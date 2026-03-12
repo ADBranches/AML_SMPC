@@ -1,27 +1,4 @@
-You’re right to call that out — and I’m going to fix it properly now.
 
-The version below is **the sufficient one**: not just a broad roadmap, but a **hard-execution build plan** designed to get you to a **real MVP that is demo-stable, academically defensible, and credible in investor conversations** within the project scope already defined in your report. It keeps the validated stack and 14-week backbone from your report, aligns the product to **FATF Recommendation 10 (CDD/KYC), Recommendation 11 (record keeping), and Recommendation 16 (payment transparency / travel-rule-type information requirements)**, and removes anything that can delay delivery if it is not essential to the MVP. [\[FINAL_YEAR...RT_REVISED \| Word\]](https://postbabyblissfoundation-my.sharepoint.com/personal/edwin_postbabyblissfoundation_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BB1E3B840-73C5-4244-9096-6664D4EDC7A6%7D&file=FINAL_YEAR_PROJECT_REPORT_REVISED.docx&action=default&mobileredirect=true), [\[fatf-gafi.org\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html), [\[blog.pibisi.com\]](https://blog.pibisi.com/en/2025/03/fatf-recommendation-11/), [\[fatf-gafi.org\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/update-Recommendation-16-payment-transparency-june-2025.html)
-
-***
-
-# The Sufficient Timeline You Should Actually Follow
-
-## What this timeline guarantees
-
-If you follow this version **exactly**, you will end with:
-
-*   **one complete end-to-end privacy-preserving AML transaction flow**, [\[FINAL_YEAR...RT_REVISED \| Word\]](https://postbabyblissfoundation-my.sharepoint.com/personal/edwin_postbabyblissfoundation_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BB1E3B840-73C5-4244-9096-6664D4EDC7A6%7D&file=FINAL_YEAR_PROJECT_REPORT_REVISED.docx&action=default&mobileredirect=true)
-*   **proof-backed compliance evidence** mapped to **Rec. 10 / 11 / 16**, [\[fatf-gafi.org\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html), [\[blog.pibisi.com\]](https://blog.pibisi.com/en/2025/03/fatf-recommendation-11/), [\[fatf-gafi.org\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/update-Recommendation-16-payment-transparency-june-2025.html)
-*   **a regulator dashboard** that can show verification results and audit traceability without exposing raw transaction data, [\[FINAL_YEAR...RT_REVISED \| Word\]](https://postbabyblissfoundation-my.sharepoint.com/personal/edwin_postbabyblissfoundation_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BB1E3B840-73C5-4244-9096-6664D4EDC7A6%7D&file=FINAL_YEAR_PROJECT_REPORT_REVISED.docx&action=default&mobileredirect=true)
-*   **a deployable Linux MVP** using the stack already established in your report: **MP-SPDZ, Microsoft SEAL, Rust, SoftHSM, PostgreSQL, k3s, Prometheus, Loki, Locust, PlantUML, and React**. [\[FINAL_YEAR...RT_REVISED \| Word\]](https://postbabyblissfoundation-my.sharepoint.com/personal/edwin_postbabyblissfoundation_onmicrosoft_com/_layouts/15/Doc.aspx?sourcedoc=%7BB1E3B840-73C5-4244-9096-6664D4EDC7A6%7D&file=FINAL_YEAR_PROJECT_REPORT_REVISED.docx&action=default&mobileredirect=true)
-
-This plan is sufficient because it adds the missing things that make a schedule executable:
-
-1.  **non-negotiable scope freeze**,
-2.  **hard weekly acceptance gates**,
-3.  **fallback rules**,
-4.  **critical-path discipline**,
-5.  **demo packaging from the middle of the build, not the end**.
 
 ***
 
