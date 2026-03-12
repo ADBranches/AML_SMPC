@@ -46,7 +46,7 @@ Below is the **best practical Linux-first stack** consistent with your report an
 
 ## Application / service layer
 
-*   **Rust (Axum or Actix-Web)** for security-sensitive APIs and orchestrators because it gives you strong memory safety and production credibility on Linux. This is the best fit around your Rust-based zk stack and security-heavy service logic. Your report already centers Rust libraries for proof systems and security components. 
+*   **Rust (Axum or Actix-Web)** is the **preferred** implementation choice for security-sensitive APIs, orchestrators, and proof-related services because it provides strong memory safety and fits naturally with the Rust-based zk stack (arkworks/Halo2). However, this is an implementation preference rather than a formal report-mandated requirement for every backend service. 
 *   **TypeScript + React** for the **regulator dashboard** and any thin bank-facing web UI because your report already places the regulator front end in React. 
 *   **Python only for benchmarking / auxiliary scripts / notebooks**, not for the core product path, so the demo remains product-grade. Your report already places notebooks and Locust in the tooling layer rather than the core cryptographic runtime. 
 
@@ -166,13 +166,14 @@ Stand up the Linux development environment, repo structure, authentication/key-m
 ## Technologies
 
 *   Linux shell / Bash
-*   Rust toolchain
-*   C++ toolchain + CMake
+*   Rust toolchain *(preferred for orchestrators, proof services, and security-sensitive APIs)*
+*   C++ toolchain + CMake *(required for Microsoft SEAL integration)*
+*   Python *(for benchmarking, scripts, notebooks, and auxiliary tooling)*
 *   PostgreSQL
 *   SoftHSM2
 *   OpenSSL
 *   Podman
-*   k3s (local cluster or staging node) 
+*   k3s *(installable now, but not a Phase 1 blocker if local containerized development is already working)*
 
 ## Directories and files to create
 
@@ -220,8 +221,9 @@ Stand up the Linux development environment, repo structure, authentication/key-m
 *   running local PostgreSQL,
 *   initialized SoftHSM token,
 *   root CA + service certificates,
-*   Rust service skeletons compile,
-*   local k3s or containerized dev environment boots successfully. 
+*   service skeletons compile,
+*   local containerized development environment boots successfully,
+*   k3s is either installed successfully or explicitly deferred to the deployment phase without blocking foundational progress.
 
 ## Investor / academic value
 
@@ -565,8 +567,7 @@ You can show:
 ***
 
 ## **PHASE 7 — Weeks 13–14**
-
-# Frontend, Documentation, Research Packaging, and Demo Script
+# Dashboard, Documentation, Research Packaging, and Demo Script
 
 ## Objective
 
@@ -701,9 +702,9 @@ Follow this order exactly:
 3.  **HE arithmetic**
 4.  **SMPC screening**
 5.  **zk proof engine**
-6.  **audit and regulator API**
-7.  **deployment and monitoring**
-8.  **frontend + docs + demo polish**  [\[fatf-gafi.org\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/update-Recommendation-16-payment-transparency-june-2025.html), [\[youtube.com\]](https://www.youtube.com/watch?v=o8ZfK6yZNWg)
+6.  **Audit and regulator API**
+7.  **Deployment and monitoring**
+8.  **Dashboard + docs + demo polish**  [\[fatf-gafi.org\]](https://www.fatf-gafi.org/en/publications/Fatfrecommendations/update-Recommendation-16-payment-transparency-june-2025.html), [\[youtube.com\]](https://www.youtube.com/watch?v=o8ZfK6yZNWg)
 
 If you start with the dashboard first, or start with “future work” features like SGX/HSM hardware, you will slow yourself down and risk never getting a stable demo. Your report’s own development logic already prioritizes foundational infrastructure, then cryptographic workflows, then proofs, then compliance, then ops, then dashboard/documentation. 
 
