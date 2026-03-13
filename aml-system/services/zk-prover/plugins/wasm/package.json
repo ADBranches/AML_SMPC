@@ -1,0 +1,8 @@
+{
+  "name": "zk-proof-wasm",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "wasm-pack build --target bundler"
+  }
+}
