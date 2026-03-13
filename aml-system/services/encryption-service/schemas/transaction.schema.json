@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transaction",
+  "type": "object",
+  "required": [
+    "tx_id",
+    "sender_id",
+    "receiver_id",
+    "amount",
+    "currency",
+    "transaction_type",
+    "originator_institution",
+    "beneficiary_institution",
+    "timestamp"
+  ],
+  "properties": {
+    "tx_id": { "type": "string" },
+    "sender_id": { "type": "string" },
+    "receiver_id": { "type": "string" },
+    "sender_entity_id": { "type": ["integer", "null"] },
+    "receiver_entity_id": { "type": ["integer", "null"] },
+    "amount": { "type": "number" },
+    "currency": { "type": "string" },
+    "transaction_type": { "type": "string" },
+    "originator_name": { "type": ["string", "null"] },
+    "beneficiary_name": { "type": ["string", "null"] },
+    "originator_institution": { "type": "string" },
+    "beneficiary_institution": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" }
+  }
+}

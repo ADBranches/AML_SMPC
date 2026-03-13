@@ -1,0 +1,10 @@
+target/
+node_modules/
+.env
+.venv/
+__pycache__/
+*.pyc
+infra/softhsm/tokens/*
+!infra/softhsm/tokens/.gitkeep
+libs/security/mtls/ca/*.key
+libs/security/mtls/certs/**/*.key

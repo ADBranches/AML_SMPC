@@ -1,0 +1,16 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}/services/he-orchestrator/seal-core",
+  "cmake.buildDirectory": "${workspaceFolder}/services/he-orchestrator/seal-core/build",
+  "cmake.configureOnOpen": false,
+  "cmake.useCMakePresets": "never",
+
+  "files.exclude": {
+    "**/external/SEAL/build": true,
+    "**/services/he-orchestrator/seal-core/build": false
+  },
+
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/services/he-orchestrator/seal-core/build/compile_commands.json",
+  "clangd.arguments": [
+    "--compile-commands-dir=${workspaceFolder}/services/he-orchestrator/seal-core/build"
+  ]
+}
