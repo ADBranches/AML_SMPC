@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zk-prover
+  namespace: aml-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zk-prover
+  template:
+    metadata:
+      labels:
+        app: zk-prover
+    spec:
+      containers:
+        - name: zk-prover
+          image: localhost/aml-zk-prover:phase6
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              value: postgresql://aml_dev:securepassword@postgres.aml-system.svc.cluster.local:5432/aml_dev
+            - name: ZK_PROVER_BIND
+              value: 0.0.0.0:8084
+          ports:
+            - containerPort: 8084
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8084
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8084
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zk-prover
+  namespace: aml-system
+spec:
+  selector:
+    app: zk-prover
+  ports:
+    - name: http
+      port: 8084
+      targetPort: 8084

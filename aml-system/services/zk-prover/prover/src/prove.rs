@@ -1,7 +1,7 @@
 use crate::{fatf_rec10, fatf_rec11, fatf_rec16};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::Value;
 use sha2::{Digest, Sha256};
 use sqlx::{PgPool, Row};
 use uuid::Uuid;
@@ -30,7 +30,10 @@ fn hash_json(value: &Value) -> Result<String, String> {
     Ok(hex::encode(hasher.finalize()))
 }
 
-async fn fetch_transaction(pool: &PgPool, tx_id: &str) -> Result<Option<sqlx::postgres::PgRow>, String> {
+async fn fetch_transaction(
+    pool: &PgPool,
+    tx_id: &str,
+) -> Result<Option<sqlx::postgres::PgRow>, String> {
     sqlx::query(
         r#"
         SELECT tx_id, originator_institution, beneficiary_institution, status
@@ -44,7 +47,10 @@ async fn fetch_transaction(pool: &PgPool, tx_id: &str) -> Result<Option<sqlx::po
     .map_err(|e| e.to_string())
 }
 
-async fn fetch_audit_rows(pool: &PgPool, tx_id: &str) -> Result<Vec<sqlx::postgres::PgRow>, String> {
+async fn fetch_audit_rows(
+    pool: &PgPool,
+    tx_id: &str,
+) -> Result<Vec<sqlx::postgres::PgRow>, String> {
     sqlx::query(
         r#"
         SELECT event_type, event_status, event_ref, details
@@ -83,12 +89,19 @@ async fn store_proof(pool: &PgPool, artifact: &ProofArtifact) -> Result<(), Stri
     Ok(())
 }
 
-pub async fn generate_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<ProofArtifact>, String> {
+pub async fn generate_proofs_for_tx(
+    pool: &PgPool,
+    tx_id: &str,
+) -> Result<Vec<ProofArtifact>, String> {
+    tracing::info!("proof generation started for tx_id={}", tx_id);
+
     let tx_row = fetch_transaction(pool, tx_id).await?;
     let tx_row = tx_row.ok_or_else(|| format!("transaction not found: {}", tx_id))?;
+    tracing::info!("transaction fetched for tx_id={}", tx_id);
 
     let audit_rows = fetch_audit_rows(pool, tx_id).await?;
     let audit_count = audit_rows.len() as u64;
+    tracing::info!("audit rows fetched for tx_id={} count={}", tx_id, audit_count);
 
     let sender_screening_performed = audit_rows.iter().any(|r| {
         r.try_get::<String, _>("event_type")
@@ -103,6 +116,7 @@ pub async fn generate_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<Pr
     });
 
     let transaction_exists = true;
+
     let originator_institution_present = tx_row
         .try_get::<Option<String>, _>("originator_institution")
         .ok()
@@ -117,8 +131,11 @@ pub async fn generate_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<Pr
         .map(|v| !v.trim().is_empty())
         .unwrap_or(false);
 
-    let status = tx_row.try_get::<String, _>("status").unwrap_or_else(|_| "unknown".into());
+    let status = tx_row
+        .try_get::<String, _>("status")
+        .unwrap_or_else(|_| "unknown".into());
 
+    tracing::info!("running FATF_REC10 for tx_id={}", tx_id);
     let rec10_claim = fatf_rec10::Rec10Claim {
         tx_id: tx_id.to_string(),
         cdd_check_executed: true,
@@ -127,6 +144,7 @@ pub async fn generate_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<Pr
     };
     fatf_rec10::verify_claim_with_circuit(&rec10_claim)?;
 
+    tracing::info!("running FATF_REC11 for tx_id={}", tx_id);
     let rec11_claim = fatf_rec11::Rec11Claim {
         tx_id: tx_id.to_string(),
         transaction_exists,
@@ -134,11 +152,13 @@ pub async fn generate_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<Pr
     };
     fatf_rec11::verify_claim_with_circuit(&rec11_claim)?;
 
+    tracing::info!("running FATF_REC16 for tx_id={}", tx_id);
     let rec16_claim = fatf_rec16::Rec16Claim {
         tx_id: tx_id.to_string(),
         originator_institution_present,
         beneficiary_institution_present,
-        payment_metadata_present: originator_institution_present && beneficiary_institution_present,
+        payment_metadata_present: originator_institution_present
+            && beneficiary_institution_present,
     };
     fatf_rec16::verify_claim_with_circuit(&rec16_claim)?;
 
@@ -176,7 +196,19 @@ pub async fn generate_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<Pr
         },
     ];
 
+    tracing::info!(
+        "prepared {} proof artifacts for tx_id={}",
+        artifacts.len(),
+        tx_id
+    );
+
     for artifact in &mut artifacts {
+        tracing::info!(
+            "verifying/storing proof tx_id={} rule_id={}",
+            artifact.tx_id,
+            artifact.rule_id
+        );
+
         let outcome = verify_proof_artifact(&ProofArtifactRecord {
             id: artifact.id.clone(),
             tx_id: artifact.tx_id.clone(),

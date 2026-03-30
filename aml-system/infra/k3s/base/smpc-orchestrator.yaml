@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smpc-runtime
+  namespace: aml-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smpc-runtime
+  template:
+    metadata:
+      labels:
+        app: smpc-runtime
+    spec:
+      containers:
+        - name: smpc-runtime
+          image: localhost/aml-smpc-runtime:phase6
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: AML_ROOT_DIR
+              value: /opt/aml-system
+            - name: SMPC_BIND
+              value: 0.0.0.0:8083
+          ports:
+            - containerPort: 8083
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8083
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8083
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smpc-runtime
+  namespace: aml-system
+spec:
+  selector:
+    app: smpc-runtime
+  ports:
+    - name: http
+      port: 8083
+      targetPort: 8083

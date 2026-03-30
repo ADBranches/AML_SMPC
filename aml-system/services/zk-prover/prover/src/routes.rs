@@ -7,7 +7,7 @@ use axum::{
     Json, Router,
 };
 use serde_json::json;
-use sqlx::PgPool;
+use sqlx::{PgPool, Row};
 use zk_verifier::{verify_proof_artifact, ProofArtifactRecord};
 
 pub fn router(pool: PgPool) -> Router {
@@ -74,11 +74,14 @@ async fn verify_by_id(
 }
 
 fn internal_error<E: std::fmt::Display>(err: E) -> (StatusCode, Json<serde_json::Value>) {
+    let msg = err.to_string();
+    tracing::error!("zk-prover internal error: {}", msg);
+
     (
         StatusCode::INTERNAL_SERVER_ERROR,
         Json(json!({
             "error": "internal_server_error",
-            "message": err.to_string()
+            "message": msg
         })),
     )
 }

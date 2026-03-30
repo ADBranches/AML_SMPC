@@ -1,0 +1,5 @@
+[retention]
+audit_logs_days = 30
+proofs_days = 365
+purge_enabled = false
+note = "Retention is configured for prototype governance but destructive purge is disabled by default in MVP."

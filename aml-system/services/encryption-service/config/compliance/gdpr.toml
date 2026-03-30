@@ -1,0 +1,5 @@
+[gdpr]
+pseudonymization_enabled = true
+raw_identifier_storage_allowed = false
+audit_minimization_enabled = true
+lawful_basis_note = "Prototype uses privacy-preserving processing and reduced data exposure for compliance-oriented demonstration."

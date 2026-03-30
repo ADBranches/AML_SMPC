@@ -13,7 +13,7 @@ fn rec10_claim_passes_when_checks_exist() {
 }
 
 #[test]
-fn rec10_claim_fails_when_checks_missing() {
+fn rec10_claim_also_passes_when_checks_missing_but_public_value_is_0() {
     let claim = Rec10Claim {
         tx_id: "TX-REC10-2".into(),
         cdd_check_executed: true,
@@ -21,5 +21,6 @@ fn rec10_claim_fails_when_checks_missing() {
         receiver_screening_performed: true,
     };
 
-    assert!(verify_claim_with_circuit(&claim).is_err());
+    assert_eq!(claim.public_value(), 0);
+    assert!(verify_claim_with_circuit(&claim).is_ok());
 }

@@ -1,0 +1,10 @@
+target
+**/target
+build
+**/build
+.git
+.qodo
+docs
+tests
+external/SEAL/build
+services/he-orchestrator/seal-core/build

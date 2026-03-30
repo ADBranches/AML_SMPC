@@ -1,0 +1,18 @@
+{
+  "title": "Service Latency",
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Service Latency",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "targets": []
+    }
+  ]
+}

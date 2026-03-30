@@ -1,60 +1,54 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bank-client
+  name: regulator-api
   namespace: aml-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bank-client
+      app: regulator-api
   template:
     metadata:
       labels:
-        app: bank-client
+        app: regulator-api
     spec:
       containers:
-        - name: bank-client
-          image: localhost/aml-bank-client:phase6
+        - name: regulator-api
+          image: localhost/aml-regulator-api:phase6
           imagePullPolicy: IfNotPresent
           env:
-            - name: BANK_CLIENT_BIND
-              value: 0.0.0.0:8080
-            - name: ENCRYPTION_SERVICE_BASE_URL
-              value: http://encryption-service:8081
-            - name: HE_GATEWAY_BASE_URL
-              value: http://he-gateway:8082
-            - name: SMPC_RUNTIME_BASE_URL
-              value: http://smpc-runtime:8083
+            - name: DATABASE_URL
+              value: postgresql://aml_dev:securepassword@postgres.aml-system.svc.cluster.local:5432/aml_dev
             - name: ZK_PROVER_BASE_URL
               value: http://zk-prover:8084
-            - name: REGULATOR_API_BASE_URL
-              value: http://regulator-api:8085
+            - name: REGULATOR_API_BIND
+              value: 0.0.0.0:8085
           ports:
-            - containerPort: 8080
+            - containerPort: 8085
               name: http
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 8085
             initialDelaySeconds: 5
             periodSeconds: 5
           livenessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 8085
             initialDelaySeconds: 15
             periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: bank-client
+  name: regulator-api
   namespace: aml-system
 spec:
   selector:
-    app: bank-client
+    app: regulator-api
   ports:
     - name: http
-      port: 8080
-      targetPort: 8080
+      port: 8085
+      targetPort: 8085

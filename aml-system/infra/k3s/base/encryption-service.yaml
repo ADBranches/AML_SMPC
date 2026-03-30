@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: encryption-service
+  namespace: aml-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: encryption-service
+  template:
+    metadata:
+      labels:
+        app: encryption-service
+    spec:
+      containers:
+        - name: encryption-service
+          image: localhost/aml-encryption-service:phase6
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DATABASE_URL
+              value: postgresql://aml_dev:securepassword@postgres.aml-system.svc.cluster.local:5432/aml_dev
+            - name: PSEUDO_SALT
+              value: dev_demo_salt_change_me
+            - name: ENCRYPTION_SERVICE_BIND
+              value: 0.0.0.0:8081
+          ports:
+            - containerPort: 8081
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: encryption-service
+  namespace: aml-system
+spec:
+  selector:
+    app: encryption-service
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
