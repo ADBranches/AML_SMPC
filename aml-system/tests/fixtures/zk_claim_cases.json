@@ -1,0 +1,24 @@
+{
+  "generate": [
+    {
+      "name": "valid_tx_for_all_rules",
+      "tx_id": "TX-E2E-001",
+      "expected_rules": [
+        "FATF_REC10",
+        "FATF_REC11",
+        "FATF_REC16"
+      ]
+    }
+  ],
+  "invalid": [
+    {
+      "name": "unknown_rule_record",
+      "rule_id": "FATF_UNKNOWN",
+      "reason": "unknown rule id should fail verification"
+    },
+    {
+      "name": "tampered_claim_hash",
+      "reason": "claim hash mismatch should fail verification"
+    }
+  ]
+}

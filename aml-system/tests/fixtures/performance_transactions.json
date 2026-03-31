@@ -1,0 +1,17 @@
+{
+  "transactions": [
+    {
+      "tx_id": "TX-PERF-001",
+      "sender_id": "SENDER-5001",
+      "receiver_id": "RECEIVER-5002",
+      "amount": 10.0,
+      "currency": "USD",
+      "transaction_type": "wire_transfer",
+      "originator_name": "Perf Sender",
+      "beneficiary_name": "Perf Receiver",
+      "originator_institution": "Perf Bank A",
+      "beneficiary_institution": "Perf Bank B",
+      "timestamp": "2026-03-31T00:00:00Z"
+    }
+  ]
+}

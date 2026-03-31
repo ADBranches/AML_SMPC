@@ -1,0 +1,70 @@
+{
+  "positive": [
+    {
+      "name": "clear_transaction",
+      "request": {
+        "tx_id": "TX-E2E-001",
+        "sender_id": "SENDER-1001",
+        "receiver_id": "RECEIVER-1002",
+        "amount": 5000.0,
+        "currency": "USD",
+        "transaction_type": "wire_transfer",
+        "originator_name": "Alpha Ltd",
+        "beneficiary_name": "Beta Ltd",
+        "originator_institution": "Bank A",
+        "beneficiary_institution": "Bank B",
+        "timestamp": "2026-03-31T00:00:00Z"
+      },
+      "expected_status": "screened_clear"
+    },
+    {
+      "name": "screened_match_transaction",
+      "request": {
+        "tx_id": "TX-E2E-002",
+        "sender_id": "SENDER-1007",
+        "receiver_id": "RECEIVER-2002",
+        "sender_entity_id": 1007,
+        "amount": 7500.0,
+        "currency": "USD",
+        "transaction_type": "wire_transfer",
+        "originator_name": "Flagged Sender",
+        "beneficiary_name": "Gamma Ltd",
+        "originator_institution": "Bank A",
+        "beneficiary_institution": "Bank C",
+        "timestamp": "2026-03-31T00:05:00Z"
+      },
+      "expected_status": "screened_match"
+    }
+  ],
+  "negative": [
+    {
+      "name": "missing_sender_id",
+      "request": {
+        "tx_id": "TX-E2E-003",
+        "receiver_id": "RECEIVER-3001",
+        "amount": 120.0,
+        "currency": "USD",
+        "transaction_type": "wire_transfer",
+        "originator_institution": "Bank A",
+        "beneficiary_institution": "Bank B",
+        "timestamp": "2026-03-31T00:10:00Z"
+      },
+      "expected_http_status": 422
+    },
+    {
+      "name": "missing_travel_rule_fields",
+      "request": {
+        "tx_id": "TX-E2E-004",
+        "sender_id": "SENDER-1111",
+        "receiver_id": "RECEIVER-1112",
+        "amount": 150.0,
+        "currency": "USD",
+        "transaction_type": "wire_transfer",
+        "originator_institution": "",
+        "beneficiary_institution": "",
+        "timestamp": "2026-03-31T00:12:00Z"
+      },
+      "expected_http_status": 201
+    }
+  ]
+}

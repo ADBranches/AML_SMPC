@@ -1,0 +1,32 @@
+{
+  "positive": [
+    {
+      "name": "simple_pair",
+      "lhs_amount": 1250.5,
+      "rhs_amount": 249.5
+    },
+    {
+      "name": "integer_pair",
+      "lhs_amount": 1000.0,
+      "rhs_amount": 7.0
+    }
+  ],
+  "negative": [
+    {
+      "name": "missing_amount",
+      "request": {}
+    },
+    {
+      "name": "invalid_numeric",
+      "request": {
+        "amount": "not-a-number"
+      }
+    },
+    {
+      "name": "malformed_ciphertext",
+      "request": {
+        "ciphertext_hex": "zz-not-hex"
+      }
+    }
+  ]
+}

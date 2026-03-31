@@ -1,0 +1,40 @@
+{
+  "positive": [
+    {
+      "name": "sanctioned_entity",
+      "tx_id": "TX-SMPC-001",
+      "entity_id": 1007,
+      "expected_result": "match"
+    },
+    {
+      "name": "clean_entity",
+      "tx_id": "TX-SMPC-002",
+      "entity_id": 1999,
+      "expected_result": "no_match"
+    }
+  ],
+  "negative": [
+    {
+      "name": "missing_entity_id",
+      "request": {
+        "tx_id": "TX-SMPC-003"
+      },
+      "expected_http_status": 422
+    },
+    {
+      "name": "wrong_type_entity_id",
+      "request": {
+        "tx_id": "TX-SMPC-004",
+        "entity_id": "bad"
+      },
+      "expected_http_status": 422
+    },
+    {
+      "name": "missing_tx_id",
+      "request": {
+        "entity_id": 1007
+      },
+      "expected_http_status": 422
+    }
+  ]
+}
