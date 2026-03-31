@@ -290,8 +290,8 @@ CMakeFiles/seal_bridge.dir/clean:
 # Target rules for target seal/CMakeFiles/seal.dir
 
 # All Build rule for target.
-seal/CMakeFiles/seal.dir/all: seal/thirdparty/zlib-build/CMakeFiles/zlibstatic.dir/all
 seal/CMakeFiles/seal.dir/all: seal/thirdparty/zstd-build/lib/CMakeFiles/libzstd_static.dir/all
+seal/CMakeFiles/seal.dir/all: seal/thirdparty/zlib-build/CMakeFiles/zlibstatic.dir/all
 	$(MAKE) $(MAKESILENT) -f seal/CMakeFiles/seal.dir/build.make seal/CMakeFiles/seal.dir/depend
 	$(MAKE) $(MAKESILENT) -f seal/CMakeFiles/seal.dir/build.make seal/CMakeFiles/seal.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles --progress-num=38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70 "Built target seal"
@@ -309,8 +309,8 @@ seal: seal/CMakeFiles/seal.dir/rule
 .PHONY : seal
 
 # codegen rule for target.
-seal/CMakeFiles/seal.dir/codegen: seal/thirdparty/zlib-build/CMakeFiles/zlibstatic.dir/all
 seal/CMakeFiles/seal.dir/codegen: seal/thirdparty/zstd-build/lib/CMakeFiles/libzstd_static.dir/all
+seal/CMakeFiles/seal.dir/codegen: seal/thirdparty/zlib-build/CMakeFiles/zlibstatic.dir/all
 	$(MAKE) $(MAKESILENT) -f seal/CMakeFiles/seal.dir/build.make seal/CMakeFiles/seal.dir/codegen
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles --progress-num=38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70 "Finished codegen for target seal"
 .PHONY : seal/CMakeFiles/seal.dir/codegen

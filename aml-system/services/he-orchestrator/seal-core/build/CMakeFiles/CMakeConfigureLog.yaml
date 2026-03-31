@@ -7,7 +7,7 @@ events:
       - "/usr/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      The system is: Linux - 6.18.3+kali+1-rt-amd64 - x86_64
+      The system is: Linux - 6.12.25-amd64 - x86_64
   -
     kind: "message-v1"
     backtrace:
@@ -40,8 +40,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -51,13 +51,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a368c/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_a368c.dir/build.make CMakeFiles/cmTC_a368c.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy'
-        Building CXX object CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_711d8/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_711d8.dir/build.make CMakeFiles/cmTC_711d8.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG'
+        Building CXX object CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -67,8 +67,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.3.0 (Debian 14.3.0-5) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a368c.dir/'
-         /usr/libexec/gcc/x86_64-linux-gnu/14/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_a368c.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/cckpTpP2.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_711d8.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/14/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_711d8.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/ccUg86mA.s
         GNU C++17 (Debian 14.3.0-5) version 14.3.0 (x86_64-linux-gnu)
         	compiled by GNU C version 14.3.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -89,14 +89,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 9ac80053b6f0a0f10adf507b527307ac
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a368c.dir/'
-         as -v --64 -o CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o /tmp/cckpTpP2.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_711d8.dir/'
+         as -v --64 -o CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccUg86mA.s
         GNU assembler version 2.44 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.44
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_a368c
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a368c.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_711d8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_711d8.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper
@@ -109,15 +109,15 @@ events:
         gcc version 14.3.0 (Debian 14.3.0-5) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a368c' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a368c.'
-         /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnIWjlC.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a368c /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_711d8' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_711d8.'
+         /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXnRzPZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_711d8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
         collect2 version 14.3.0
-        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnIWjlC.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a368c /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXnRzPZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_711d8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Debian) 2.44
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a368c' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a368c.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_a368c
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_711d8' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_711d8.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_711d8
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG'
         
       exitCode: 0
   -
@@ -158,13 +158,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy']
+        ignore line: [Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a368c/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_a368c.dir/build.make CMakeFiles/cmTC_a368c.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fjkOdy']
-        ignore line: [Building CXX object CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_711d8/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_711d8.dir/build.make CMakeFiles/cmTC_711d8.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-C67JbG']
+        ignore line: [Building CXX object CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -174,8 +174,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.3.0 (Debian 14.3.0-5) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a368c.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_a368c.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/cckpTpP2.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_711d8.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_711d8.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/ccUg86mA.s]
         ignore line: [GNU C++17 (Debian 14.3.0-5) version 14.3.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 14.3.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -196,14 +196,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 9ac80053b6f0a0f10adf507b527307ac]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a368c.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o /tmp/cckpTpP2.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_711d8.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccUg86mA.s]
         ignore line: [GNU assembler version 2.44 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.44]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_a368c]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a368c.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_711d8]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_711d8.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper]
@@ -216,13 +216,13 @@ events:
         ignore line: [gcc version 14.3.0 (Debian 14.3.0-5) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a368c' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a368c.']
-        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnIWjlC.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a368c /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_711d8' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_711d8.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXnRzPZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_711d8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/libexec/gcc/x86_64-linux-gnu/14/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccnIWjlC.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccXnRzPZ.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -238,7 +238,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_a368c] ==> ignore
+          arg [cmTC_711d8] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o]
@@ -251,7 +251,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/14/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -262,7 +262,7 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 14.3.0]
-        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccnIWjlC.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a368c /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_a368c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXnRzPZ.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_711d8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_711d8.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
@@ -323,8 +323,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -334,13 +334,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4a40d/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_4a40d.dir/build.make CMakeFiles/cmTC_4a40d.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F'
-        Building C object CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -fPIE   -v -o CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_61334/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_61334.dir/build.make CMakeFiles/cmTC_61334.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ'
+        Building C object CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -fPIE   -v -o CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
@@ -350,8 +350,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.3.0 (Debian 14.3.0-5) 
-        COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4a40d.dir/'
-         /usr/libexec/gcc/x86_64-linux-gnu/14/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4a40d.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIE -fasynchronous-unwind-tables -o /tmp/ccoRsdLS.s
+        COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_61334.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/14/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_61334.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIE -fasynchronous-unwind-tables -o /tmp/cc1tmatM.s
         GNU C17 (Debian 14.3.0-5) version 14.3.0 (x86_64-linux-gnu)
         	compiled by GNU C version 14.3.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -368,14 +368,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 47f1d9fbf2bbbbcf2a25de321c2ec94e
-        COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4a40d.dir/'
-         as -v --64 -o CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o /tmp/ccoRsdLS.s
+        COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_61334.dir/'
+         as -v --64 -o CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o /tmp/cc1tmatM.s
         GNU assembler version 2.44 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.44
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_4a40d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4a40d.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_61334
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_61334.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper
@@ -388,15 +388,15 @@ events:
         gcc version 14.3.0 (Debian 14.3.0-5) 
         COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4a40d' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4a40d.'
-         /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cchAQzsR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_4a40d /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_61334' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_61334.'
+         /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccIhOlVu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_61334 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
         collect2 version 14.3.0
-        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cchAQzsR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_4a40d /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccIhOlVu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_61334 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
         GNU ld (GNU Binutils for Debian) 2.44
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4a40d' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4a40d.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -o cmTC_4a40d
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_61334' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_61334.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -o cmTC_61334
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ'
         
       exitCode: 0
   -
@@ -431,13 +431,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F']
+        ignore line: [Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4a40d/fast]
-        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_4a40d.dir/build.make CMakeFiles/cmTC_4a40d.dir/build]
-        ignore line: [gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-s5Gt4F']
-        ignore line: [Building C object CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -fPIE   -v -o CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_61334/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_61334.dir/build.make CMakeFiles/cmTC_61334.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yCIypZ']
+        ignore line: [Building C object CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -fPIE   -v -o CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
@@ -447,8 +447,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.3.0 (Debian 14.3.0-5) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4a40d.dir/']
-        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_4a40d.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIE -fasynchronous-unwind-tables -o /tmp/ccoRsdLS.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_61334.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_61334.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fPIE -fasynchronous-unwind-tables -o /tmp/cc1tmatM.s]
         ignore line: [GNU C17 (Debian 14.3.0-5) version 14.3.0 (x86_64-linux-gnu)]
         ignore line: [	compiled by GNU C version 14.3.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -465,14 +465,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 47f1d9fbf2bbbbcf2a25de321c2ec94e]
-        ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4a40d.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o /tmp/ccoRsdLS.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_61334.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o /tmp/cc1tmatM.s]
         ignore line: [GNU assembler version 2.44 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.44]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_4a40d]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4a40d.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-o' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_61334]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_61334.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper]
@@ -485,13 +485,13 @@ events:
         ignore line: [gcc version 14.3.0 (Debian 14.3.0-5) ]
         ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/14/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/14/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/14/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_4a40d' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_4a40d.']
-        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cchAQzsR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_4a40d /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_61334' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_61334.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/14/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccIhOlVu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_61334 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
           arg [/usr/libexec/gcc/x86_64-linux-gnu/14/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cchAQzsR.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccIhOlVu.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -507,7 +507,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_4a40d] ==> ignore
+          arg [cmTC_61334] ==> ignore
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o]
@@ -520,7 +520,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-linux-gnu/14/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/14/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -535,7 +535,7 @@ events:
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o]
           arg [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
         ignore line: [collect2 version 14.3.0]
-        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/cchAQzsR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_4a40d /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_4a40d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/14/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/14/lto-wrapper -plugin-opt=-fresolution=/tmp/ccIhOlVu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_61334 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/14 -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/14/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/14/../../.. -v CMakeFiles/cmTC_61334.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
@@ -572,8 +572,8 @@ events:
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/cmake/EnableCXX17.cmake:28 (check_cxx_source_compiles)"
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/CMakeLists.txt:68 (include)"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-hc2A56"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-hc2A56"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-5Z0xB5"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-5Z0xB5"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -584,18 +584,18 @@ events:
       variable: "USE_STD_FOR_EACH_N"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-hc2A56'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-5Z0xB5'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_adc80/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_adc80.dir/build.make CMakeFiles/cmTC_adc80.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-hc2A56'
-        Building CXX object CMakeFiles/cmTC_adc80.dir/src.cxx.o
-        /usr/bin/c++ -DUSE_STD_FOR_EACH_N  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_adc80.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-hc2A56/src.cxx
-        Linking CXX executable cmTC_adc80
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_adc80.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e88af/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e88af.dir/build.make CMakeFiles/cmTC_e88af.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-5Z0xB5'
+        Building CXX object CMakeFiles/cmTC_e88af.dir/src.cxx.o
+        /usr/bin/c++ -DUSE_STD_FOR_EACH_N  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_e88af.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-5Z0xB5/src.cxx
+        Linking CXX executable cmTC_e88af
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e88af.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_adc80.dir/src.cxx.o -o cmTC_adc80
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-hc2A56'
+        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_e88af.dir/src.cxx.o -o cmTC_e88af
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-5Z0xB5'
         
       exitCode: 0
   -
@@ -606,8 +606,8 @@ events:
     checks:
       - "Looking for sys/types.h"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6WjXcV"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6WjXcV"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-K5NmYK"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-K5NmYK"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -618,18 +618,18 @@ events:
       variable: "HAVE_SYS_TYPES_H"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6WjXcV'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-K5NmYK'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ef102/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_ef102.dir/build.make CMakeFiles/cmTC_ef102.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6WjXcV'
-        Building C object CMakeFiles/cmTC_ef102.dir/CheckIncludeFile.c.o
-        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_ef102.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6WjXcV/CheckIncludeFile.c
-        Linking C executable cmTC_ef102
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ef102.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9b0ca/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9b0ca.dir/build.make CMakeFiles/cmTC_9b0ca.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-K5NmYK'
+        Building C object CMakeFiles/cmTC_9b0ca.dir/CheckIncludeFile.c.o
+        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_9b0ca.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-K5NmYK/CheckIncludeFile.c
+        Linking C executable cmTC_9b0ca
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9b0ca.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_ef102.dir/CheckIncludeFile.c.o -o cmTC_ef102
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6WjXcV'
+        /usr/bin/cc CMakeFiles/cmTC_9b0ca.dir/CheckIncludeFile.c.o -o cmTC_9b0ca
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-K5NmYK'
         
       exitCode: 0
   -
@@ -640,8 +640,8 @@ events:
     checks:
       - "Looking for stdint.h"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-QuRpxL"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-QuRpxL"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okavaA"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okavaA"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -652,18 +652,18 @@ events:
       variable: "HAVE_STDINT_H"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-QuRpxL'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okavaA'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4aa7b/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_4aa7b.dir/build.make CMakeFiles/cmTC_4aa7b.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-QuRpxL'
-        Building C object CMakeFiles/cmTC_4aa7b.dir/CheckIncludeFile.c.o
-        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_4aa7b.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-QuRpxL/CheckIncludeFile.c
-        Linking C executable cmTC_4aa7b
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4aa7b.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_10f57/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_10f57.dir/build.make CMakeFiles/cmTC_10f57.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okavaA'
+        Building C object CMakeFiles/cmTC_10f57.dir/CheckIncludeFile.c.o
+        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_10f57.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okavaA/CheckIncludeFile.c
+        Linking C executable cmTC_10f57
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10f57.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_4aa7b.dir/CheckIncludeFile.c.o -o cmTC_4aa7b
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-QuRpxL'
+        /usr/bin/cc CMakeFiles/cmTC_10f57.dir/CheckIncludeFile.c.o -o cmTC_10f57
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okavaA'
         
       exitCode: 0
   -
@@ -674,8 +674,8 @@ events:
     checks:
       - "Looking for stddef.h"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6i4spt"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6i4spt"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Di0rmo"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Di0rmo"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -686,18 +686,18 @@ events:
       variable: "HAVE_STDDEF_H"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6i4spt'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Di0rmo'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4d9ed/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_4d9ed.dir/build.make CMakeFiles/cmTC_4d9ed.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6i4spt'
-        Building C object CMakeFiles/cmTC_4d9ed.dir/CheckIncludeFile.c.o
-        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_4d9ed.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6i4spt/CheckIncludeFile.c
-        Linking C executable cmTC_4d9ed
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4d9ed.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ed9ad/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ed9ad.dir/build.make CMakeFiles/cmTC_ed9ad.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Di0rmo'
+        Building C object CMakeFiles/cmTC_ed9ad.dir/CheckIncludeFile.c.o
+        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_ed9ad.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Di0rmo/CheckIncludeFile.c
+        Linking C executable cmTC_ed9ad
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ed9ad.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_4d9ed.dir/CheckIncludeFile.c.o -o cmTC_4d9ed
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-6i4spt'
+        /usr/bin/cc CMakeFiles/cmTC_ed9ad.dir/CheckIncludeFile.c.o -o cmTC_ed9ad
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Di0rmo'
         
       exitCode: 0
   -
@@ -709,8 +709,8 @@ events:
     checks:
       - "Check size of off64_t"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-f0qkqE"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-f0qkqE"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ta8fny"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ta8fny"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -721,18 +721,18 @@ events:
       variable: "HAVE_OFF64_T"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-f0qkqE'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ta8fny'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_20764/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_20764.dir/build.make CMakeFiles/cmTC_20764.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-f0qkqE'
-        Building C object CMakeFiles/cmTC_20764.dir/OFF64_T.c.o
-        /usr/bin/cc -DHAVE_STDDEF_H -DHAVE_STDINT_H -DHAVE_SYS_TYPES_H -D_LARGEFILE64_SOURCE=1  -fPIE -o CMakeFiles/cmTC_20764.dir/OFF64_T.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-f0qkqE/OFF64_T.c
-        Linking C executable cmTC_20764
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_20764.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a1eff/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a1eff.dir/build.make CMakeFiles/cmTC_a1eff.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ta8fny'
+        Building C object CMakeFiles/cmTC_a1eff.dir/OFF64_T.c.o
+        /usr/bin/cc -DHAVE_STDDEF_H -DHAVE_STDINT_H -DHAVE_SYS_TYPES_H -D_LARGEFILE64_SOURCE=1  -fPIE -o CMakeFiles/cmTC_a1eff.dir/OFF64_T.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ta8fny/OFF64_T.c
+        Linking C executable cmTC_a1eff
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a1eff.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_20764.dir/OFF64_T.c.o -o cmTC_20764
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-f0qkqE'
+        /usr/bin/cc CMakeFiles/cmTC_a1eff.dir/OFF64_T.c.o -o cmTC_a1eff
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ta8fny'
         
       exitCode: 0
   -
@@ -743,8 +743,8 @@ events:
     checks:
       - "Looking for fseeko"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-2Qtgjq"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-2Qtgjq"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kVkWF8"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kVkWF8"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -755,18 +755,18 @@ events:
       variable: "HAVE_FSEEKO"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-2Qtgjq'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kVkWF8'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_771c7/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_771c7.dir/build.make CMakeFiles/cmTC_771c7.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-2Qtgjq'
-        Building C object CMakeFiles/cmTC_771c7.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=fseeko -fPIE -o CMakeFiles/cmTC_771c7.dir/CheckFunctionExists.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-2Qtgjq/CheckFunctionExists.c
-        Linking C executable cmTC_771c7
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_771c7.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_daa9e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_daa9e.dir/build.make CMakeFiles/cmTC_daa9e.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kVkWF8'
+        Building C object CMakeFiles/cmTC_daa9e.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=fseeko -fPIE -o CMakeFiles/cmTC_daa9e.dir/CheckFunctionExists.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kVkWF8/CheckFunctionExists.c
+        Linking C executable cmTC_daa9e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_daa9e.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=fseeko CMakeFiles/cmTC_771c7.dir/CheckFunctionExists.c.o -o cmTC_771c7
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-2Qtgjq'
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=fseeko CMakeFiles/cmTC_daa9e.dir/CheckFunctionExists.c.o -o cmTC_daa9e
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kVkWF8'
         
       exitCode: 0
   -
@@ -777,8 +777,8 @@ events:
     checks:
       - "Looking for unistd.h"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JTfjcN"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JTfjcN"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-p59vza"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-p59vza"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -789,18 +789,18 @@ events:
       variable: "Z_HAVE_UNISTD_H"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JTfjcN'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-p59vza'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ee35d/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_ee35d.dir/build.make CMakeFiles/cmTC_ee35d.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JTfjcN'
-        Building C object CMakeFiles/cmTC_ee35d.dir/CheckIncludeFile.c.o
-        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_ee35d.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JTfjcN/CheckIncludeFile.c
-        Linking C executable cmTC_ee35d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ee35d.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a883b/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a883b.dir/build.make CMakeFiles/cmTC_a883b.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-p59vza'
+        Building C object CMakeFiles/cmTC_a883b.dir/CheckIncludeFile.c.o
+        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_a883b.dir/CheckIncludeFile.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-p59vza/CheckIncludeFile.c
+        Linking C executable cmTC_a883b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a883b.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_ee35d.dir/CheckIncludeFile.c.o -o cmTC_ee35d
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JTfjcN'
+        /usr/bin/cc CMakeFiles/cmTC_a883b.dir/CheckIncludeFile.c.o -o cmTC_a883b
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-p59vza'
         
       exitCode: 0
   -
@@ -828,8 +828,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WALL"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fML8sJ"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fML8sJ"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JlDnNn"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JlDnNn"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -840,18 +840,18 @@ events:
       variable: "C_FLAG_WALL"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fML8sJ'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JlDnNn'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_57bec/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_57bec.dir/build.make CMakeFiles/cmTC_57bec.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fML8sJ'
-        Building C object CMakeFiles/cmTC_57bec.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WALL  -fPIE   -Wall -o CMakeFiles/cmTC_57bec.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fML8sJ/src.c
-        Linking C executable cmTC_57bec
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_57bec.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_11d01/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_11d01.dir/build.make CMakeFiles/cmTC_11d01.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JlDnNn'
+        Building C object CMakeFiles/cmTC_11d01.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WALL  -fPIE   -Wall -o CMakeFiles/cmTC_11d01.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JlDnNn/src.c
+        Linking C executable cmTC_11d01
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11d01.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_57bec.dir/src.c.o -o cmTC_57bec
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fML8sJ'
+        /usr/bin/cc CMakeFiles/cmTC_11d01.dir/src.c.o -o cmTC_11d01
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-JlDnNn'
         
       exitCode: 0
   -
@@ -866,8 +866,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WALL"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-XgMVfY"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-XgMVfY"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kScSkX"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kScSkX"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -878,18 +878,18 @@ events:
       variable: "CXX_FLAG_WALL"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-XgMVfY'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kScSkX'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5f8d5/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_5f8d5.dir/build.make CMakeFiles/cmTC_5f8d5.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-XgMVfY'
-        Building CXX object CMakeFiles/cmTC_5f8d5.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WALL  -std=gnu++17 -fPIE   -Wall -o CMakeFiles/cmTC_5f8d5.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-XgMVfY/src.cxx
-        Linking CXX executable cmTC_5f8d5
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5f8d5.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7a7ce/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_7a7ce.dir/build.make CMakeFiles/cmTC_7a7ce.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kScSkX'
+        Building CXX object CMakeFiles/cmTC_7a7ce.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WALL  -std=gnu++17 -fPIE   -Wall -o CMakeFiles/cmTC_7a7ce.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kScSkX/src.cxx
+        Linking CXX executable cmTC_7a7ce
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a7ce.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++ CMakeFiles/cmTC_5f8d5.dir/src.cxx.o -o cmTC_5f8d5
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-XgMVfY'
+        /usr/bin/c++ CMakeFiles/cmTC_7a7ce.dir/src.cxx.o -o cmTC_7a7ce
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kScSkX'
         
       exitCode: 0
   -
@@ -904,8 +904,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WEXTRA"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-NF9qVG"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-NF9qVG"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-LgaYiH"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-LgaYiH"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -916,18 +916,18 @@ events:
       variable: "C_FLAG_WEXTRA"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-NF9qVG'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-LgaYiH'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_15082/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_15082.dir/build.make CMakeFiles/cmTC_15082.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-NF9qVG'
-        Building C object CMakeFiles/cmTC_15082.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WEXTRA  -Wall  -fPIE   -Wextra -o CMakeFiles/cmTC_15082.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-NF9qVG/src.c
-        Linking C executable cmTC_15082
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_15082.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c51f5/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_c51f5.dir/build.make CMakeFiles/cmTC_c51f5.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-LgaYiH'
+        Building C object CMakeFiles/cmTC_c51f5.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WEXTRA  -Wall  -fPIE   -Wextra -o CMakeFiles/cmTC_c51f5.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-LgaYiH/src.c
+        Linking C executable cmTC_c51f5
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c51f5.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall  CMakeFiles/cmTC_15082.dir/src.c.o -o cmTC_15082
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-NF9qVG'
+        /usr/bin/cc  -Wall  CMakeFiles/cmTC_c51f5.dir/src.c.o -o cmTC_c51f5
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-LgaYiH'
         
       exitCode: 0
   -
@@ -942,8 +942,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WEXTRA"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-rAQqgc"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-rAQqgc"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qBv49O"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qBv49O"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -954,18 +954,18 @@ events:
       variable: "CXX_FLAG_WEXTRA"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-rAQqgc'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qBv49O'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_45ab4/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_45ab4.dir/build.make CMakeFiles/cmTC_45ab4.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-rAQqgc'
-        Building CXX object CMakeFiles/cmTC_45ab4.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WEXTRA  -Wall  -std=gnu++17 -fPIE   -Wextra -o CMakeFiles/cmTC_45ab4.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-rAQqgc/src.cxx
-        Linking CXX executable cmTC_45ab4
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_45ab4.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_73b0b/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_73b0b.dir/build.make CMakeFiles/cmTC_73b0b.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qBv49O'
+        Building CXX object CMakeFiles/cmTC_73b0b.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WEXTRA  -Wall  -std=gnu++17 -fPIE   -Wextra -o CMakeFiles/cmTC_73b0b.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qBv49O/src.cxx
+        Linking CXX executable cmTC_73b0b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_73b0b.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++  -Wall  CMakeFiles/cmTC_45ab4.dir/src.cxx.o -o cmTC_45ab4
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-rAQqgc'
+        /usr/bin/c++  -Wall  CMakeFiles/cmTC_73b0b.dir/src.cxx.o -o cmTC_73b0b
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qBv49O'
         
       exitCode: 0
   -
@@ -980,8 +980,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WUNDEF"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DZVE3f"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DZVE3f"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-CXHJM0"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-CXHJM0"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -992,18 +992,18 @@ events:
       variable: "C_FLAG_WUNDEF"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DZVE3f'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-CXHJM0'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e3117/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_e3117.dir/build.make CMakeFiles/cmTC_e3117.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DZVE3f'
-        Building C object CMakeFiles/cmTC_e3117.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WUNDEF  -Wall -Wextra  -fPIE   -Wundef -o CMakeFiles/cmTC_e3117.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DZVE3f/src.c
-        Linking C executable cmTC_e3117
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e3117.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_11b26/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_11b26.dir/build.make CMakeFiles/cmTC_11b26.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-CXHJM0'
+        Building C object CMakeFiles/cmTC_11b26.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WUNDEF  -Wall -Wextra  -fPIE   -Wundef -o CMakeFiles/cmTC_11b26.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-CXHJM0/src.c
+        Linking C executable cmTC_11b26
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_11b26.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra  CMakeFiles/cmTC_e3117.dir/src.c.o -o cmTC_e3117
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DZVE3f'
+        /usr/bin/cc  -Wall -Wextra  CMakeFiles/cmTC_11b26.dir/src.c.o -o cmTC_11b26
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-CXHJM0'
         
       exitCode: 0
   -
@@ -1018,8 +1018,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WUNDEF"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qmoI84"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qmoI84"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yYdqk1"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yYdqk1"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall -Wextra"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1030,18 +1030,18 @@ events:
       variable: "CXX_FLAG_WUNDEF"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qmoI84'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yYdqk1'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_50966/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_50966.dir/build.make CMakeFiles/cmTC_50966.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qmoI84'
-        Building CXX object CMakeFiles/cmTC_50966.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WUNDEF  -Wall -Wextra  -std=gnu++17 -fPIE   -Wundef -o CMakeFiles/cmTC_50966.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qmoI84/src.cxx
-        Linking CXX executable cmTC_50966
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_50966.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2cc6c/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_2cc6c.dir/build.make CMakeFiles/cmTC_2cc6c.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yYdqk1'
+        Building CXX object CMakeFiles/cmTC_2cc6c.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WUNDEF  -Wall -Wextra  -std=gnu++17 -fPIE   -Wundef -o CMakeFiles/cmTC_2cc6c.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yYdqk1/src.cxx
+        Linking CXX executable cmTC_2cc6c
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2cc6c.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++  -Wall -Wextra  CMakeFiles/cmTC_50966.dir/src.cxx.o -o cmTC_50966
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qmoI84'
+        /usr/bin/c++  -Wall -Wextra  CMakeFiles/cmTC_2cc6c.dir/src.cxx.o -o cmTC_2cc6c
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-yYdqk1'
         
       exitCode: 0
   -
@@ -1056,8 +1056,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WSHADOW"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-7knA1v"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-7knA1v"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jkJFz5"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jkJFz5"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1068,18 +1068,18 @@ events:
       variable: "C_FLAG_WSHADOW"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-7knA1v'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jkJFz5'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_068bf/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_068bf.dir/build.make CMakeFiles/cmTC_068bf.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-7knA1v'
-        Building C object CMakeFiles/cmTC_068bf.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WSHADOW  -Wall -Wextra -Wundef  -fPIE   -Wshadow -o CMakeFiles/cmTC_068bf.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-7knA1v/src.c
-        Linking C executable cmTC_068bf
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_068bf.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9ff60/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9ff60.dir/build.make CMakeFiles/cmTC_9ff60.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jkJFz5'
+        Building C object CMakeFiles/cmTC_9ff60.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WSHADOW  -Wall -Wextra -Wundef  -fPIE   -Wshadow -o CMakeFiles/cmTC_9ff60.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jkJFz5/src.c
+        Linking C executable cmTC_9ff60
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9ff60.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra -Wundef  CMakeFiles/cmTC_068bf.dir/src.c.o -o cmTC_068bf
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-7knA1v'
+        /usr/bin/cc  -Wall -Wextra -Wundef  CMakeFiles/cmTC_9ff60.dir/src.c.o -o cmTC_9ff60
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jkJFz5'
         
       exitCode: 0
   -
@@ -1094,8 +1094,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WSHADOW"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-mry17P"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-mry17P"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-z4tnTm"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-z4tnTm"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall -Wextra -Wundef"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1106,18 +1106,18 @@ events:
       variable: "CXX_FLAG_WSHADOW"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-mry17P'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-z4tnTm'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_df74a/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_df74a.dir/build.make CMakeFiles/cmTC_df74a.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-mry17P'
-        Building CXX object CMakeFiles/cmTC_df74a.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WSHADOW  -Wall -Wextra -Wundef  -std=gnu++17 -fPIE   -Wshadow -o CMakeFiles/cmTC_df74a.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-mry17P/src.cxx
-        Linking CXX executable cmTC_df74a
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_df74a.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_22348/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_22348.dir/build.make CMakeFiles/cmTC_22348.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-z4tnTm'
+        Building CXX object CMakeFiles/cmTC_22348.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WSHADOW  -Wall -Wextra -Wundef  -std=gnu++17 -fPIE   -Wshadow -o CMakeFiles/cmTC_22348.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-z4tnTm/src.cxx
+        Linking CXX executable cmTC_22348
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_22348.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++  -Wall -Wextra -Wundef  CMakeFiles/cmTC_df74a.dir/src.cxx.o -o cmTC_df74a
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-mry17P'
+        /usr/bin/c++  -Wall -Wextra -Wundef  CMakeFiles/cmTC_22348.dir/src.cxx.o -o cmTC_22348
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-z4tnTm'
         
       exitCode: 0
   -
@@ -1132,8 +1132,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WCAST_ALIGN"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-UiwBKw"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-UiwBKw"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-k8Sm88"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-k8Sm88"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef -Wshadow"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1144,18 +1144,18 @@ events:
       variable: "C_FLAG_WCAST_ALIGN"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-UiwBKw'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-k8Sm88'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_60ae5/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_60ae5.dir/build.make CMakeFiles/cmTC_60ae5.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-UiwBKw'
-        Building C object CMakeFiles/cmTC_60ae5.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WCAST_ALIGN  -Wall -Wextra -Wundef -Wshadow  -fPIE   -Wcast-align -o CMakeFiles/cmTC_60ae5.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-UiwBKw/src.c
-        Linking C executable cmTC_60ae5
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_60ae5.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_711ff/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_711ff.dir/build.make CMakeFiles/cmTC_711ff.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-k8Sm88'
+        Building C object CMakeFiles/cmTC_711ff.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WCAST_ALIGN  -Wall -Wextra -Wundef -Wshadow  -fPIE   -Wcast-align -o CMakeFiles/cmTC_711ff.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-k8Sm88/src.c
+        Linking C executable cmTC_711ff
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_711ff.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow  CMakeFiles/cmTC_60ae5.dir/src.c.o -o cmTC_60ae5
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-UiwBKw'
+        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow  CMakeFiles/cmTC_711ff.dir/src.c.o -o cmTC_711ff
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-k8Sm88'
         
       exitCode: 0
   -
@@ -1170,8 +1170,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WCAST_ALIGN"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TcdNt8"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TcdNt8"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-4bREui"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-4bREui"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall -Wextra -Wundef -Wshadow"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1182,18 +1182,18 @@ events:
       variable: "CXX_FLAG_WCAST_ALIGN"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TcdNt8'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-4bREui'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2d29f/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_2d29f.dir/build.make CMakeFiles/cmTC_2d29f.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TcdNt8'
-        Building CXX object CMakeFiles/cmTC_2d29f.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WCAST_ALIGN  -Wall -Wextra -Wundef -Wshadow  -std=gnu++17 -fPIE   -Wcast-align -o CMakeFiles/cmTC_2d29f.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TcdNt8/src.cxx
-        Linking CXX executable cmTC_2d29f
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d29f.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2fb81/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_2fb81.dir/build.make CMakeFiles/cmTC_2fb81.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-4bREui'
+        Building CXX object CMakeFiles/cmTC_2fb81.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WCAST_ALIGN  -Wall -Wextra -Wundef -Wshadow  -std=gnu++17 -fPIE   -Wcast-align -o CMakeFiles/cmTC_2fb81.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-4bREui/src.cxx
+        Linking CXX executable cmTC_2fb81
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2fb81.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++  -Wall -Wextra -Wundef -Wshadow  CMakeFiles/cmTC_2d29f.dir/src.cxx.o -o cmTC_2d29f
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TcdNt8'
+        /usr/bin/c++  -Wall -Wextra -Wundef -Wshadow  CMakeFiles/cmTC_2fb81.dir/src.cxx.o -o cmTC_2fb81
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-4bREui'
         
       exitCode: 0
   -
@@ -1208,8 +1208,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WCAST_QUAL"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-3Hf77G"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-3Hf77G"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kW7yDY"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kW7yDY"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1220,18 +1220,18 @@ events:
       variable: "C_FLAG_WCAST_QUAL"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-3Hf77G'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kW7yDY'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c415d/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_c415d.dir/build.make CMakeFiles/cmTC_c415d.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-3Hf77G'
-        Building C object CMakeFiles/cmTC_c415d.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WCAST_QUAL  -Wall -Wextra -Wundef -Wshadow -Wcast-align  -fPIE   -Wcast-qual -o CMakeFiles/cmTC_c415d.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-3Hf77G/src.c
-        Linking C executable cmTC_c415d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c415d.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3ec12/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_3ec12.dir/build.make CMakeFiles/cmTC_3ec12.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kW7yDY'
+        Building C object CMakeFiles/cmTC_3ec12.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WCAST_QUAL  -Wall -Wextra -Wundef -Wshadow -Wcast-align  -fPIE   -Wcast-qual -o CMakeFiles/cmTC_3ec12.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kW7yDY/src.c
+        Linking C executable cmTC_3ec12
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3ec12.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align  CMakeFiles/cmTC_c415d.dir/src.c.o -o cmTC_c415d
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-3Hf77G'
+        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align  CMakeFiles/cmTC_3ec12.dir/src.c.o -o cmTC_3ec12
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-kW7yDY'
         
       exitCode: 0
   -
@@ -1246,8 +1246,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WCAST_QUAL"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-cNSola"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-cNSola"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-GIXVKg"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-GIXVKg"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1258,18 +1258,18 @@ events:
       variable: "CXX_FLAG_WCAST_QUAL"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-cNSola'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-GIXVKg'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6c572/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_6c572.dir/build.make CMakeFiles/cmTC_6c572.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-cNSola'
-        Building CXX object CMakeFiles/cmTC_6c572.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WCAST_QUAL  -Wall -Wextra -Wundef -Wshadow -Wcast-align  -std=gnu++17 -fPIE   -Wcast-qual -o CMakeFiles/cmTC_6c572.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-cNSola/src.cxx
-        Linking CXX executable cmTC_6c572
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6c572.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_821e6/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_821e6.dir/build.make CMakeFiles/cmTC_821e6.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-GIXVKg'
+        Building CXX object CMakeFiles/cmTC_821e6.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WCAST_QUAL  -Wall -Wextra -Wundef -Wshadow -Wcast-align  -std=gnu++17 -fPIE   -Wcast-qual -o CMakeFiles/cmTC_821e6.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-GIXVKg/src.cxx
+        Linking CXX executable cmTC_821e6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_821e6.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++  -Wall -Wextra -Wundef -Wshadow -Wcast-align  CMakeFiles/cmTC_6c572.dir/src.cxx.o -o cmTC_6c572
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-cNSola'
+        /usr/bin/c++  -Wall -Wextra -Wundef -Wshadow -Wcast-align  CMakeFiles/cmTC_821e6.dir/src.cxx.o -o cmTC_821e6
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-GIXVKg'
         
       exitCode: 0
   -
@@ -1284,8 +1284,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WSTRICT_PROTOTYPES"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DodkWI"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DodkWI"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyNkaw"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyNkaw"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1296,18 +1296,18 @@ events:
       variable: "C_FLAG_WSTRICT_PROTOTYPES"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DodkWI'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyNkaw'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_968ce/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_968ce.dir/build.make CMakeFiles/cmTC_968ce.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DodkWI'
-        Building C object CMakeFiles/cmTC_968ce.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WSTRICT_PROTOTYPES  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  -fPIE   -Wstrict-prototypes -o CMakeFiles/cmTC_968ce.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DodkWI/src.c
-        Linking C executable cmTC_968ce
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_968ce.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_133aa/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_133aa.dir/build.make CMakeFiles/cmTC_133aa.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyNkaw'
+        Building C object CMakeFiles/cmTC_133aa.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WSTRICT_PROTOTYPES  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  -fPIE   -Wstrict-prototypes -o CMakeFiles/cmTC_133aa.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyNkaw/src.c
+        Linking C executable cmTC_133aa
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_133aa.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  CMakeFiles/cmTC_968ce.dir/src.c.o -o cmTC_968ce
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-DodkWI'
+        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  CMakeFiles/cmTC_133aa.dir/src.c.o -o cmTC_133aa
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyNkaw'
         
       exitCode: 0
   -
@@ -1322,8 +1322,8 @@ events:
     checks:
       - "Performing Test LD_FLAG_WL_Z_NOEXECSTACK"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-HvdU75"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-HvdU75"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gaQJ2o"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gaQJ2o"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1334,18 +1334,18 @@ events:
       variable: "LD_FLAG_WL_Z_NOEXECSTACK"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-HvdU75'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gaQJ2o'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7e195/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_7e195.dir/build.make CMakeFiles/cmTC_7e195.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-HvdU75'
-        Building C object CMakeFiles/cmTC_7e195.dir/src.c.o
-        /usr/bin/cc -DLD_FLAG_WL_Z_NOEXECSTACK  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -fPIE -o CMakeFiles/cmTC_7e195.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-HvdU75/src.c
-        Linking C executable cmTC_7e195
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7e195.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7db48/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_7db48.dir/build.make CMakeFiles/cmTC_7db48.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gaQJ2o'
+        Building C object CMakeFiles/cmTC_7db48.dir/src.c.o
+        /usr/bin/cc -DLD_FLAG_WL_Z_NOEXECSTACK  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -fPIE -o CMakeFiles/cmTC_7db48.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gaQJ2o/src.c
+        Linking C executable cmTC_7db48
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7db48.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -Wl,-z,noexecstack CMakeFiles/cmTC_7e195.dir/src.c.o -o cmTC_7e195
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-HvdU75'
+        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -Wl,-z,noexecstack CMakeFiles/cmTC_7db48.dir/src.c.o -o cmTC_7db48
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gaQJ2o'
         
       exitCode: 0
   -
@@ -1360,8 +1360,8 @@ events:
     checks:
       - "Performing Test C_FLAG_QUNUSED_ARGUMENTS"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fkAQlJ"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fkAQlJ"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gHbmFS"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gHbmFS"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1372,17 +1372,17 @@ events:
       variable: "C_FLAG_QUNUSED_ARGUMENTS"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fkAQlJ'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gHbmFS'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_68265/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_68265.dir/build.make CMakeFiles/cmTC_68265.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fkAQlJ'
-        Building C object CMakeFiles/cmTC_68265.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_QUNUSED_ARGUMENTS  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -fPIE   -Qunused-arguments -o CMakeFiles/cmTC_68265.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fkAQlJ/src.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9dc33/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9dc33.dir/build.make CMakeFiles/cmTC_9dc33.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gHbmFS'
+        Building C object CMakeFiles/cmTC_9dc33.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_QUNUSED_ARGUMENTS  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -fPIE   -Qunused-arguments -o CMakeFiles/cmTC_9dc33.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gHbmFS/src.c
         cc: error: unrecognized command-line option '-Qunused-arguments'
-        gmake[1]: *** [CMakeFiles/cmTC_68265.dir/build.make:81: CMakeFiles/cmTC_68265.dir/src.c.o] Error 1
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fkAQlJ'
-        gmake: *** [Makefile:134: cmTC_68265/fast] Error 2
+        gmake[1]: *** [CMakeFiles/cmTC_9dc33.dir/build.make:81: CMakeFiles/cmTC_9dc33.dir/src.c.o] Error 1
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gHbmFS'
+        gmake: *** [Makefile:134: cmTC_9dc33/fast] Error 2
         
       exitCode: 2
   -
@@ -1397,8 +1397,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_QUNUSED_ARGUMENTS"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-B4Gjhg"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-B4Gjhg"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lGaSaR"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lGaSaR"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1409,17 +1409,17 @@ events:
       variable: "CXX_FLAG_QUNUSED_ARGUMENTS"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-B4Gjhg'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lGaSaR'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8d618/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_8d618.dir/build.make CMakeFiles/cmTC_8d618.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-B4Gjhg'
-        Building CXX object CMakeFiles/cmTC_8d618.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_QUNUSED_ARGUMENTS  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  -std=gnu++17 -fPIE   -Qunused-arguments -o CMakeFiles/cmTC_8d618.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-B4Gjhg/src.cxx
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ddc5d/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ddc5d.dir/build.make CMakeFiles/cmTC_ddc5d.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lGaSaR'
+        Building CXX object CMakeFiles/cmTC_ddc5d.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_QUNUSED_ARGUMENTS  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  -std=gnu++17 -fPIE   -Qunused-arguments -o CMakeFiles/cmTC_ddc5d.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lGaSaR/src.cxx
         c++: error: unrecognized command-line option '-Qunused-arguments'
-        gmake[1]: *** [CMakeFiles/cmTC_8d618.dir/build.make:81: CMakeFiles/cmTC_8d618.dir/src.cxx.o] Error 1
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-B4Gjhg'
-        gmake: *** [Makefile:134: cmTC_8d618/fast] Error 2
+        gmake[1]: *** [CMakeFiles/cmTC_ddc5d.dir/build.make:81: CMakeFiles/cmTC_ddc5d.dir/src.cxx.o] Error 1
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lGaSaR'
+        gmake: *** [Makefile:134: cmTC_ddc5d/fast] Error 2
         
       exitCode: 2
   -
@@ -1434,8 +1434,8 @@ events:
     checks:
       - "Performing Test C_FLAG_WA_NOEXECSTACK"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-oo91JA"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-oo91JA"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lsKrSs"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lsKrSs"
     cmakeVariables:
       CMAKE_C_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1446,18 +1446,18 @@ events:
       variable: "C_FLAG_WA_NOEXECSTACK"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-oo91JA'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lsKrSs'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ddb1d/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_ddb1d.dir/build.make CMakeFiles/cmTC_ddb1d.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-oo91JA'
-        Building C object CMakeFiles/cmTC_ddb1d.dir/src.c.o
-        /usr/bin/cc -DC_FLAG_WA_NOEXECSTACK  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -fPIE   -Wa,--noexecstack -o CMakeFiles/cmTC_ddb1d.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-oo91JA/src.c
-        Linking C executable cmTC_ddb1d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ddb1d.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4a03e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4a03e.dir/build.make CMakeFiles/cmTC_4a03e.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lsKrSs'
+        Building C object CMakeFiles/cmTC_4a03e.dir/src.c.o
+        /usr/bin/cc -DC_FLAG_WA_NOEXECSTACK  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes  -fPIE   -Wa,--noexecstack -o CMakeFiles/cmTC_4a03e.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lsKrSs/src.c
+        Linking C executable cmTC_4a03e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4a03e.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes   -Wl,-z,noexecstack  CMakeFiles/cmTC_ddb1d.dir/src.c.o -o cmTC_ddb1d
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-oo91JA'
+        /usr/bin/cc  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual -Wstrict-prototypes   -Wl,-z,noexecstack  CMakeFiles/cmTC_4a03e.dir/src.c.o -o cmTC_4a03e
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-lsKrSs'
         
       exitCode: 0
   -
@@ -1472,8 +1472,8 @@ events:
     checks:
       - "Performing Test CXX_FLAG_WA_NOEXECSTACK"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okFyJi"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okFyJi"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gGHnIg"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gGHnIg"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1484,18 +1484,18 @@ events:
       variable: "CXX_FLAG_WA_NOEXECSTACK"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okFyJi'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gGHnIg'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_22e59/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_22e59.dir/build.make CMakeFiles/cmTC_22e59.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okFyJi'
-        Building CXX object CMakeFiles/cmTC_22e59.dir/src.cxx.o
-        /usr/bin/c++ -DCXX_FLAG_WA_NOEXECSTACK  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  -std=gnu++17 -fPIE   -Wa,--noexecstack -o CMakeFiles/cmTC_22e59.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okFyJi/src.cxx
-        Linking CXX executable cmTC_22e59
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_22e59.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_70242/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_70242.dir/build.make CMakeFiles/cmTC_70242.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gGHnIg'
+        Building CXX object CMakeFiles/cmTC_70242.dir/src.cxx.o
+        /usr/bin/c++ -DCXX_FLAG_WA_NOEXECSTACK  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual  -std=gnu++17 -fPIE   -Wa,--noexecstack -o CMakeFiles/cmTC_70242.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gGHnIg/src.cxx
+        Linking CXX executable cmTC_70242
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_70242.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual   -Wl,-z,noexecstack  CMakeFiles/cmTC_22e59.dir/src.cxx.o -o cmTC_22e59
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-okFyJi'
+        /usr/bin/c++  -Wall -Wextra -Wundef -Wshadow -Wcast-align -Wcast-qual   -Wl,-z,noexecstack  CMakeFiles/cmTC_70242.dir/src.cxx.o -o cmTC_70242
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-gGHnIg'
         
       exitCode: 0
   -
@@ -1505,8 +1505,8 @@ events:
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/cmake/CheckCXXIntrinsicsHeader.cmake:26 (check_include_file_cxx)"
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/CMakeLists.txt:279 (include)"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-OCT5Q6"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-OCT5Q6"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-G4zR2c"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-G4zR2c"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1517,18 +1517,18 @@ events:
       variable: "SEAL_INTRIN_HEADER_FOUND"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-OCT5Q6'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-G4zR2c'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d50f9/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_d50f9.dir/build.make CMakeFiles/cmTC_d50f9.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-OCT5Q6'
-        Building CXX object CMakeFiles/cmTC_d50f9.dir/CheckIncludeFile.cxx.o
-        /usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_d50f9.dir/CheckIncludeFile.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-OCT5Q6/CheckIncludeFile.cxx
-        Linking CXX executable cmTC_d50f9
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d50f9.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b4bed/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b4bed.dir/build.make CMakeFiles/cmTC_b4bed.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-G4zR2c'
+        Building CXX object CMakeFiles/cmTC_b4bed.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++   -std=gnu++17 -fPIE -o CMakeFiles/cmTC_b4bed.dir/CheckIncludeFile.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-G4zR2c/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_b4bed
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b4bed.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++ CMakeFiles/cmTC_d50f9.dir/CheckIncludeFile.cxx.o -o cmTC_d50f9
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-OCT5Q6'
+        /usr/bin/c++ CMakeFiles/cmTC_b4bed.dir/CheckIncludeFile.cxx.o -o cmTC_b4bed
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-G4zR2c'
         
       exitCode: 0
   -
@@ -1539,8 +1539,8 @@ events:
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/cmake/CheckCXXIntrinsicsSpecific.cmake:38 (check_type_size)"
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/CMakeLists.txt:288 (include)"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jVdwtJ"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jVdwtJ"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Z2MqEX"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Z2MqEX"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1551,18 +1551,18 @@ events:
       variable: "HAVE_INT128"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jVdwtJ'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Z2MqEX'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_825fa/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_825fa.dir/build.make CMakeFiles/cmTC_825fa.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jVdwtJ'
-        Building CXX object CMakeFiles/cmTC_825fa.dir/INT128.cpp.o
-        /usr/bin/c++   -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_825fa.dir/INT128.cpp.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jVdwtJ/INT128.cpp
-        Linking CXX executable cmTC_825fa
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_825fa.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fa562/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_fa562.dir/build.make CMakeFiles/cmTC_fa562.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Z2MqEX'
+        Building CXX object CMakeFiles/cmTC_fa562.dir/INT128.cpp.o
+        /usr/bin/c++   -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_fa562.dir/INT128.cpp.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Z2MqEX/INT128.cpp
+        Linking CXX executable cmTC_fa562
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa562.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_825fa.dir/INT128.cpp.o -o cmTC_825fa
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-jVdwtJ'
+        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_fa562.dir/INT128.cpp.o -o cmTC_fa562
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Z2MqEX'
         
       exitCode: 0
   -
@@ -1573,8 +1573,8 @@ events:
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/cmake/CheckCXXIntrinsicsSpecific.cmake:46 (check_cxx_source_runs)"
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/CMakeLists.txt:288 (include)"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-eVafTH"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-eVafTH"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Kcz2XU"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Kcz2XU"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1585,18 +1585,18 @@ events:
       variable: "SEAL___BUILTIN_CLZLL_FOUND_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-eVafTH'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Kcz2XU'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_07d5f/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_07d5f.dir/build.make CMakeFiles/cmTC_07d5f.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-eVafTH'
-        Building CXX object CMakeFiles/cmTC_07d5f.dir/src.cxx.o
-        /usr/bin/c++ -DSEAL___BUILTIN_CLZLL_FOUND  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_07d5f.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-eVafTH/src.cxx
-        Linking CXX executable cmTC_07d5f
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_07d5f.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_520aa/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_520aa.dir/build.make CMakeFiles/cmTC_520aa.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Kcz2XU'
+        Building CXX object CMakeFiles/cmTC_520aa.dir/src.cxx.o
+        /usr/bin/c++ -DSEAL___BUILTIN_CLZLL_FOUND  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_520aa.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Kcz2XU/src.cxx
+        Linking CXX executable cmTC_520aa
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_520aa.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_07d5f.dir/src.cxx.o -o cmTC_07d5f
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-eVafTH'
+        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_520aa.dir/src.cxx.o -o cmTC_520aa
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-Kcz2XU'
         
       exitCode: 0
     runResult:
@@ -1613,8 +1613,8 @@ events:
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/cmake/CheckCXXIntrinsicsSpecific.cmake:56 (check_cxx_source_runs)"
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/CMakeLists.txt:288 (include)"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-YNO6T7"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-YNO6T7"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-e6mZlR"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-e6mZlR"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1625,18 +1625,18 @@ events:
       variable: "SEAL__ADDCARRY_U64_FOUND_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-YNO6T7'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-e6mZlR'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_db027/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_db027.dir/build.make CMakeFiles/cmTC_db027.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-YNO6T7'
-        Building CXX object CMakeFiles/cmTC_db027.dir/src.cxx.o
-        /usr/bin/c++ -DSEAL__ADDCARRY_U64_FOUND  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_db027.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-YNO6T7/src.cxx
-        Linking CXX executable cmTC_db027
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_db027.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d53a4/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_d53a4.dir/build.make CMakeFiles/cmTC_d53a4.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-e6mZlR'
+        Building CXX object CMakeFiles/cmTC_d53a4.dir/src.cxx.o
+        /usr/bin/c++ -DSEAL__ADDCARRY_U64_FOUND  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_d53a4.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-e6mZlR/src.cxx
+        Linking CXX executable cmTC_d53a4
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d53a4.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_db027.dir/src.cxx.o -o cmTC_db027
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-YNO6T7'
+        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_d53a4.dir/src.cxx.o -o cmTC_d53a4
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-e6mZlR'
         
       exitCode: 0
     runResult:
@@ -1653,8 +1653,8 @@ events:
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/cmake/CheckCXXIntrinsicsSpecific.cmake:67 (check_cxx_source_runs)"
       - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/CMakeLists.txt:288 (include)"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VYOI9S"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VYOI9S"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TkcE6V"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TkcE6V"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1665,18 +1665,18 @@ events:
       variable: "SEAL__SUBBORROW_U64_FOUND_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VYOI9S'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TkcE6V'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2c376/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_2c376.dir/build.make CMakeFiles/cmTC_2c376.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VYOI9S'
-        Building CXX object CMakeFiles/cmTC_2c376.dir/src.cxx.o
-        /usr/bin/c++ -DSEAL__SUBBORROW_U64_FOUND  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_2c376.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VYOI9S/src.cxx
-        Linking CXX executable cmTC_2c376
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2c376.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_c036d/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_c036d.dir/build.make CMakeFiles/cmTC_c036d.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TkcE6V'
+        Building CXX object CMakeFiles/cmTC_c036d.dir/src.cxx.o
+        /usr/bin/c++ -DSEAL__SUBBORROW_U64_FOUND  -O0 -std=c++17 -std=gnu++17 -fPIE -o CMakeFiles/cmTC_c036d.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TkcE6V/src.cxx
+        Linking CXX executable cmTC_c036d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c036d.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_2c376.dir/src.cxx.o -o cmTC_2c376
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VYOI9S'
+        /usr/bin/c++   -O0 -std=c++17 CMakeFiles/cmTC_c036d.dir/src.cxx.o -o cmTC_c036d
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-TkcE6V'
         
       exitCode: 0
     runResult:
@@ -1695,8 +1695,8 @@ events:
     checks:
       - "Performing Test SEAL_MEMSET_S_FOUND"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1707,21 +1707,21 @@ events:
       variable: "SEAL_MEMSET_S_FOUND_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_15bc2/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_15bc2.dir/build.make CMakeFiles/cmTC_15bc2.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0'
-        Building CXX object CMakeFiles/cmTC_15bc2.dir/src.cxx.o
-        /usr/bin/c++ -DSEAL_MEMSET_S_FOUND  -std=gnu++17 -fPIE -o CMakeFiles/cmTC_15bc2.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0/src.cxx
-        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0/src.cxx: In function ‘int main()’:
-        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0/src.cxx:7:17: error: ‘memset_s’ was not declared in this scope; did you mean ‘memset’?
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_909cc/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_909cc.dir/build.make CMakeFiles/cmTC_909cc.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt'
+        Building CXX object CMakeFiles/cmTC_909cc.dir/src.cxx.o
+        /usr/bin/c++ -DSEAL_MEMSET_S_FOUND  -std=gnu++17 -fPIE -o CMakeFiles/cmTC_909cc.dir/src.cxx.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt/src.cxx
+        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt/src.cxx: In function ‘int main()’:
+        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt/src.cxx:7:17: error: ‘memset_s’ was not declared in this scope; did you mean ‘memset’?
             7 |         int r = memset_s(str, sizeof(str), 'a', 5);
               |                 ^~~~~~~~
               |                 memset
-        gmake[1]: *** [CMakeFiles/cmTC_15bc2.dir/build.make:81: CMakeFiles/cmTC_15bc2.dir/src.cxx.o] Error 1
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-VrePe0'
-        gmake: *** [Makefile:134: cmTC_15bc2/fast] Error 2
+        gmake[1]: *** [CMakeFiles/cmTC_909cc.dir/build.make:81: CMakeFiles/cmTC_909cc.dir/src.cxx.o] Error 1
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-9tQUGt'
+        gmake: *** [Makefile:134: cmTC_909cc/fast] Error 2
         
       exitCode: 2
     runResult:
@@ -1737,8 +1737,8 @@ events:
     checks:
       - "Looking for explicit_bzero"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fqCHQM"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fqCHQM"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-uKV9Vi"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-uKV9Vi"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1749,18 +1749,18 @@ events:
       variable: "SEAL_EXPLICIT_BZERO_FOUND"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fqCHQM'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-uKV9Vi'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cdb0e/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_cdb0e.dir/build.make CMakeFiles/cmTC_cdb0e.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fqCHQM'
-        Building C object CMakeFiles/cmTC_cdb0e.dir/CheckSymbolExists.c.o
-        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_cdb0e.dir/CheckSymbolExists.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fqCHQM/CheckSymbolExists.c
-        Linking C executable cmTC_cdb0e
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cdb0e.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_99437/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_99437.dir/build.make CMakeFiles/cmTC_99437.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-uKV9Vi'
+        Building C object CMakeFiles/cmTC_99437.dir/CheckSymbolExists.c.o
+        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_99437.dir/CheckSymbolExists.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-uKV9Vi/CheckSymbolExists.c
+        Linking C executable cmTC_99437
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_99437.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_cdb0e.dir/CheckSymbolExists.c.o -o cmTC_cdb0e
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-fqCHQM'
+        /usr/bin/cc CMakeFiles/cmTC_99437.dir/CheckSymbolExists.c.o -o cmTC_99437
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-uKV9Vi'
         
       exitCode: 0
   -
@@ -1773,8 +1773,8 @@ events:
     checks:
       - "Looking for explicit_memset"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1785,21 +1785,21 @@ events:
       variable: "SEAL_EXPLICIT_MEMSET_FOUND"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a4b24/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_a4b24.dir/build.make CMakeFiles/cmTC_a4b24.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp'
-        Building C object CMakeFiles/cmTC_a4b24.dir/CheckSymbolExists.c.o
-        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_a4b24.dir/CheckSymbolExists.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp/CheckSymbolExists.c
-        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp/CheckSymbolExists.c: In function ‘main’:
-        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp/CheckSymbolExists.c:8:19: error: ‘explicit_memset’ undeclared (first use in this function)
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_710d4/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_710d4.dir/build.make CMakeFiles/cmTC_710d4.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe'
+        Building C object CMakeFiles/cmTC_710d4.dir/CheckSymbolExists.c.o
+        /usr/bin/cc   -fPIE -o CMakeFiles/cmTC_710d4.dir/CheckSymbolExists.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe/CheckSymbolExists.c
+        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe/CheckSymbolExists.c: In function ‘main’:
+        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe/CheckSymbolExists.c:8:19: error: ‘explicit_memset’ undeclared (first use in this function)
             8 |   return ((int*)(&explicit_memset))[argc];
               |                   ^~~~~~~~~~~~~~~
-        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
-        gmake[1]: *** [CMakeFiles/cmTC_a4b24.dir/build.make:81: CMakeFiles/cmTC_a4b24.dir/CheckSymbolExists.c.o] Error 1
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ichXcp'
-        gmake: *** [Makefile:134: cmTC_a4b24/fast] Error 2
+        /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+        gmake[1]: *** [CMakeFiles/cmTC_710d4.dir/build.make:81: CMakeFiles/cmTC_710d4.dir/CheckSymbolExists.c.o] Error 1
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-qyAjMe'
+        gmake: *** [Makefile:134: cmTC_710d4/fast] Error 2
         
       exitCode: 2
   -
@@ -1814,8 +1814,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-sT8JPZ"
-      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-sT8JPZ"
+      source: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ISYFsm"
+      binary: "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ISYFsm"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1826,19 +1826,19 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-sT8JPZ'
+        Change Dir: '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ISYFsm'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_79d81/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_79d81.dir/build.make CMakeFiles/cmTC_79d81.dir/build
-        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-sT8JPZ'
-        Building C object CMakeFiles/cmTC_79d81.dir/src.c.o
-        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -fPIE -o CMakeFiles/cmTC_79d81.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-sT8JPZ/src.c
-        Linking C executable cmTC_79d81
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_79d81.dir/link.txt --verbose=1
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ecd87/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ecd87.dir/build.make CMakeFiles/cmTC_ecd87.dir/build
+        gmake[1]: Entering directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ISYFsm'
+        Building C object CMakeFiles/cmTC_ecd87.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -fPIE -o CMakeFiles/cmTC_ecd87.dir/src.c.o -c /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ISYFsm/src.c
+        Linking C executable cmTC_ecd87
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ecd87.dir/link.txt --verbose=1
         /usr/bin/ld: error in /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o(.sframe); no .sframe will be created
         /usr/bin/ld: error in /usr/lib/x86_64-linux-gnu/libc_nonshared.a(pthread_atfork.oS)(.sframe); no .sframe will be created
-        /usr/bin/cc CMakeFiles/cmTC_79d81.dir/src.c.o -o cmTC_79d81
-        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-sT8JPZ'
+        /usr/bin/cc CMakeFiles/cmTC_ecd87.dir/src.c.o -o cmTC_ecd87
+        gmake[1]: Leaving directory '/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/CMakeFiles/CMakeScratch/TryCompile-ISYFsm'
         
       exitCode: 0
 ...
