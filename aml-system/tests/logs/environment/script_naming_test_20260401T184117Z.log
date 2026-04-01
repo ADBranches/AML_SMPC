@@ -1,0 +1,7 @@
+{
+  "test": "script_naming_test",
+  "official_doc_exists": true,
+  "missing_active_scripts": [],
+  "official_doc_mentions_active_scripts": true,
+  "passed": true
+}

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+source "$ROOT_DIR/scripts/dev/load-env.sh"
+
+export ENCRYPTION_SERVICE_BASE_URL="${ENCRYPTION_SERVICE_BASE_URL:-http://127.0.0.1:8081}"
+export HE_GATEWAY_BASE_URL="${HE_GATEWAY_BASE_URL:-http://127.0.0.1:8082}"
+export SMPC_BASE_URL="${SMPC_BASE_URL:-http://127.0.0.1:8083}"
+export ZK_PROVER_BASE_URL="${ZK_PROVER_BASE_URL:-http://127.0.0.1:8084}"
+export REGULATOR_API_BASE_URL="${REGULATOR_API_BASE_URL:-http://127.0.0.1:8085}"
+
+export DEMO_TX_ID="${DEMO_TX_ID:-TX-E2E-001}"
+export PERF_PROOF_TX_ID="${PERF_PROOF_TX_ID:-$DEMO_TX_ID}"
+export COMPLIANCE_TX_ID="${COMPLIANCE_TX_ID:-$DEMO_TX_ID}"
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+  echo "[info] demo environment loaded"
+  echo "DATABASE_URL=$DATABASE_URL"
+  echo "ENCRYPTION_SERVICE_BASE_URL=$ENCRYPTION_SERVICE_BASE_URL"
+  echo "HE_GATEWAY_BASE_URL=$HE_GATEWAY_BASE_URL"
+  echo "SMPC_BASE_URL=$SMPC_BASE_URL"
+  echo "ZK_PROVER_BASE_URL=$ZK_PROVER_BASE_URL"
+  echo "REGULATOR_API_BASE_URL=$REGULATOR_API_BASE_URL"
+  echo "DEMO_TX_ID=$DEMO_TX_ID"
+  echo "PERF_PROOF_TX_ID=$PERF_PROOF_TX_ID"
+  echo "COMPLIANCE_TX_ID=$COMPLIANCE_TX_ID"
+fi

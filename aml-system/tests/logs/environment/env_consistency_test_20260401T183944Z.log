@@ -1,0 +1,6 @@
+{
+  "test": "env_consistency_test",
+  "exit_status": 0,
+  "passed": true,
+  "output": "[ok] environment consistency checks passed"
+}
