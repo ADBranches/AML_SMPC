@@ -1,0 +1,213 @@
+{
+  "record": {
+    "proof_id": "9ed0b8bc-4cae-4391-8cd9-177d68f06f5e",
+    "tx_id": "TX-E2E-001",
+    "statuses": {
+      "list": 200,
+      "get": 200,
+      "verify": 200,
+      "audit": 200
+    },
+    "passed": true
+  },
+  "list_body": [
+    {
+      "id": "6b136445-a1fa-49b5-9781-49a62f88f286",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.164582Z"
+    },
+    {
+      "id": "3b2ce2dc-0327-4c0c-8572-ee175ffc3d08",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.167913Z"
+    },
+    {
+      "id": "7b42c889-e160-4497-bf37-b347983a5d1d",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.171522Z"
+    },
+    {
+      "id": "181178d8-efab-4643-99a9-337085e111af",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.541116Z"
+    },
+    {
+      "id": "232d7791-556f-4f58-ad2b-6a24cc031cbf",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.543752Z"
+    },
+    {
+      "id": "b08778d5-e166-4d0c-9a34-3fb647475f6c",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.546307Z"
+    },
+    {
+      "id": "a12f8fbf-9822-48d3-ad62-d608c083b3f6",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.724891Z"
+    },
+    {
+      "id": "34946a1e-682c-40ca-8b39-db3ee7f4a543",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.727499Z"
+    },
+    {
+      "id": "1c7af4d8-9738-4103-8f02-286e5613a819",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.730002Z"
+    },
+    {
+      "id": "29978f6a-f976-4a4b-a4e9-7dfbb845c5c9",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "deadbeef",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.905264Z"
+    },
+    {
+      "id": "06cbb8a5-ad74-4979-bc31-dea2319800db",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.907831Z"
+    },
+    {
+      "id": "648b42d2-9ece-4a32-83c1-3e83a295ecd2",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:28.910344Z"
+    },
+    {
+      "id": "9ed0b8bc-4cae-4391-8cd9-177d68f06f5e",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:29.270849Z"
+    },
+    {
+      "id": "0e103ef3-005c-4213-b475-4dc23b57b0aa",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:29.273451Z"
+    },
+    {
+      "id": "d69c4afb-844c-45c4-9458-54a0d2ec4f56",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "public_signal": true,
+      "verification_status": "verified",
+      "created_at": "2026-04-01T12:42:29.277604Z"
+    }
+  ],
+  "get_body": {
+    "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+    "created_at": "2026-04-01T12:42:29.270849Z",
+    "id": "9ed0b8bc-4cae-4391-8cd9-177d68f06f5e",
+    "proof_blob": {
+      "cdd_check_executed": true,
+      "receiver_screening_performed": true,
+      "sender_screening_performed": true,
+      "tx_id": "TX-E2E-001"
+    },
+    "public_signal": true,
+    "rule_id": "FATF_REC10",
+    "tx_id": "TX-E2E-001",
+    "verification_status": "verified"
+  },
+  "verify_body": {
+    "proof_id": "9ed0b8bc-4cae-4391-8cd9-177d68f06f5e",
+    "tx_id": "TX-E2E-001",
+    "rule_id": "FATF_REC10",
+    "verified": true,
+    "reason": "verification passed"
+  },
+  "audit_body": [
+    {
+      "id": "6f4e65d6-0cc5-46d9-b024-a88300f5314a",
+      "tx_id": "TX-E2E-001",
+      "event_type": "transaction_submitted_and_pseudonymized",
+      "event_status": "success",
+      "event_ref": null,
+      "details": {
+        "receiver_entity_id": 2002,
+        "receiver_pseudo": "psd_94a801cf91b7ff02c1148b35",
+        "sender_entity_id": 2001,
+        "sender_pseudo": "psd_027128ca17b6918887edbd16",
+        "timestamp": "2026-03-31T00:00:00Z"
+      },
+      "created_at": "2026-04-01T12:42:27.965716Z"
+    },
+    {
+      "id": "899fa699-634e-409e-a4df-6cae03ab1fb4",
+      "tx_id": "TX-E2E-001",
+      "event_type": "sender_screening_completed",
+      "event_status": "no_match",
+      "event_ref": "2001",
+      "details": {
+        "entity_id": 2001,
+        "screening_result": "no_match"
+      },
+      "created_at": "2026-04-01T12:42:27.968215Z"
+    },
+    {
+      "id": "3714ba68-c042-419e-81cb-b6b09579acf7",
+      "tx_id": "TX-E2E-001",
+      "event_type": "receiver_screening_completed",
+      "event_status": "no_match",
+      "event_ref": "2002",
+      "details": {
+        "entity_id": 2002,
+        "screening_result": "no_match"
+      },
+      "created_at": "2026-04-01T12:42:27.969307Z"
+    }
+  ]
+}

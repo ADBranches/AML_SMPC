@@ -1,0 +1,12 @@
+{
+  "proof_id": "29978f6a-f976-4a4b-a4e9-7dfbb845c5c9",
+  "status": 200,
+  "verification": {
+    "proof_id": "29978f6a-f976-4a4b-a4e9-7dfbb845c5c9",
+    "tx_id": "TX-E2E-001",
+    "rule_id": "FATF_REC10",
+    "verified": false,
+    "reason": "claim hash mismatch"
+  },
+  "passed": true
+}

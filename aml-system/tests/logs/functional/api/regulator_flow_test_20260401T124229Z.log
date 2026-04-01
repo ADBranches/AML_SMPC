@@ -1,0 +1,11 @@
+{
+  "proof_id": "9ed0b8bc-4cae-4391-8cd9-177d68f06f5e",
+  "tx_id": "TX-E2E-001",
+  "statuses": {
+    "list": 200,
+    "get": 200,
+    "verify": 200,
+    "audit": 200
+  },
+  "passed": true
+}

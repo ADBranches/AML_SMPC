@@ -1,0 +1,29 @@
+{
+  "results": [
+    {
+      "name": "missing_amount",
+      "path": "/he/encrypt",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: missing field `amount` at line 1 column 2"
+    },
+    {
+      "name": "invalid_numeric",
+      "path": "/he/encrypt",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: amount: invalid type: string \"not-a-number\", expected f64 at line 1 column 25"
+    },
+    {
+      "name": "malformed_ciphertext",
+      "path": "/he/decrypt-test",
+      "status": 500,
+      "expected_status": 500,
+      "passed": true,
+      "body": "{\"error\":\"internal_server_error\",\"message\":\"Invalid hex input\"}"
+    }
+  ],
+  "passed": true
+}

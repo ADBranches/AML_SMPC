@@ -1,0 +1,12 @@
+{
+  "proof_id": "a12f8fbf-9822-48d3-ad62-d608c083b3f6",
+  "status": 200,
+  "verification": {
+    "proof_id": "a12f8fbf-9822-48d3-ad62-d608c083b3f6",
+    "tx_id": "TX-E2E-001",
+    "rule_id": "FATF_REC10",
+    "verified": true,
+    "reason": "verification passed"
+  },
+  "passed": true
+}

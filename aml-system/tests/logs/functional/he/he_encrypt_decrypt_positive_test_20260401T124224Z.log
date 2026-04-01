@@ -1,0 +1,15 @@
+{
+  "test": "he_encrypt_decrypt_positive_test",
+  "statuses": [
+    200,
+    200,
+    200,
+    200
+  ],
+  "lhs_amount": 1250.5,
+  "rhs_amount": 249.5,
+  "observed_sum": 1499.9999999983152,
+  "expected_sum": 1500.0,
+  "tolerance": 0.0001,
+  "passed": true
+}

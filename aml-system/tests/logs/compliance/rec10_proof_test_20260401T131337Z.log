@@ -1,0 +1,19 @@
+{
+  "rule_id": "FATF_REC10",
+  "match_count": 1,
+  "proof": {
+    "id": "c9474d64-02e9-44ad-abe6-b36ef57b2606",
+    "tx_id": "TX-E2E-001",
+    "rule_id": "FATF_REC10",
+    "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+    "proof_blob": {
+      "cdd_check_executed": true,
+      "receiver_screening_performed": true,
+      "sender_screening_performed": true,
+      "tx_id": "TX-E2E-001"
+    },
+    "public_signal": true,
+    "verification_status": "verified"
+  },
+  "passed": true
+}

@@ -1,0 +1,7 @@
+{
+  "rule_id": "FATF_REC11",
+  "audit_count": 3,
+  "proof_count": 3453,
+  "passed": true,
+  "assertion": "Audit trail exists and is linked to proof context"
+}

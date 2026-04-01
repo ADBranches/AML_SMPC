@@ -1,0 +1,7 @@
+{
+  "rule_id": "FATF_REC16",
+  "metadata_count": 1,
+  "proof_count": 3453,
+  "passed": true,
+  "assertion": "Travel-rule metadata exists and corresponding proof is present"
+}

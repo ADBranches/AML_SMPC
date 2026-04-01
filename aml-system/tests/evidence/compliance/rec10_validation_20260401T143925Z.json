@@ -1,0 +1,6 @@
+{
+  "rule_id": "FATF_REC10",
+  "proof_count": 3453,
+  "passed": true,
+  "assertion": "CDD-oriented proof exists for valid transaction path"
+}

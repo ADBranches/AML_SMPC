@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "body": {
+    "tx_id": "TX-SMPC-002",
+    "entity_id": 1999,
+    "screening_result": "no_match"
+  },
+  "expected_result": "no_match",
+  "passed": true
+}

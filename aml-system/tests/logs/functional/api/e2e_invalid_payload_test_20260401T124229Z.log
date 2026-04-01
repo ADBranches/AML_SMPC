@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "name": "missing_sender_id",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: missing field `sender_id` at line 1 column 238"
+    },
+    {
+      "name": "missing_travel_rule_fields",
+      "status": 500,
+      "expected_status": 201,
+      "passed": false,
+      "body": "{\"error\":\"internal_server_error\",\"message\":\"error returned from database: duplicate key value violates unique constraint \\\"transactions_tx_id_key\\\"\"}"
+    }
+  ],
+  "passed": false
+}

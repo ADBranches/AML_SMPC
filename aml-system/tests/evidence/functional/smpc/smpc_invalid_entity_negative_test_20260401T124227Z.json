@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "name": "missing_entity_id",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: missing field `entity_id` at line 1 column 24"
+    },
+    {
+      "name": "wrong_type_entity_id",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: entity_id: invalid type: string \"bad\", expected u64 at line 1 column 43"
+    },
+    {
+      "name": "missing_tx_id",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: missing field `tx_id` at line 1 column 19"
+    }
+  ],
+  "passed": true
+}

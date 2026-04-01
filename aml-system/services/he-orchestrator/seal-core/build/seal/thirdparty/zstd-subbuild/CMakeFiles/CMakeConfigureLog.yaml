@@ -20,7 +20,7 @@ events:
     names:
       - "uname"
     candidate_directories:
-      - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/env/bin/"
+      - "/home/kamb/Downloads/projects/AML_SMPC/aml-system/env/bin/"
       - "/home/kamb/.local/bin/"
       - "/usr/local/sbin/"
       - "/usr/sbin/"
@@ -31,7 +31,7 @@ events:
       - "/usr/local/games/"
       - "/usr/games/"
     searched_directories:
-      - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/env/bin/uname"
+      - "/home/kamb/Downloads/projects/AML_SMPC/aml-system/env/bin/uname"
       - "/home/kamb/.local/bin/uname"
       - "/usr/local/sbin/uname"
       - "/usr/sbin/uname"
@@ -40,7 +40,7 @@ events:
     found: "/usr/bin/uname"
     search_context:
       ENV{PATH}:
-        - "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/env/bin"
+        - "/home/kamb/Downloads/projects/AML_SMPC/aml-system/env/bin"
         - "/home/kamb/.local/bin"
         - "/usr/local/sbin"
         - "/usr/sbin"

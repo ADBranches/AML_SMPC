@@ -1,0 +1,65 @@
+{
+  "record": {
+    "passed": true,
+    "tx_id": "TX-E2E-001",
+    "submit_status": 201,
+    "proofs_status": 200,
+    "proof_count": 3,
+    "db_transaction_count": 1,
+    "error": null,
+    "error_type": null,
+    "traceback": null
+  },
+  "submit_body": {
+    "tx_id": "TX-E2E-001",
+    "sender_pseudo": "psd_027128ca17b6918887edbd16",
+    "receiver_pseudo": "psd_94a801cf91b7ff02c1148b35",
+    "sender_screening_result": "no_match",
+    "receiver_screening_result": "no_match",
+    "status": "screened_clear",
+    "audit_event_id": "3cec8484-3e5c-4307-abc7-7fecb37ca1cd"
+  },
+  "proofs_body": [
+    {
+      "id": "bef76d50-2147-4805-bca5-e6c8716b0ddc",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+      "proof_blob": {
+        "cdd_check_executed": true,
+        "receiver_screening_performed": true,
+        "sender_screening_performed": true,
+        "tx_id": "TX-E2E-001"
+      },
+      "public_signal": true,
+      "verification_status": "verified"
+    },
+    {
+      "id": "288c48a1-c5f4-4911-b7c8-b0ec20c06977",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "proof_blob": {
+        "audit_event_count": 3,
+        "transaction_exists": true,
+        "tx_id": "TX-E2E-001"
+      },
+      "public_signal": true,
+      "verification_status": "verified"
+    },
+    {
+      "id": "4e7b389f-cae0-4f41-af7c-5d7329897707",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "proof_blob": {
+        "beneficiary_institution_present": true,
+        "originator_institution_present": true,
+        "payment_metadata_present": true,
+        "tx_id": "TX-E2E-001"
+      },
+      "public_signal": true,
+      "verification_status": "verified"
+    }
+  ]
+}

@@ -1,2 +1,4 @@
+import os
+
 def generate_proofs_request():
-    return {"tx_id": "TX-E2E-001"}
+    return {"tx_id": os.getenv("PERF_PROOF_TX_ID", "TX-E2E-001")}

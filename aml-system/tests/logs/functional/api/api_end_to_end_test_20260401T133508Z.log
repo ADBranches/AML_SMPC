@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "tx_id": "TX-E2E-001",
+  "submit_status": 201,
+  "proofs_status": 200,
+  "proof_count": 3,
+  "db_transaction_count": 1,
+  "error": null,
+  "error_type": null,
+  "traceback": null
+}

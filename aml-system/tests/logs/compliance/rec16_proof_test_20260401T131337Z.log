@@ -1,0 +1,19 @@
+{
+  "rule_id": "FATF_REC16",
+  "match_count": 1,
+  "proof": {
+    "id": "c0ee3dda-c3b3-4551-ae95-4455787354b0",
+    "tx_id": "TX-E2E-001",
+    "rule_id": "FATF_REC16",
+    "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+    "proof_blob": {
+      "beneficiary_institution_present": true,
+      "originator_institution_present": true,
+      "payment_metadata_present": true,
+      "tx_id": "TX-E2E-001"
+    },
+    "public_signal": true,
+    "verification_status": "verified"
+  },
+  "passed": true
+}
