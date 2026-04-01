@@ -2,37 +2,37 @@
 	"sources" : 
 	[
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate-complete.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate-complete.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-build.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-build.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-configure.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-configure.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-download.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-download.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-install.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-install.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-mkdir.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-mkdir.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-patch.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-patch.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-test.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-test.rule"
 		},
 		{
-			"file" : "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-update.rule"
+			"file" : "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/zstd-populate-prefix/src/zstd-populate-stamp/zstd-populate-update.rule"
 		}
 	],
 	"target" : 

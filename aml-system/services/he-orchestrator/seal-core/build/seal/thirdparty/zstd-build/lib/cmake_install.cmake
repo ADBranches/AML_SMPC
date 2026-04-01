@@ -1,4 +1,4 @@
-# Install script for directory: /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/lib
+# Install script for directory: /home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,24 +43,24 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-build/lib/libzstd.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-build/lib/libzstd.pc")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib/zdict.h"
-    "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib/zstd.h"
-    "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib/zstd_errors.h"
+    "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib/zdict.h"
+    "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib/zstd.h"
+    "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib/zstd_errors.h"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libzstd.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libzstd.a")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-build/lib/install_local_manifest.txt"
+  file(WRITE "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-build/lib/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

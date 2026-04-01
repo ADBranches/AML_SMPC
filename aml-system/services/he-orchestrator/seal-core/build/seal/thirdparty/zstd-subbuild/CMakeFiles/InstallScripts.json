@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

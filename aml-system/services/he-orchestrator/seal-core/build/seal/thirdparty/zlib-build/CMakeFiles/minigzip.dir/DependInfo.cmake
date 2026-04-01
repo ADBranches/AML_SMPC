@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zlib-src/test/minigzip.c" "seal/thirdparty/zlib-build/CMakeFiles/minigzip.dir/test/minigzip.c.o" "gcc" "seal/thirdparty/zlib-build/CMakeFiles/minigzip.dir/test/minigzip.c.o.d"
+  "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zlib-src/test/minigzip.c" "seal/thirdparty/zlib-build/CMakeFiles/minigzip.dir/test/minigzip.c.o" "gcc" "seal/thirdparty/zlib-build/CMakeFiles/minigzip.dir/test/minigzip.c.o.d"
   "" "seal/bin/minigzip" "gcc" "seal/thirdparty/zlib-build/CMakeFiles/minigzip.dir/link.d"
   )
 

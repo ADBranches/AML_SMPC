@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "name": "missing_sender_id",
+      "status": 422,
+      "expected_status": 422,
+      "passed": true,
+      "body": "Failed to deserialize the JSON body into the target type: missing field `sender_id` at line 1 column 238"
+    },
+    {
+      "name": "missing_travel_rule_fields",
+      "status": 201,
+      "expected_status": 201,
+      "passed": true,
+      "body": "{\"tx_id\":\"TX-E2E-004\",\"sender_pseudo\":\"psd_46a553d87a166e7fddb1eb7e\",\"receiver_pseudo\":\"psd_2463a79a8b2ac3b1fa205e63\",\"sender_screening_result\":\"no_match\",\"receiver_screening_result\":\"no_match\",\"status\":\"screened_clear\",\"audit_event_id\":\"bce8f3b6-d3a7-41a0-8424-80a2b163ceb5\"}"
+    }
+  ],
+  "passed": true
+}

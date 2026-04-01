@@ -1,0 +1,15 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/msgsl-build/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/msgsl-build/include/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zlib-build/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-build/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-build/lib/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/native/src/seal/cmake_install.cmake",
+		"/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/native/src/seal/util/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -7,7 +7,7 @@ if(CMAKE_VERSION VERSION_LESS "3.0.0")
    message(FATAL_ERROR "CMake >= 3.0.0 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 3.0.0...3.29)
+cmake_policy(VERSION 3.0.0...4.0)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -50,7 +50,7 @@ unset(_cmake_expected_targets)
 add_library(zstd::libzstd_static STATIC IMPORTED)
 
 set_target_properties(zstd::libzstd_static PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-src/build/cmake/../../lib"
 )
 
 # Create imported target zstd::libzstd
@@ -64,7 +64,7 @@ set_target_properties(zstd::libzstd PROPERTIES
 set_property(TARGET zstd::libzstd_static APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(zstd::libzstd_static PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "ASM;C"
-  IMPORTED_LOCATION_RELEASE "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libzstd.a"
+  IMPORTED_LOCATION_RELEASE "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libzstd.a"
   )
 
 # This file does not depend on other imported targets which have

@@ -10,6 +10,16 @@
 
 namespace aml_he {
 
+thread_local std::string g_last_error;
+
+void set_last_error(const std::string& msg) {
+    g_last_error = msg;
+}
+
+const std::string& last_error() {
+    return g_last_error;
+}
+
 GlobalSealContext& global_ctx() {
     static GlobalSealContext instance = []() {
         GlobalSealContext ctx;
@@ -60,8 +70,12 @@ std::string hex_to_bytes(const std::string& input) {
 
     for (std::size_t i = 0; i < input.size(); i += 2) {
         auto byte = input.substr(i, 2);
-        char chr = static_cast<char>(std::stoi(byte, nullptr, 16));
-        out.push_back(chr);
+        try {
+            char chr = static_cast<char>(std::stoi(byte, nullptr, 16));
+            out.push_back(chr);
+        } catch (const std::exception&) {
+            throw std::runtime_error("Invalid hex input");
+        }
     }
 
     return out;
@@ -77,6 +91,10 @@ char* heap_copy_string(const std::string& s) {
 }
 
 } // namespace aml_he
+
+extern "C" const char* seal_last_error_message() {
+    return aml_he::heap_copy_string(aml_he::last_error());
+}
 
 extern "C" void seal_free_string(const char* ptr) {
     if (ptr) {

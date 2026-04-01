@@ -11,7 +11,7 @@
 
   <PropertyGroup>
     <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/bin/dotnet/$(Configuration)</OutputPath>
+    <OutputPath>/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/bin/dotnet/$(Configuration)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <SEALCBinaryFiles Condition="$([MSBuild]::IsOsPlatform(Windows))" Include="/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/bin\sealc.dll" />
-    <SEALCBinaryFiles Condition="$([MSBuild]::IsOsPlatform(Linux))" Include="/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libsealc.so*" />
-    <SEALCBinaryFiles Condition="$([MSBuild]::IsOsPlatform(OSX))" Include="/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libsealc*.dylib" />
+    <SEALCBinaryFiles Condition="$([MSBuild]::IsOsPlatform(Windows))" Include="/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/bin\sealc.dll" />
+    <SEALCBinaryFiles Condition="$([MSBuild]::IsOsPlatform(Linux))" Include="/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libsealc.so*" />
+    <SEALCBinaryFiles Condition="$([MSBuild]::IsOsPlatform(OSX))" Include="/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libsealc*.dylib" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
@@ -35,6 +35,6 @@
   </Target>
 
   <ItemGroup>
-    <Compile Include="/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL\dotnet\tests\**\*.cs" />
+    <Compile Include="/home/kamb/Downloads/projects/AML_SMPC/aml-system/external/SEAL\dotnet\tests\**\*.cs" />
   </ItemGroup>
 </Project>

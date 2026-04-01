@@ -1,9 +1,9 @@
  
-if(NOT EXISTS "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/install_manifest.txt")
+if(NOT EXISTS "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: /home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/install_manifest.txt")
 endif()
 
-file(READ "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/install_manifest.txt" files)
+file(READ "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
   message(STATUS "Uninstalling $ENV{DESTDIR}${file}")

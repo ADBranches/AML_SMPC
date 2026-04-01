@@ -13,7 +13,7 @@ ENC_URL="http://127.0.0.1:8081"
 HE_URL="http://127.0.0.1:8082"
 SMPC_URL="http://127.0.0.1:8083"
 
-export DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5433/aml_dev}"
+export DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5434/aml_dev}"
 export PSEUDO_SALT="${PSEUDO_SALT:-dev_demo_salt_change_me}"
 export SMPC_BASE_URL="${SMPC_BASE_URL:-http://127.0.0.1:8083}"
 export AML_ROOT_DIR="$ROOT_DIR"

@@ -1,0 +1,8 @@
+{
+  "submit_status": 201,
+  "proofs_status": 200,
+  "tx_id": "TX-E2E-001",
+  "proof_count": 3,
+  "db_transaction_count": 1,
+  "passed": true
+}

@@ -7,7 +7,7 @@ if(CMAKE_VERSION VERSION_LESS "2.8.3")
    message(FATAL_ERROR "CMake >= 2.8.3 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 2.8.3...3.29)
+cmake_policy(VERSION 2.8.3...4.0)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -51,7 +51,7 @@ add_library(SEAL::seal STATIC IMPORTED)
 
 set_target_properties(SEAL::seal PROPERTIES
   INTERFACE_COMPILE_FEATURES "cxx_std_17"
-  INTERFACE_INCLUDE_DIRECTORIES "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/external/SEAL/native/src;/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/native/src/;/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/msgsl-src/include"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/kamb/Downloads/projects/AML_SMPC/aml-system/external/SEAL/native/src;/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/native/src/;/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/msgsl-src/include"
   INTERFACE_LINK_LIBRARIES "Threads::Threads"
 )
 
@@ -59,7 +59,7 @@ set_target_properties(SEAL::seal PROPERTIES
 set_property(TARGET SEAL::seal APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(SEAL::seal PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "C;CXX"
-  IMPORTED_LOCATION_RELEASE "/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libseal-4.1.a"
+  IMPORTED_LOCATION_RELEASE "/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/lib/libseal-4.1.a"
   )
 
 # This file does not depend on other imported targets which have

@@ -1,0 +1,8 @@
+{
+  "health_status": 200,
+  "encrypt_status": 200,
+  "sum_status": 200,
+  "decrypt_status": 200,
+  "decrypt_amount": 20.000000001323613,
+  "passed": true
+}

@@ -1,0 +1,60 @@
+{
+  "record": {
+    "status": 200,
+    "expected_rules": [
+      "FATF_REC10",
+      "FATF_REC11",
+      "FATF_REC16"
+    ],
+    "returned_rule_ids": [
+      "FATF_REC10",
+      "FATF_REC11",
+      "FATF_REC16"
+    ],
+    "proof_count": 3,
+    "passed": true
+  },
+  "proofs": [
+    {
+      "id": "3967af07-bb4a-46fa-9d3e-cfd4896a0e4a",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC10",
+      "claim_hash": "028dbb2a21bd191a38dd9cc3d6517909f423474164c95622f05416b32afe9aec",
+      "proof_blob": {
+        "cdd_check_executed": true,
+        "receiver_screening_performed": true,
+        "sender_screening_performed": true,
+        "tx_id": "TX-E2E-001"
+      },
+      "public_signal": true,
+      "verification_status": "verified"
+    },
+    {
+      "id": "6c24d64d-1be1-45e5-9d75-2ad2dccf07b3",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC11",
+      "claim_hash": "2e749db324aa00a204ad71bcad31ef44e73fc42bb1e3e3b8007ca57ac24fa982",
+      "proof_blob": {
+        "audit_event_count": 3,
+        "transaction_exists": true,
+        "tx_id": "TX-E2E-001"
+      },
+      "public_signal": true,
+      "verification_status": "verified"
+    },
+    {
+      "id": "365b85c8-1ca9-4919-b376-b52f419caecc",
+      "tx_id": "TX-E2E-001",
+      "rule_id": "FATF_REC16",
+      "claim_hash": "3f13d17a32a01401028dc23cb08ae1e2660a2568f4539561597695a1c80c4219",
+      "proof_blob": {
+        "beneficiary_institution_present": true,
+        "originator_institution_present": true,
+        "payment_metadata_present": true,
+        "tx_id": "TX-E2E-001"
+      },
+      "public_signal": true,
+      "verification_status": "verified"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SEAL_BUILD_DIR="$ROOT_DIR/services/he-orchestrator/seal-core/build"
 
-export DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5433/aml_dev}"
+export DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5434/aml_dev}"
 
 echo "[build] building SEAL bridge..."
 rm -rf "$SEAL_BUILD_DIR"

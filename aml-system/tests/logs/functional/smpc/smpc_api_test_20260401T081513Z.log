@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "body": {
+    "tx_id": "TX-SMPC-SMOKE",
+    "entity_id": 1007,
+    "screening_result": "match"
+  },
+  "passed": true
+}

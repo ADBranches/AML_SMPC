@@ -11,7 +11,7 @@ ENC_URL="http://127.0.0.1:8081"
 HE_URL="http://127.0.0.1:8082"
 
 # Ensure the encryption service always has DB access, even in a fresh shell.
-export DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5433/aml_dev}"
+export DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5434/aml_dev}"
 
 ENC_PID=""
 HE_PID=""

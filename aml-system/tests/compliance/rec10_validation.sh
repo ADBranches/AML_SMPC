@@ -6,7 +6,7 @@ TEST_DIR="$ROOT_DIR/tests"
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$TEST_DIR/logs" "$TEST_DIR/evidence"
 
-DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5433/aml_dev}"
+DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5434/aml_dev}"
 LOG_DIR="$TEST_DIR/logs/compliance"
 EVIDENCE_DIR="$TEST_DIR/evidence/compliance"
 LOG_FILE="$LOG_DIR/rec10_validation_${TIMESTAMP}.log"

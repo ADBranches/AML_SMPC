@@ -1,0 +1,82 @@
+AML_SMPC Project - Required Tools and Bootstrapping Notes
+=========================================================
+
+Core OS packages used by the repo scripts shown so far
+------------------------------------------------------
+- bash
+- git
+- curl
+- jq
+- psmisc            # provides fuser
+- cmake
+- build-essential   # gcc/g++, make, linker toolchain
+- pkg-config
+- python3
+- python3-venv
+- python3-pip
+- postgresql-client # provides psql
+- podman
+- iproute2          # provides ss
+- softhsm2
+- openssl
+- ca-certificates
+- unzip
+- tar
+- rsync
+
+Rust toolchain
+--------------
+Required for cargo-based services:
+- rustup
+- cargo
+- rustc
+
+Python packages used by performance testing
+-------------------------------------------
+Install inside the project's virtual environment:
+- locust
+
+Project-local source/bootstrap items
+------------------------------------
+1. external/SEAL
+   - Must exist and contain CMakeLists.txt
+   - If missing, clone Microsoft SEAL into external/SEAL
+
+2. external/MP-SPDZ
+   - The folder already exists in your repo tree.
+   - If your local copy is incomplete/empty, restore it from your intended project source before running SMPC-related flows.
+
+3. Database schema
+   - Apply these migrations before functional/compliance testing:
+     - infra/postgres/migrations/001_create_transactions.sql
+     - infra/postgres/migrations/002_create_audit_logs.sql
+     - infra/postgres/migrations/003_create_proofs.sql
+     - infra/postgres/migrations/004_create_regulator_views.sql
+     - infra/postgres/migrations/005_retention_policy.sql
+
+4. Environment defaults to standardize
+   - DATABASE_URL should point at localhost:5434 in your current setup
+   - Ensure .env, .env.example, and test/demo defaults agree
+
+5. Optional / later-phase tooling
+   - k3s                # Phase 6 deployment/ops scripts
+   - kubectl via k3s    # Phase 6 rollout/health checks
+
+Expected local service ports during full Phase 7.1 functional runs
+------------------------------------------------------------------
+- 5434 PostgreSQL
+- 8081 encryption-service
+- 8082 HE gateway
+- 8083 SMPC runtime
+- 8084 zk-prover
+- 8085 regulator-api
+
+Recommended install order
+-------------------------
+1. Install OS packages
+2. Install Rust toolchain if cargo is missing
+3. Create/activate Python virtual environment and install locust
+4. Restore external/SEAL if missing
+5. Confirm external/MP-SPDZ is present and complete
+6. Apply database migrations
+7. Run the Phase 7.1 functional stack/tests

@@ -28,11 +28,15 @@ std::string bytes_to_hex(const std::string& input);
 std::string hex_to_bytes(const std::string& input);
 char* heap_copy_string(const std::string& s);
 
+void set_last_error(const std::string& msg);
+const std::string& last_error();
+
 } // namespace aml_he
 
 extern "C" {
     const char* seal_encrypt_amount(double amount);
     const char* seal_sum_ciphertexts(const char* lhs_hex, const char* rhs_hex);
     double seal_decrypt_amount(const char* cipher_hex);
+    const char* seal_last_error_message();
     void seal_free_string(const char* ptr);
 }

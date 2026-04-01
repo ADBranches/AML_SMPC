@@ -1,3 +1,3 @@
-/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate.dir
-/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/edit_cache.dir
-/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/rebuild_cache.dir
+/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/zstd-populate.dir
+/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/edit_cache.dir
+/home/kamb/Downloads/projects/AML_SMPC/aml-system/services/he-orchestrator/seal-core/build/seal/thirdparty/zstd-subbuild/CMakeFiles/rebuild_cache.dir

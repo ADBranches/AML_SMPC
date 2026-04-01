@@ -1,0 +1,12 @@
+{
+  "proof_id": "4278d23e-079f-4270-a27a-de2e75c3ff60",
+  "status": 200,
+  "verification": {
+    "proof_id": "4278d23e-079f-4270-a27a-de2e75c3ff60",
+    "tx_id": "TX-E2E-001",
+    "rule_id": "FATF_REC10",
+    "verified": true,
+    "reason": "verification passed"
+  },
+  "passed": true
+}
