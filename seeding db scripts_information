@@ -1,0 +1,19 @@
+sudo apt update
+sudo apt install -y cmake build-essential pkg-config
+
+grep -RIl "5433" scripts tests .env.example | xargs sed -i 's/5433/5434/g'
+
+set -a
+source .env
+set +a
+
+psql "$DATABASE_URL" -f infra/postgres/migrations/001_create_transactions.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/002_create_audit_logs.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/003_create_proofs.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/004_create_regulator_views.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/005_retention_policy.sql
+
+psql "$DATABASE_URL" -c '\dt'
+
+
+bash scripts/demo/run_phase7_1.sh

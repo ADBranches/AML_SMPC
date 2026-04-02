@@ -1,0 +1,34 @@
+export DATABASE_URL=postgresql://aml_dev:securepassword@localhost:5434/aml_dev
+export ENCRYPTION_SERVICE_BASE_URL=http://127.0.0.1:8081
+export ZK_PROVER_BASE_URL=http://127.0.0.1:8084
+
+
+
+lets resolve this i.e  be as precise as you can....
+
+
+bash scripts/demo/run_phase7_1.sh
+bash scripts/demo/run_phase7_3.sh
+bash scripts/demo/run_phase7_2.sh
+
+
+
+
+
+
+ss -lntp | grep ':8085'
+curl -i http://127.0.0.1:8085/proofs
+tail -n 100 /tmp/aml-reg.log
+
+
+
+cd ~/Downloads/projects/AML_SMPC/aml-system
+source env/bin/activate
+bash scripts/demo/start-local-stack.sh
+bash scripts/demo/seed-demo-data.sh
+
+
+bash scripts/demo/stop-local-stack.sh
+
+
+ss -lntp | grep -E ':8081|:8082|:8083|:8084|:8085|:5434'

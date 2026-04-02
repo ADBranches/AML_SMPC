@@ -1,0 +1,50 @@
+# 1) Fix DB URL drift
+grep -RIl "5433" tests .env.example | xargs sed -i 's/5433/5434/g'
+
+# 2) Ensure DB is alive and migrated
+set -a && source .env && set +a
+make db-check
+psql "$DATABASE_URL" -f infra/postgres/migrations/001_create_transactions.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/002_create_audit_logs.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/003_create_proofs.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/004_create_regulator_views.sql
+psql "$DATABASE_URL" -f infra/postgres/migrations/005_retention_policy.sql
+
+# 3) Start all app services in your normal dev flow
+ss -lntp | grep -E ':5434|:8081|:8082|:8083|:8084|:8085'
+
+# 4) Replace the wrong Phase 7.1 runner
+chmod +x scripts/demo/run_phase7_1.sh
+bash scripts/demo/run_phase7_1.sh
+
+
+grep -n "^def " tests/performance/transactions_load_test.py
+sed -n '1,220p' tests/performance/locustfile.py
+
+
+
+
+sudo apt install -y cmake build-essential pkg-config
+
+
+ss -lntp | grep -E ':5434|:8081|:8082|:8083|:8084|:8085'
+psql "$DATABASE_URL" -c '\dt'
+grep -n "^def " tests/performance/transactions_load_test.py
+sed -n '1,120p' tests/performance/locustfile.py
+
+bash scripts/demo/run-phase2-demo.sh
+bash scripts/demo/run-phase3-integrated-demo.sh
+bash scripts/demo/run-phase4-demo.sh
+bash scripts/demo/run-phase5-demo.sh
+bash scripts/demo/run-phase6-demo.sh
+
+
+
+
+
+
+cp /mnt/data/aml_system_bootstrap.sh .
+chmod +x aml_system_bootstrap.sh
+./aml_system_bootstrap.sh
+
+bash scripts/demo/run_phase7_1.sh
