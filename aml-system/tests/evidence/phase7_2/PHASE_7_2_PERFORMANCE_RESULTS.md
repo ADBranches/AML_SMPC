@@ -1,20 +1,20 @@
 # Phase 7.2 Performance Results
 
-Generated: 2026-04-27T15:36:39.766580+00:00
+Generated: 2026-04-27T18:16:28.975152+00:00
 
 ## Transaction Submission Benchmark
 
 Target: 1000 transactions in under 5 seconds.
 
 Observed:
-- Request count: 13709
+- Request count: 10091
 - Failure count: 0
 - Failure rows: 0
-- Requests per second: 467.7204463750956
-- Median response time: 150
-- P95 response time: 250
-- P99 response time: 360
-- Elapsed wall-clock time: 31.404 seconds
+- Requests per second: 339.92353492474865
+- Median response time: 200
+- P95 response time: 380
+- P99 response time: 970
+- Elapsed wall-clock time: 32.981 seconds
 
 Status: REVIEW REQUIRED
 
@@ -23,14 +23,14 @@ Status: REVIEW REQUIRED
 Target: proof generation requests complete successfully with P95 below 100 ms for the controlled demo workload.
 
 Observed:
-- Request count: 7185
+- Request count: 628
 - Failure count: 0
 - Failure rows: 0
-- Median response time: 75
-- P95 response time: 110
-- P99 response time: 150
+- Median response time: 46
+- P95 response time: 58
+- P99 response time: 66
 
-Status: REVIEW REQUIRED
+Status: PASS
 
 ## Evidence Files
 
