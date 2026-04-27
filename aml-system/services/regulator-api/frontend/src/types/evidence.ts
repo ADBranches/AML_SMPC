@@ -1,11 +1,13 @@
 export type PhaseStatus = "PASSED" | "REVIEW_REQUIRED" | "PENDING";
 
-export type ComplianceEvidence = {
+export type ComplianceStatus = {
   recommendation: string;
   title: string;
   status: PhaseStatus;
   description: string;
 };
+
+export type ComplianceEvidence = ComplianceStatus;
 
 export type PerformanceEvidence = {
   transactionRequestCount: number;
