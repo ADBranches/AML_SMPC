@@ -17,6 +17,7 @@ echo "============================================================"
 echo
 echo "Starting required backend services..."
 
+phase71_start_he_gateway
 phase71_start_smpc_runtime
 phase71_start_encryption_service
 phase71_start_zk_prover
@@ -25,14 +26,18 @@ phase71_start_regulator_api
 echo
 echo "Backend services are ready:"
 echo "encryption-service: http://127.0.0.1:8081"
+echo "he-orchestrator:     http://127.0.0.1:8082"
 echo "smpc-orchestrator:  http://127.0.0.1:8083"
 echo "zk-prover:          http://127.0.0.1:8084"
 echo "regulator-api:      http://127.0.0.1:8085"
 
 echo
 echo "Frontend should use:"
-echo "VITE_REGULATOR_API_BASE_URL=http://127.0.0.1:8085"
-echo "VITE_ZK_PROVER_BASE_URL=http://127.0.0.1:8084"
+echo "VITE_REGULATOR_API_BASE_URL=/api/regulator"
+echo "VITE_ENCRYPTION_API_BASE_URL=/api/encryption"
+echo "VITE_HE_API_BASE_URL=/api/he"
+echo "VITE_SMPC_API_BASE_URL=/api/smpc"
+echo "VITE_ZK_PROVER_BASE_URL=/api/zk"
 
 echo
 echo "Keep this terminal open while using the frontend."

@@ -128,6 +128,15 @@ export function NewTransactionPage() {
       {result ? (
         <Card>
           <h3 className="mb-3 font-bold">Submission Response</h3>
+          <p className="mb-3 text-sm text-slate-600">
+            Use this returned transaction ID to verify audit and regulator evidence:
+            <span className="ml-2 font-mono font-bold">{result.tx_id}</span>
+          </p>
+
+          <div className="mb-4 rounded-xl bg-slate-950 p-4 text-xs text-slate-100">
+            <p>curl -fsS "http://127.0.0.1:8085/audit/{result.tx_id}" | jq .</p>
+          </div>
+
           <JsonViewer value={result} />
         </Card>
       ) : null}

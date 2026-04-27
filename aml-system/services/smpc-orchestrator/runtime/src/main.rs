@@ -1,6 +1,6 @@
 use axum::{
     extract::State,
-    routing::post,
+    routing::{get, post},
     Json, Router,
 };
 use serde::{Deserialize, Serialize};
@@ -22,6 +22,31 @@ struct ScreenResponse {
     tx_id: String,
     entity_id: u64,
     screening_result: String,
+}
+
+#[derive(Serialize)]
+struct HealthResponse {
+    status: String,
+    service: String,
+    mode: String,
+    parties: u8,
+    threshold: u8,
+    sanctioned_entities_loaded: usize,
+}
+
+async fn health_handler(State(state): State<AppState>) -> Json<HealthResponse> {
+    Json(HealthResponse {
+        status: "ok".to_string(),
+        service: "smpc-orchestrator".to_string(),
+        mode: "demo_sanction_screening".to_string(),
+        parties: 3,
+        threshold: 1,
+        sanctioned_entities_loaded: state.sanctioned_entities.len(),
+    })
+}
+
+async fn status_handler(State(state): State<AppState>) -> Json<HealthResponse> {
+    health_handler(State(state)).await
 }
 
 async fn screen_handler(
@@ -51,6 +76,8 @@ async fn main() {
     };
 
     let app = Router::new()
+        .route("/health", get(health_handler))
+        .route("/smpc/status", get(status_handler))
         .route("/smpc/screen", post(screen_handler))
         .with_state(state);
 
