@@ -2,14 +2,14 @@
   "cases": [
     {
       "case_id": "smpc_match_001",
-      "description": "Known sanctioned test entity should produce match.",
-      "entity_reference": "SANCTIONED_ENTITY_ALPHA",
+      "tx_id": "TX-SMPC-MATCH-001",
+      "entity_id": 1007,
       "expected_result": "match"
     },
     {
       "case_id": "smpc_no_match_001",
-      "description": "Known clean test entity should produce no_match.",
-      "entity_reference": "CLEAN_ENTITY_OMEGA",
+      "tx_id": "TX-SMPC-NOMATCH-001",
+      "entity_id": 2001,
       "expected_result": "no_match"
     }
   ]

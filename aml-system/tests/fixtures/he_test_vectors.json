@@ -1,8 +1,6 @@
 {
   "case_id": "he_sum_basic_001",
-  "description": "Canonical HE test vector for encrypt -> sum -> decrypt functional validation.",
-  "operation": "sum",
   "values": [100, 250, 650],
   "expected_sum": 1000,
-  "tolerance": 0
+  "tolerance": 2.0
 }

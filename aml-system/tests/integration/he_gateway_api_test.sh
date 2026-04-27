@@ -1,41 +1,54 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-TEST_DIR="$ROOT_DIR/tests"
-TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
-mkdir -p "$TEST_DIR/logs" "$TEST_DIR/evidence"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib_phase71.sh"
 
-HE_BASE_URL="${HE_GATEWAY_BASE_URL:-http://127.0.0.1:8082}"
-LOG_DIR="$TEST_DIR/logs/functional/he"
-EVIDENCE_DIR="$TEST_DIR/evidence/functional/he"
-LOG_FILE="$LOG_DIR/he_gateway_api_test_${TIMESTAMP}.log"
-EVIDENCE_FILE="$EVIDENCE_DIR/he_gateway_api_test_${TIMESTAMP}.json"
-mkdir -p "$LOG_DIR" "$EVIDENCE_DIR"
+phase71_load_env
+phase71_require_common
+phase71_start_he_gateway
 
-python3 - <<'PY' "$HE_BASE_URL" "$LOG_FILE" "$EVIDENCE_FILE"
-import json, sys, urllib.request
-base_url, log_file, evidence_file = sys.argv[1:4]
+BASE_URL="${HE_GATEWAY_BASE_URL:-http://127.0.0.1:8082}"
+OUT="$EVIDENCE_DIR/he_gateway_api_test.log"
+FIXTURE="$ROOT_DIR/tests/fixtures/he_test_vectors.json"
 
-def get(path):
-    req = urllib.request.Request(base_url + path, method='GET')
-    with urllib.request.urlopen(req) as resp:
-        return resp.status, json.loads(resp.read().decode('utf-8'))
+{
+  echo "Running HE gateway API functional test..."
+  echo "Base URL: $BASE_URL"
 
-def post(path, payload):
-    req = urllib.request.Request(base_url + path, data=json.dumps(payload).encode(), headers={'Content-Type':'application/json'}, method='POST')
-    with urllib.request.urlopen(req) as resp:
-        return resp.status, json.loads(resp.read().decode('utf-8'))
-health_s, health = get('/health')
-enc_s, enc = post('/he/encrypt', {'amount': 10.0})
-sum_s, summed = post('/he/sum', {'lhs_ciphertext_hex': enc['ciphertext_hex'], 'rhs_ciphertext_hex': enc['ciphertext_hex']})
-dec_s, dec = post('/he/decrypt-test', {'ciphertext_hex': summed['result_ciphertext_hex']})
-passed = (health_s, enc_s, sum_s, dec_s) == (200, 200, 200, 200)
-record = {'health_status': health_s, 'encrypt_status': enc_s, 'sum_status': sum_s, 'decrypt_status': dec_s, 'decrypt_amount': dec['amount'], 'passed': passed}
-open(log_file,'w').write(json.dumps(record, indent=2))
-open(evidence_file,'w').write(json.dumps({'health': health, 'encrypt': enc, 'sum': summed, 'decrypt': dec, **record}, indent=2))
-if not passed:
-    raise SystemExit(1)
+  v1="$(jq -r '.values[0]' "$FIXTURE")"
+  v2="$(jq -r '.values[1]' "$FIXTURE")"
+  v3="$(jq -r '.values[2]' "$FIXTURE")"
+  expected="$(jq -r '.expected_sum' "$FIXTURE")"
+  tolerance="$(jq -r '.tolerance' "$FIXTURE")"
+
+  c1="$(curl -fsS -X POST "$BASE_URL/he/encrypt" -H "Content-Type: application/json" -d "{\"amount\":$v1}" | tee "$EVIDENCE_DIR/he_encrypt_1.json" | jq -r '.ciphertext_hex')"
+  c2="$(curl -fsS -X POST "$BASE_URL/he/encrypt" -H "Content-Type: application/json" -d "{\"amount\":$v2}" | tee "$EVIDENCE_DIR/he_encrypt_2.json" | jq -r '.ciphertext_hex')"
+  c3="$(curl -fsS -X POST "$BASE_URL/he/encrypt" -H "Content-Type: application/json" -d "{\"amount\":$v3}" | tee "$EVIDENCE_DIR/he_encrypt_3.json" | jq -r '.ciphertext_hex')"
+
+  s12="$(curl -fsS -X POST "$BASE_URL/he/sum" -H "Content-Type: application/json" \
+    -d "$(jq -n --arg lhs "$c1" --arg rhs "$c2" '{lhs_ciphertext_hex:$lhs,rhs_ciphertext_hex:$rhs}')" \
+    | tee "$EVIDENCE_DIR/he_sum_12.json" | jq -r '.result_ciphertext_hex')"
+
+  s123="$(curl -fsS -X POST "$BASE_URL/he/sum" -H "Content-Type: application/json" \
+    -d "$(jq -n --arg lhs "$s12" --arg rhs "$c3" '{lhs_ciphertext_hex:$lhs,rhs_ciphertext_hex:$rhs}')" \
+    | tee "$EVIDENCE_DIR/he_sum_123.json" | jq -r '.result_ciphertext_hex')"
+
+  actual="$(curl -fsS -X POST "$BASE_URL/he/decrypt-test" -H "Content-Type: application/json" \
+    -d "$(jq -n --arg ciphertext "$s123" '{ciphertext_hex:$ciphertext}')" \
+    | tee "$EVIDENCE_DIR/he_decrypt_result.json" | jq -r '.amount')"
+
+  python3 - <<PY
+actual = float("$actual")
+expected = float("$expected")
+tolerance = float("$tolerance")
+diff = abs(actual - expected)
+print(f"actual={actual}")
+print(f"expected={expected}")
+print(f"tolerance={tolerance}")
+print(f"diff={diff}")
+assert diff <= tolerance, f"HE decrypted sum mismatch: actual={actual}, expected={expected}, diff={diff}"
 PY
 
-echo "[PASS] HE gateway API smoke test completed. Evidence: $EVIDENCE_FILE"
+  echo "HE gateway API test PASSED"
+} | tee "$OUT"

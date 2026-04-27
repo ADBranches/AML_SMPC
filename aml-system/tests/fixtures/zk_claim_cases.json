@@ -2,36 +2,18 @@
   "claims": [
     {
       "case_id": "rec10_claim_001",
-      "recommendation": "FATF_REC10",
-      "description": "Customer due diligence proof claim.",
-      "claim": {
-        "customer_verified": true,
-        "risk_assessed": true,
-        "identity_hash_present": true
-      },
-      "expected_verified": true
+      "rule_id": "FATF_REC10",
+      "tx_id": "TX-PHASE71-ZK-001"
     },
     {
       "case_id": "rec11_claim_001",
-      "recommendation": "FATF_REC11",
-      "description": "Record keeping proof claim.",
-      "claim": {
-        "record_retained": true,
-        "retention_period_valid": true,
-        "audit_reference_present": true
-      },
-      "expected_verified": true
+      "rule_id": "FATF_REC11",
+      "tx_id": "TX-PHASE71-ZK-001"
     },
     {
       "case_id": "rec16_claim_001",
-      "recommendation": "FATF_REC16",
-      "description": "Wire transfer information proof claim.",
-      "claim": {
-        "originator_present": true,
-        "beneficiary_present": true,
-        "transaction_reference_present": true
-      },
-      "expected_verified": true
+      "rule_id": "FATF_REC16",
+      "tx_id": "TX-PHASE71-ZK-001"
     }
   ]
 }

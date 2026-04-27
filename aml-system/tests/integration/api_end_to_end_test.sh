@@ -1,168 +1,76 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-TEST_DIR="$ROOT_DIR/tests"
-TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
-mkdir -p "$TEST_DIR/logs" "$TEST_DIR/evidence"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib_phase71.sh"
 
-DATABASE_URL="${DATABASE_URL:-postgresql://aml_dev:securepassword@localhost:5434/aml_dev}"
-ENCRYPTION_SERVICE_BASE_URL="${ENCRYPTION_SERVICE_BASE_URL:-http://127.0.0.1:8081}"
-ZK_PROVER_BASE_URL="${ZK_PROVER_BASE_URL:-http://127.0.0.1:8084}"
+phase71_load_env
+phase71_require_common
+phase71_require_cmd psql
 
-LOG_DIR="$TEST_DIR/logs/functional/api"
-EVIDENCE_DIR="$TEST_DIR/evidence/functional/api"
-FIXTURE="$TEST_DIR/fixtures/e2e_transactions.json"
-LOG_FILE="$LOG_DIR/api_end_to_end_test_${TIMESTAMP}.log"
-EVIDENCE_FILE="$EVIDENCE_DIR/api_end_to_end_test_${TIMESTAMP}.json"
+TX_ID="TX-PHASE71-E2E-001"
+ENCRYPTION_URL="${ENCRYPTION_SERVICE_BASE_URL:-http://127.0.0.1:8081}"
+ZK_URL="${ZK_PROVER_BASE_URL:-http://127.0.0.1:8084}"
+REGULATOR_URL="${REGULATOR_API_BASE_URL:-http://127.0.0.1:8085}"
+OUT="$EVIDENCE_DIR/api_end_to_end_test.log"
 
-mkdir -p "$LOG_DIR" "$EVIDENCE_DIR"
+{
+  echo "Running Phase 7.1 API end-to-end test..."
 
-require_cmd() {
-  command -v "$1" >/dev/null 2>&1 || {
-    echo "[error] missing required command: $1"
-    exit 1
-  }
-}
+  psql_url="$(phase71_psql_url)"
+  psql "$psql_url" -v ON_ERROR_STOP=1 <<SQL
+DELETE FROM proofs WHERE tx_id = '$TX_ID';
+DELETE FROM audit_logs WHERE tx_id = '$TX_ID';
+DELETE FROM transactions WHERE tx_id = '$TX_ID';
+SQL
 
-wait_for_post_endpoint() {
-  local url="$1"
-  local name="$2"
-  local retries="${3:-30}"
+  phase71_start_smpc_runtime
+  phase71_start_encryption_service
+  phase71_start_zk_prover
+  phase71_start_regulator_api
 
-  echo "[wait] waiting for ${name} at ${url} ..."
-  for ((i=1; i<=retries; i++)); do
-    code="$(curl -s -o /dev/null -w "%{http_code}" "$url" || true)"
-    if [[ "$code" =~ ^(200|404|405)$ ]]; then
-      echo "[ok] ${name} is reachable"
-      return 0
-    fi
-    sleep 1
-  done
+  payload="$(jq -c '.transaction' "$ROOT_DIR/tests/fixtures/e2e_transactions.json")"
 
-  echo "[error] ${name} is not reachable at ${url}"
-  echo "[hint] start the Phase 7 service stack first before running this standalone test"
-  exit 1
-}
+  submit_response="$(curl -fsS -X POST "$ENCRYPTION_URL/transactions/submit" \
+    -H "Content-Type: application/json" \
+    -d "$payload" \
+    | tee "$EVIDENCE_DIR/e2e_transaction_submit_response.json")"
 
-require_cmd python3
-require_cmd psql
-require_cmd curl
+  submitted_tx_id="$(echo "$submit_response" | jq -r '.tx_id')"
+  status="$(echo "$submit_response" | jq -r '.status')"
 
-wait_for_post_endpoint "${ENCRYPTION_SERVICE_BASE_URL}/transactions/submit" "encryption-service"
-wait_for_post_endpoint "${ZK_PROVER_BASE_URL}/proofs/generate" "zk-prover"
+  test "$submitted_tx_id" = "$TX_ID"
+  test "$status" = "screened_clear"
 
-python3 - <<'PY' "$DATABASE_URL" "$ENCRYPTION_SERVICE_BASE_URL" "$ZK_PROVER_BASE_URL" "$FIXTURE" "$LOG_FILE" "$EVIDENCE_FILE"
-import json
-import subprocess
-import sys
-import traceback
-import urllib.error
-import urllib.request
+  proof_response="$(curl -fsS -X POST "$ZK_URL/proofs/generate" \
+    -H "Content-Type: application/json" \
+    -d "{\"tx_id\":\"$TX_ID\"}" \
+    | tee "$EVIDENCE_DIR/e2e_proof_generation_response.json")"
 
-DATABASE_URL, enc_url, zk_url, fixture, log_file, evidence_file = sys.argv[1:7]
+  proof_count="$(echo "$proof_response" | jq 'length')"
+  test "$proof_count" -ge 3
 
-result = {
-    "passed": False,
-    "tx_id": None,
-    "submit_status": None,
-    "proofs_status": None,
-    "proof_count": None,
-    "db_transaction_count": None,
-    "error": None,
-    "error_type": None,
-    "traceback": None,
-}
+  regulator_proofs="$(curl -fsS "$REGULATOR_URL/proofs?tx_id=$TX_ID" \
+    | tee "$EVIDENCE_DIR/e2e_regulator_proofs_response.json")"
 
-submit_body = None
-proofs_body = None
+  regulator_count="$(echo "$regulator_proofs" | jq 'length')"
+  test "$regulator_count" -ge 3
 
-def write_outputs():
-    with open(log_file, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2)
-    with open(evidence_file, "w", encoding="utf-8") as f:
-        json.dump(
-            {
-                "record": result,
-                "submit_body": submit_body,
-                "proofs_body": proofs_body,
-            },
-            f,
-            indent=2,
-        )
+  audit_response="$(curl -fsS "$REGULATOR_URL/audit/$TX_ID" \
+    | tee "$EVIDENCE_DIR/e2e_regulator_audit_response.json")"
 
-try:
-    with open(fixture, encoding="utf-8") as f:
-        case = json.load(f)["positive"][0]
+  audit_count="$(echo "$audit_response" | jq 'length')"
+  test "$audit_count" -ge 3
 
-    tx_id = case["request"]["tx_id"]
-    result["tx_id"] = tx_id
+  proof_id="$(echo "$regulator_proofs" | jq -r '.[0].id')"
+  test "$proof_id" != "null"
+  test -n "$proof_id"
 
-    cleanup_sql = (
-        f"DELETE FROM proofs WHERE tx_id = '{tx_id}'; "
-        f"DELETE FROM audit_logs WHERE tx_id = '{tx_id}'; "
-        f"DELETE FROM transactions WHERE tx_id = '{tx_id}';"
-    )
+  verify_response="$(curl -fsS -X POST "$REGULATOR_URL/proofs/$proof_id/verify" \
+    | tee "$EVIDENCE_DIR/e2e_regulator_verify_response.json")"
 
-    subprocess.run(
-        ["psql", DATABASE_URL, "-v", "ON_ERROR_STOP=1", "-c", cleanup_sql],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+  verified="$(echo "$verify_response" | jq -r '.verified')"
+  test "$verified" = "true"
 
-    req = urllib.request.Request(
-        enc_url + "/transactions/submit",
-        data=json.dumps(case["request"]).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        result["submit_status"] = resp.status
-        submit_body = json.loads(resp.read().decode("utf-8"))
-
-    req2 = urllib.request.Request(
-        zk_url + "/proofs/generate",
-        data=json.dumps({"tx_id": submit_body["tx_id"]}).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req2, timeout=30) as resp:
-        result["proofs_status"] = resp.status
-        proofs_body = json.loads(resp.read().decode("utf-8"))
-
-    q = subprocess.run(
-        [
-            "psql",
-            DATABASE_URL,
-            "-At",
-            "-c",
-            f"SELECT count(*) FROM transactions WHERE tx_id = '{submit_body['tx_id']}';",
-        ],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-
-    result["db_transaction_count"] = int(q.stdout.strip())
-    result["proof_count"] = len(proofs_body)
-
-    result["passed"] = (
-        result["submit_status"] == 201
-        and result["proofs_status"] == 200
-        and result["db_transaction_count"] == 1
-        and result["proof_count"] >= 3
-    )
-
-except Exception as e:
-    result["error"] = str(e)
-    result["error_type"] = type(e).__name__
-    result["traceback"] = traceback.format_exc()
-
-write_outputs()
-
-if not result["passed"]:
-    raise SystemExit(1)
-PY
-
-echo "[PASS] API end-to-end test completed. Evidence: $EVIDENCE_FILE"
+  echo "Phase 7.1 API end-to-end test PASSED"
+} | tee "$OUT"

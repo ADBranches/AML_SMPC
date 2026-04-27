@@ -1,14 +1,17 @@
 {
-  "transactions": [
-    {
-      "case_id": "e2e_txn_001",
-      "transaction_id": "TXN-PHASE71-001",
-      "originator": "ALPHA_TEST_CUSTOMER",
-      "beneficiary": "BETA_TEST_BENEFICIARY",
-      "amount": 1000,
-      "currency": "USD",
-      "expected_smpc_result": "no_match",
-      "expected_proof_status": "verified"
-    }
-  ]
+  "transaction": {
+    "tx_id": "TX-PHASE71-E2E-001",
+    "sender_id": "CUSTOMER-2001",
+    "receiver_id": "CUSTOMER-2002",
+    "sender_entity_id": 2001,
+    "receiver_entity_id": 2002,
+    "amount": 1000.0,
+    "currency": "USD",
+    "transaction_type": "wire_transfer",
+    "originator_name": "Phase 71 Sender",
+    "beneficiary_name": "Phase 71 Receiver",
+    "originator_institution": "Origin Bank Phase71",
+    "beneficiary_institution": "Beneficiary Bank Phase71",
+    "timestamp": "2026-04-27T09:00:00Z"
+  }
 }
