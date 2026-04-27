@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+OUT_DIR="$ROOT_DIR/tests/evidence/phase7_1/route_context"
+mkdir -p "$OUT_DIR"
+
+echo "Collecting Phase 7.1 route/source context..."
+echo "Project root: $ROOT_DIR"
+echo
+
+FILES=(
+  "services/he-orchestrator/rust-gateway/src/main.rs"
+  "services/he-orchestrator/rust-gateway/src/routes.rs"
+  "services/he-orchestrator/rust-gateway/src/ffi.rs"
+
+  "services/smpc-orchestrator/runtime/src/main.rs"
+  "services/smpc-orchestrator/runtime/src/routes.rs"
+  "services/smpc-orchestrator/runtime/src/mp_spdz.rs"
+  "services/smpc-orchestrator/runtime/src/parser.rs"
+
+  "services/zk-prover/prover/src/main.rs"
+  "services/zk-prover/prover/src/routes.rs"
+  "services/zk-prover/prover/src/prove.rs"
+
+  "services/zk-prover/verifier/src/lib.rs"
+  "services/zk-prover/verifier/src/verify.rs"
+
+  "services/encryption-service/api/src/main.rs"
+  "services/encryption-service/api/src/routes.rs"
+  "services/encryption-service/api/src/pseudonymize.rs"
+  "services/encryption-service/api/src/smpc_client.rs"
+
+  "services/regulator-api/backend/src/main.rs"
+  "services/regulator-api/backend/src/routes.rs"
+  "services/regulator-api/backend/src/proofs.rs"
+  "services/regulator-api/backend/src/audit.rs"
+  "services/regulator-api/backend/src/db.rs"
+)
+
+for file in "${FILES[@]}"; do
+  echo "===== $file ====="
+  if [ -f "$ROOT_DIR/$file" ]; then
+    safe_name="$(echo "$file" | tr '/' '_')"
+    cp "$ROOT_DIR/$file" "$OUT_DIR/$safe_name"
+    sed -n '1,240p' "$ROOT_DIR/$file"
+  else
+    echo "MISSING: $file"
+  fi
+  echo
+done
+
+echo "Route context saved to:"
+echo "$OUT_DIR"

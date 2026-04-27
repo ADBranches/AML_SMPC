@@ -1,0 +1,37 @@
+Phase 7.1 Preflight Check
+Project root: /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system
+
+Checking required commands...
+✅ command available: bash
+✅ command available: python
+✅ command available: cargo
+✅ command available: curl
+✅ command available: cmake
+
+Checking Phase 7.1 directories...
+✅ directory exists: tests/integration
+✅ directory exists: tests/compliance
+✅ directory exists: tests/fixtures
+✅ directory exists: tests/evidence/phase7_1
+✅ directory exists: scripts/ci
+
+Checking fixture JSON files...
+✅ file exists: tests/fixtures/he_test_vectors.json
+✅ valid JSON: tests/fixtures/he_test_vectors.json
+✅ file exists: tests/fixtures/he_expected_outputs.json
+✅ valid JSON: tests/fixtures/he_expected_outputs.json
+✅ file exists: tests/fixtures/smpc_test_cases.json
+✅ valid JSON: tests/fixtures/smpc_test_cases.json
+✅ file exists: tests/fixtures/zk_claim_cases.json
+✅ valid JSON: tests/fixtures/zk_claim_cases.json
+✅ file exists: tests/fixtures/e2e_transactions.json
+✅ valid JSON: tests/fixtures/e2e_transactions.json
+
+Checking collector script syntax...
+✅ file exists: scripts/ci/phase71_collect_route_context.sh
+✅ bash syntax valid: scripts/ci/phase71_collect_route_context.sh
+
+Checking filtered project structure...
+✅ filtered structure saved: /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/tests/evidence/phase7_1/checks/filtered_structure.log
+
+✅ Phase 7.1 preflight passed.

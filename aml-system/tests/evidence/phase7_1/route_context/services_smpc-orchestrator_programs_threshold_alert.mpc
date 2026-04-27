@@ -1,0 +1,8 @@
+from Compiler.types import sint
+from Compiler.library import print_ln
+
+value = sint.get_input_from(0)
+threshold = sint.get_input_from(1)
+
+alert = (value > threshold)
+print_ln('%s', alert.reveal())

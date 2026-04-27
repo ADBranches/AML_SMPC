@@ -1,0 +1,8 @@
+from Compiler.types import sint
+from Compiler.library import print_ln
+
+a = sint.get_input_from(0)
+b = sint.get_input_from(1)
+
+result = (a == b)
+print_ln('%s', result.reveal())

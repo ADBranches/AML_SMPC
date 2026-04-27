@@ -1,0 +1,2250 @@
+Collecting Phase 7.1 route/source context...
+Project root: /home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system
+
+===== services/he-orchestrator/seal-core/CMakeLists.txt =====
+cmake_minimum_required(VERSION 3.16)
+project(aml_seal_bridge LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# Adjust this path if your SEAL checkout lives elsewhere.
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../../external/SEAL
+                 ${CMAKE_CURRENT_BINARY_DIR}/seal
+                 EXCLUDE_FROM_ALL)
+
+add_library(seal_bridge SHARED
+    src/context.cpp
+    src/encrypt.cpp
+    src/sum.cpp
+    src/decrypt.cpp
+)
+
+target_include_directories(seal_bridge PUBLIC include)
+target_link_libraries(seal_bridge PUBLIC SEAL::seal)
+===== services/he-orchestrator/seal-core/include/seal_bridge.hpp =====
+#pragma once
+
+#include <cstdint>
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "seal/seal.h"
+
+namespace aml_he {
+
+struct GlobalSealContext {
+    std::shared_ptr<seal::SEALContext> context;
+    seal::PublicKey public_key;
+    seal::SecretKey secret_key;
+    seal::RelinKeys relin_keys;
+    seal::GaloisKeys galois_keys;
+    std::unique_ptr<seal::Encryptor> encryptor;
+    std::unique_ptr<seal::Decryptor> decryptor;
+    std::unique_ptr<seal::Evaluator> evaluator;
+    std::unique_ptr<seal::CKKSEncoder> encoder;
+    double scale;
+};
+
+GlobalSealContext& global_ctx();
+
+std::string bytes_to_hex(const std::string& input);
+std::string hex_to_bytes(const std::string& input);
+char* heap_copy_string(const std::string& s);
+
+void set_last_error(const std::string& msg);
+const std::string& last_error();
+
+} // namespace aml_he
+
+extern "C" {
+    const char* seal_encrypt_amount(double amount);
+    const char* seal_sum_ciphertexts(const char* lhs_hex, const char* rhs_hex);
+    double seal_decrypt_amount(const char* cipher_hex);
+    const char* seal_last_error_message();
+    void seal_free_string(const char* ptr);
+}
+===== services/he-orchestrator/seal-core/src/context.cpp =====
+#include "seal_bridge.hpp"
+
+#include <cmath>
+#include <iomanip>
+#include <sstream>
+#include <stdexcept>
+#include <vector>
+#include <cstring>
+#include <cstdlib>
+
+namespace aml_he {
+
+thread_local std::string g_last_error;
+
+void set_last_error(const std::string& msg) {
+    g_last_error = msg;
+}
+
+const std::string& last_error() {
+    return g_last_error;
+}
+
+GlobalSealContext& global_ctx() {
+    static GlobalSealContext instance = []() {
+        GlobalSealContext ctx;
+
+        seal::EncryptionParameters parms(seal::scheme_type::ckks);
+        std::size_t poly_modulus_degree = 8192;
+        parms.set_poly_modulus_degree(poly_modulus_degree);
+        parms.set_coeff_modulus(
+            seal::CoeffModulus::Create(poly_modulus_degree, {60, 40, 40, 60}));
+
+        ctx.context = std::make_shared<seal::SEALContext>(parms);
+
+        seal::KeyGenerator keygen(*ctx.context);
+
+        ctx.secret_key = keygen.secret_key();
+        keygen.create_public_key(ctx.public_key);
+        keygen.create_relin_keys(ctx.relin_keys);
+        keygen.create_galois_keys(ctx.galois_keys);
+
+        ctx.encryptor = std::make_unique<seal::Encryptor>(*ctx.context, ctx.public_key);
+        ctx.decryptor = std::make_unique<seal::Decryptor>(*ctx.context, ctx.secret_key);
+        ctx.evaluator = std::make_unique<seal::Evaluator>(*ctx.context);
+        ctx.encoder = std::make_unique<seal::CKKSEncoder>(*ctx.context);
+        ctx.scale = std::pow(2.0, 40);
+
+        return ctx;
+    }();
+
+    return instance;
+}
+
+std::string bytes_to_hex(const std::string& input) {
+    std::ostringstream oss;
+    oss << std::hex << std::setfill('0');
+    for (unsigned char c : input) {
+        oss << std::setw(2) << static_cast<int>(c);
+    }
+    return oss.str();
+}
+
+std::string hex_to_bytes(const std::string& input) {
+    if (input.size() % 2 != 0) {
+        throw std::runtime_error("Invalid hex length");
+    }
+
+    std::string out;
+    out.reserve(input.size() / 2);
+
+    for (std::size_t i = 0; i < input.size(); i += 2) {
+        auto byte = input.substr(i, 2);
+        try {
+            char chr = static_cast<char>(std::stoi(byte, nullptr, 16));
+            out.push_back(chr);
+        } catch (const std::exception&) {
+            throw std::runtime_error("Invalid hex input");
+        }
+    }
+
+    return out;
+}
+
+char* heap_copy_string(const std::string& s) {
+    char* out = static_cast<char*>(std::malloc(s.size() + 1));
+    if (!out) {
+        return nullptr;
+    }
+    std::memcpy(out, s.c_str(), s.size() + 1);
+    return out;
+}
+
+} // namespace aml_he
+
+extern "C" const char* seal_last_error_message() {
+    return aml_he::heap_copy_string(aml_he::last_error());
+}
+
+extern "C" void seal_free_string(const char* ptr) {
+    if (ptr) {
+        std::free((void*)ptr);
+    }
+}
+===== services/he-orchestrator/seal-core/src/encrypt.cpp =====
+#include "seal_bridge.hpp"
+
+#include <sstream>
+#include <vector>
+#include <exception>
+
+extern "C" const char* seal_encrypt_amount(double amount) {
+    using namespace aml_he;
+
+    try {
+        set_last_error("");
+
+        auto& ctx = global_ctx();
+
+        std::vector<double> input{amount};
+        seal::Plaintext plain;
+        ctx.encoder->encode(input, ctx.scale, plain);
+
+        seal::Ciphertext cipher;
+        ctx.encryptor->encrypt(plain, cipher);
+
+        std::stringstream ss;
+        cipher.save(ss);
+        std::string raw = ss.str();
+        std::string hex = bytes_to_hex(raw);
+
+        return heap_copy_string(hex);
+    } catch (const std::exception& ex) {
+        set_last_error(ex.what());
+        return nullptr;
+    } catch (...) {
+        set_last_error("Unknown C++ exception in seal_encrypt_amount");
+        return nullptr;
+    }
+}
+===== services/he-orchestrator/seal-core/src/sum.cpp =====
+#include "seal_bridge.hpp"
+
+#include <sstream>
+#include <stdexcept>
+#include <exception>
+
+extern "C" const char* seal_sum_ciphertexts(const char* lhs_hex, const char* rhs_hex) {
+    using namespace aml_he;
+
+    try {
+        set_last_error("");
+
+        if (!lhs_hex || !rhs_hex) {
+            set_last_error("Ciphertext inputs must not be null");
+            return nullptr;
+        }
+
+        auto& ctx = global_ctx();
+
+        seal::Ciphertext lhs;
+        seal::Ciphertext rhs;
+
+        {
+            std::string lhs_raw = hex_to_bytes(lhs_hex);
+            std::stringstream lss(lhs_raw);
+            lhs.load(*ctx.context, lss);
+        }
+
+        {
+            std::string rhs_raw = hex_to_bytes(rhs_hex);
+            std::stringstream rss(rhs_raw);
+            rhs.load(*ctx.context, rss);
+        }
+
+        seal::Ciphertext result;
+        ctx.evaluator->add(lhs, rhs, result);
+
+        std::stringstream out;
+        result.save(out);
+        std::string raw = out.str();
+        std::string hex = bytes_to_hex(raw);
+
+        return heap_copy_string(hex);
+    } catch (const std::exception& ex) {
+        set_last_error(ex.what());
+        return nullptr;
+    } catch (...) {
+        set_last_error("Unknown C++ exception in seal_sum_ciphertexts");
+        return nullptr;
+    }
+}
+===== services/he-orchestrator/seal-core/src/decrypt.cpp =====
+#include "seal_bridge.hpp"
+
+#include <sstream>
+#include <vector>
+#include <limits>
+#include <exception>
+
+extern "C" double seal_decrypt_amount(const char* cipher_hex) {
+    using namespace aml_he;
+
+    try {
+        set_last_error("");
+
+        if (!cipher_hex) {
+            set_last_error("cipher_hex must not be null");
+            return std::numeric_limits<double>::quiet_NaN();
+        }
+
+        auto& ctx = global_ctx();
+
+        seal::Ciphertext cipher;
+        {
+            std::string raw = hex_to_bytes(cipher_hex);
+            std::stringstream ss(raw);
+            cipher.load(*ctx.context, ss);
+        }
+
+        seal::Plaintext plain;
+        ctx.decryptor->decrypt(cipher, plain);
+
+        std::vector<double> decoded;
+        ctx.encoder->decode(plain, decoded);
+
+        if (decoded.empty()) {
+            set_last_error("Decoded plaintext was empty");
+            return std::numeric_limits<double>::quiet_NaN();
+        }
+
+        return decoded[0];
+    } catch (const std::exception& ex) {
+        set_last_error(ex.what());
+        return std::numeric_limits<double>::quiet_NaN();
+    } catch (...) {
+        set_last_error("Unknown C++ exception in seal_decrypt_amount");
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+}
+===== services/he-orchestrator/rust-gateway/Cargo.toml =====
+[package]
+name = "he-rust-gateway"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = "0.8.8"
+tokio = { version = "1.50.0", features = ["full"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
+libc = "0.2"
+dotenvy = "0.15"
+===== services/he-orchestrator/rust-gateway/build.rs =====
+fn main() {
+    println!("cargo:rustc-link-search=native=../seal-core/build");
+    println!("cargo:rustc-link-lib=dylib=seal_bridge");
+    println!("cargo:rerun-if-changed=src/ffi.rs");
+}
+===== services/he-orchestrator/rust-gateway/src/main.rs =====
+mod ffi;
+mod routes;
+
+use std::{env, net::SocketAddr};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+#[tokio::main]
+async fn main() {
+    dotenvy::dotenv().ok();
+
+    tracing_subscriber::registry()
+        .with(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "info,he_rust_gateway=debug".into()),
+        )
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
+    let bind_addr = env::var("HE_GATEWAY_BIND").unwrap_or_else(|_| "127.0.0.1:8082".to_string());
+    let addr: SocketAddr = bind_addr.parse().expect("Invalid HE_GATEWAY_BIND");
+
+    let app = routes::router();
+    tracing::info!("he-rust-gateway listening on {}", addr);
+
+    let listener = tokio::net::TcpListener::bind(addr)
+        .await
+        .expect("Failed to bind listener");
+
+    axum::serve(listener, app)
+        .await
+        .expect("server failed");
+}
+===== services/he-orchestrator/rust-gateway/src/ffi.rs =====
+use std::ffi::{CStr, CString};
+use std::os::raw::{c_char, c_double};
+
+unsafe extern "C" {
+    fn seal_encrypt_amount(amount: c_double) -> *const c_char;
+    fn seal_sum_ciphertexts(lhs_hex: *const c_char, rhs_hex: *const c_char) -> *const c_char;
+    fn seal_decrypt_amount(cipher_hex: *const c_char) -> c_double;
+    fn seal_last_error_message() -> *const c_char;
+    fn seal_free_string(ptr: *const c_char);
+}
+
+fn take_last_error(default: &str) -> String {
+    unsafe {
+        let ptr = seal_last_error_message();
+        if ptr.is_null() {
+            return default.to_string();
+        }
+
+        let msg = CStr::from_ptr(ptr).to_string_lossy().to_string();
+        seal_free_string(ptr);
+
+        if msg.trim().is_empty() {
+            default.to_string()
+        } else {
+            msg
+        }
+    }
+}
+
+pub fn encrypt_amount(amount: f64) -> Result<String, String> {
+    unsafe {
+        let ptr = seal_encrypt_amount(amount);
+        if ptr.is_null() {
+            return Err(take_last_error("seal_encrypt_amount failed"));
+        }
+
+        let s = CStr::from_ptr(ptr).to_string_lossy().to_string();
+        seal_free_string(ptr);
+        Ok(s)
+    }
+}
+
+pub fn sum_ciphertexts(lhs_hex: &str, rhs_hex: &str) -> Result<String, String> {
+    let lhs = CString::new(lhs_hex).map_err(|e| e.to_string())?;
+    let rhs = CString::new(rhs_hex).map_err(|e| e.to_string())?;
+
+    unsafe {
+        let ptr = seal_sum_ciphertexts(lhs.as_ptr(), rhs.as_ptr());
+        if ptr.is_null() {
+            return Err(take_last_error("seal_sum_ciphertexts failed"));
+        }
+
+        let s = CStr::from_ptr(ptr).to_string_lossy().to_string();
+        seal_free_string(ptr);
+        Ok(s)
+    }
+}
+
+pub fn decrypt_amount(cipher_hex: &str) -> Result<f64, String> {
+    let cipher = CString::new(cipher_hex).map_err(|e| e.to_string())?;
+
+    unsafe {
+        let value = seal_decrypt_amount(cipher.as_ptr());
+        if value.is_nan() {
+            return Err(take_last_error("seal_decrypt_amount failed"));
+        }
+        Ok(value)
+    }
+}
+===== services/he-orchestrator/rust-gateway/src/routes.rs =====
+use crate::ffi;
+use axum::{
+    http::StatusCode,
+    response::IntoResponse,
+    routing::{get, post},
+    Json, Router,
+};
+use serde::{Deserialize, Serialize};
+use serde_json::json;
+
+#[derive(Debug, Deserialize)]
+pub struct EncryptRequest {
+    pub amount: f64,
+}
+
+#[derive(Debug, Serialize)]
+pub struct EncryptResponse {
+    pub ciphertext_hex: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SumRequest {
+    pub lhs_ciphertext_hex: String,
+    pub rhs_ciphertext_hex: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct SumResponse {
+    pub result_ciphertext_hex: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct DecryptRequest {
+    pub ciphertext_hex: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct DecryptResponse {
+    pub amount: f64,
+}
+
+pub fn router() -> Router {
+    Router::new()
+        .route("/health", get(health))
+        .route("/he/encrypt", post(encrypt))
+        .route("/he/sum", post(sum))
+        .route("/he/decrypt-test", post(decrypt_test))
+}
+
+async fn health() -> impl IntoResponse {
+    (StatusCode::OK, Json(json!({"status": "ok"})))
+}
+
+async fn encrypt(
+    Json(req): Json<EncryptRequest>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let ciphertext_hex = ffi::encrypt_amount(req.amount).map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(EncryptResponse { ciphertext_hex })))
+}
+
+async fn sum(
+    Json(req): Json<SumRequest>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let result_ciphertext_hex =
+        ffi::sum_ciphertexts(&req.lhs_ciphertext_hex, &req.rhs_ciphertext_hex)
+            .map_err(internal_error)?;
+
+    Ok((
+        StatusCode::OK,
+        Json(SumResponse {
+            result_ciphertext_hex,
+        }),
+    ))
+}
+
+async fn decrypt_test(
+    Json(req): Json<DecryptRequest>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let amount = ffi::decrypt_amount(&req.ciphertext_hex).map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(DecryptResponse { amount })))
+}
+
+fn internal_error<E: std::fmt::Display>(err: E) -> (StatusCode, Json<serde_json::Value>) {
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json(json!({
+            "error": "internal_server_error",
+            "message": err.to_string()
+        })),
+    )
+}
+===== services/smpc-orchestrator/programs/sanction_check.mpc =====
+from Compiler.types import sint
+from Compiler.library import print_ln
+
+# MVP simplification:
+# party 0 supplies the queried entity_id
+# party 1 supplies three sanctioned IDs
+# party 2 supplies three padding values (or future extension values)
+
+query = sint.get_input_from(0)
+
+s1 = sint.get_input_from(1)
+s2 = sint.get_input_from(1)
+s3 = sint.get_input_from(1)
+
+p1 = sint.get_input_from(2)
+p2 = sint.get_input_from(2)
+p3 = sint.get_input_from(2)
+
+match = (query == s1) + (query == s2) + (query == s3) + (query == p1) + (query == p2) + (query == p3)
+
+print_ln('%s', match.reveal())
+===== services/smpc-orchestrator/programs/entity_match.mpc =====
+from Compiler.types import sint
+from Compiler.library import print_ln
+
+a = sint.get_input_from(0)
+b = sint.get_input_from(1)
+
+result = (a == b)
+print_ln('%s', result.reveal())
+===== services/smpc-orchestrator/programs/threshold_alert.mpc =====
+from Compiler.types import sint
+from Compiler.library import print_ln
+
+value = sint.get_input_from(0)
+threshold = sint.get_input_from(1)
+
+alert = (value > threshold)
+print_ln('%s', alert.reveal())
+===== services/smpc-orchestrator/runtime/Cargo.toml =====
+[package]
+name = "runtime"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = "0.8.8"
+tokio = { version = "1.50.0", features = ["full"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+
+===== services/smpc-orchestrator/runtime/src/main.rs =====
+use axum::{
+    extract::State,
+    routing::post,
+    Json, Router,
+};
+use serde::{Deserialize, Serialize};
+use std::{collections::HashSet, net::SocketAddr, sync::Arc};
+
+#[derive(Clone)]
+struct AppState {
+    sanctioned_entities: Arc<HashSet<u64>>,
+}
+
+#[derive(Deserialize)]
+struct ScreenRequest {
+    tx_id: String,
+    entity_id: u64,
+}
+
+#[derive(Serialize)]
+struct ScreenResponse {
+    tx_id: String,
+    entity_id: u64,
+    screening_result: String,
+}
+
+async fn screen_handler(
+    State(state): State<AppState>,
+    Json(payload): Json<ScreenRequest>,
+) -> Json<ScreenResponse> {
+    let result = if state.sanctioned_entities.contains(&payload.entity_id) {
+        "match"
+    } else {
+        "no_match"
+    };
+
+    Json(ScreenResponse {
+        tx_id: payload.tx_id,
+        entity_id: payload.entity_id,
+        screening_result: result.to_string(),
+    })
+}
+
+#[tokio::main]
+async fn main() {
+    let mut sanctioned = HashSet::new();
+    sanctioned.insert(1007);
+
+    let state = AppState {
+        sanctioned_entities: Arc::new(sanctioned),
+    };
+
+    let app = Router::new()
+        .route("/smpc/screen", post(screen_handler))
+        .with_state(state);
+
+    let addr: SocketAddr = "127.0.0.1:8083"
+        .parse()
+        .expect("invalid bind address 127.0.0.1:8083");
+
+    println!("SMPC runtime listening on http://{}", addr);
+
+    let listener = match tokio::net::TcpListener::bind(addr).await {
+        Ok(listener) => listener,
+        Err(err) => {
+            eprintln!("Failed to bind SMPC runtime on {}: {}", addr, err);
+            std::process::exit(1);
+        }
+    };
+
+    if let Err(err) = axum::serve(listener, app).await {
+        eprintln!("SMPC runtime server failed: {}", err);
+        std::process::exit(1);
+    }
+}
+
+===== services/smpc-orchestrator/runtime/src/routes.rs =====
+MISSING: services/smpc-orchestrator/runtime/src/routes.rs
+
+===== services/smpc-orchestrator/runtime/src/mp_spdz.rs =====
+MISSING: services/smpc-orchestrator/runtime/src/mp_spdz.rs
+
+===== services/smpc-orchestrator/runtime/src/parser.rs =====
+MISSING: services/smpc-orchestrator/runtime/src/parser.rs
+
+===== services/zk-prover/circuits/fatf-rec10/src/lib.rs =====
+pub mod circuit;
+
+use halo2_proofs::{dev::MockProver, pasta::Fp};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Rec10Claim {
+    pub tx_id: String,
+    pub cdd_check_executed: bool,
+    pub sender_screening_performed: bool,
+    pub receiver_screening_performed: bool,
+}
+
+impl Rec10Claim {
+    pub fn public_value(&self) -> u64 {
+        if self.cdd_check_executed
+            && self.sender_screening_performed
+            && self.receiver_screening_performed
+        {
+            1
+        } else {
+            0
+        }
+    }
+}
+
+pub fn verify_claim_with_circuit(claim: &Rec10Claim) -> Result<(), String> {
+    let circuit = circuit::Rec10Circuit {
+        check_executed: halo2_proofs::circuit::Value::known(Fp::from(claim.public_value())),
+    };
+
+    let public_inputs = vec![vec![Fp::from(claim.public_value())]];
+    let prover = MockProver::run(8, &circuit, public_inputs)
+        .map_err(|e| format!("rec10 mock prover init failed: {:?}", e))?;
+
+    prover
+        .verify()
+        .map_err(|e| format!("rec10 mock prover verify failed: {:?}", e))
+}
+
+#[cfg(test)]
+mod tests;
+===== services/zk-prover/circuits/fatf-rec10/src/circuit.rs =====
+use halo2_proofs::{
+    circuit::{Layouter, SimpleFloorPlanner, Value},
+    pasta::Fp,
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
+};
+
+#[derive(Clone, Debug)]
+pub struct Rec10Config {
+    pub advice: Column<Advice>,
+    pub instance: Column<Instance>,
+    pub selector: Selector,
+}
+
+#[derive(Default, Clone, Debug)]
+pub struct Rec10Circuit {
+    pub check_executed: Value<Fp>,
+}
+
+impl Circuit<Fp> for Rec10Circuit {
+    type Config = Rec10Config;
+    type FloorPlanner = SimpleFloorPlanner;
+
+    fn without_witnesses(&self) -> Self {
+        Self {
+            check_executed: Value::unknown(),
+        }
+    }
+
+    fn configure(meta: &mut ConstraintSystem<Fp>) -> Self::Config {
+        let advice = meta.advice_column();
+        let instance = meta.instance_column();
+        let selector = meta.selector();
+
+        meta.enable_equality(advice);
+        meta.enable_equality(instance);
+
+        Rec10Config {
+            advice,
+            instance,
+            selector,
+        }
+    }
+
+    fn synthesize(
+        &self,
+        config: Self::Config,
+        mut layouter: impl Layouter<Fp>,
+    ) -> Result<(), Error> {
+        let assigned = layouter.assign_region(
+            || "rec10 region",
+            |mut region| {
+                config.selector.enable(&mut region, 0)?;
+
+                let cell = region.assign_advice(
+                    || "rec10 check_executed",
+                    config.advice,
+                    0,
+                    || self.check_executed,
+                )?;
+
+                Ok(cell)
+            },
+        )?;
+
+        layouter.constrain_instance(assigned.cell(), config.instance, 0)?;
+
+        Ok(())
+    }
+}
+===== services/zk-prover/circuits/fatf-rec10/src/tests.rs =====
+use super::*;
+
+#[test]
+fn rec10_claim_passes_when_checks_exist() {
+    let claim = Rec10Claim {
+        tx_id: "TX-REC10-1".into(),
+        cdd_check_executed: true,
+        sender_screening_performed: true,
+        receiver_screening_performed: true,
+    };
+
+    assert!(verify_claim_with_circuit(&claim).is_ok());
+}
+
+#[test]
+fn rec10_claim_also_passes_when_checks_missing_but_public_value_is_0() {
+    let claim = Rec10Claim {
+        tx_id: "TX-REC10-2".into(),
+        cdd_check_executed: true,
+        sender_screening_performed: false,
+        receiver_screening_performed: true,
+    };
+
+    assert_eq!(claim.public_value(), 0);
+    assert!(verify_claim_with_circuit(&claim).is_ok());
+}
+===== services/zk-prover/circuits/fatf-rec11/src/lib.rs =====
+pub mod circuit;
+
+use halo2_proofs::{dev::MockProver, pasta::Fp};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Rec11Claim {
+    pub tx_id: String,
+    pub transaction_exists: bool,
+    pub audit_event_count: u64,
+}
+
+impl Rec11Claim {
+    pub fn public_value(&self) -> u64 {
+        if self.transaction_exists && self.audit_event_count >= 3 {
+            1
+        } else {
+            0
+        }
+    }
+}
+
+pub fn verify_claim_with_circuit(claim: &Rec11Claim) -> Result<(), String> {
+    let circuit = circuit::Rec11Circuit {
+        record_integrity: halo2_proofs::circuit::Value::known(Fp::from(claim.public_value())),
+    };
+
+    let public_inputs = vec![vec![Fp::from(claim.public_value())]];
+    let prover = MockProver::run(8, &circuit, public_inputs)
+        .map_err(|e| format!("rec11 mock prover init failed: {:?}", e))?;
+
+    prover
+        .verify()
+        .map_err(|e| format!("rec11 mock prover verify failed: {:?}", e))
+}
+
+#[cfg(test)]
+mod tests;
+===== services/zk-prover/circuits/fatf-rec11/src/circuit.rs =====
+use halo2_proofs::{
+    circuit::{Layouter, SimpleFloorPlanner, Value},
+    pasta::Fp,
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
+};
+
+#[derive(Clone, Debug)]
+pub struct Rec11Config {
+    pub advice: Column<Advice>,
+    pub instance: Column<Instance>,
+    pub selector: Selector,
+}
+
+#[derive(Default, Clone, Debug)]
+pub struct Rec11Circuit {
+    pub record_integrity: Value<Fp>,
+}
+
+impl Circuit<Fp> for Rec11Circuit {
+    type Config = Rec11Config;
+    type FloorPlanner = SimpleFloorPlanner;
+
+    fn without_witnesses(&self) -> Self {
+        Self {
+            record_integrity: Value::unknown(),
+        }
+    }
+
+    fn configure(meta: &mut ConstraintSystem<Fp>) -> Self::Config {
+        let advice = meta.advice_column();
+        let instance = meta.instance_column();
+        let selector = meta.selector();
+
+        meta.enable_equality(advice);
+        meta.enable_equality(instance);
+
+        Rec11Config {
+            advice,
+            instance,
+            selector,
+        }
+    }
+
+    fn synthesize(
+        &self,
+        config: Self::Config,
+        mut layouter: impl Layouter<Fp>,
+    ) -> Result<(), Error> {
+        let assigned = layouter.assign_region(
+            || "rec11 region",
+            |mut region| {
+                config.selector.enable(&mut region, 0)?;
+
+                let cell = region.assign_advice(
+                    || "rec11 record_integrity",
+                    config.advice,
+                    0,
+                    || self.record_integrity,
+                )?;
+
+                Ok(cell)
+            },
+        )?;
+
+        layouter.constrain_instance(assigned.cell(), config.instance, 0)?;
+
+        Ok(())
+    }
+}
+===== services/zk-prover/circuits/fatf-rec11/src/tests.rs =====
+use super::*;
+
+#[test]
+fn rec11_claim_passes_when_records_exist() {
+    let claim = Rec11Claim {
+        tx_id: "TX-REC11-1".into(),
+        transaction_exists: true,
+        audit_event_count: 3,
+    };
+
+    assert_eq!(claim.public_value(), 1);
+    assert!(verify_claim_with_circuit(&claim).is_ok());
+}
+
+#[test]
+fn rec11_claim_also_passes_when_audit_is_insufficient_but_public_value_is_0() {
+    let claim = Rec11Claim {
+        tx_id: "TX-REC11-2".into(),
+        transaction_exists: true,
+        audit_event_count: 1,
+    };
+
+    assert_eq!(claim.public_value(), 0);
+    assert!(verify_claim_with_circuit(&claim).is_ok());
+}
+===== services/zk-prover/circuits/fatf-rec16/src/lib.rs =====
+pub mod circuit;
+
+use halo2_proofs::{dev::MockProver, pasta::Fp};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Rec16Claim {
+    pub tx_id: String,
+    pub originator_institution_present: bool,
+    pub beneficiary_institution_present: bool,
+    pub payment_metadata_present: bool,
+}
+
+impl Rec16Claim {
+    pub fn public_value(&self) -> u64 {
+        if self.originator_institution_present
+            && self.beneficiary_institution_present
+            && self.payment_metadata_present
+        {
+            1
+        } else {
+            0
+        }
+    }
+}
+
+pub fn verify_claim_with_circuit(claim: &Rec16Claim) -> Result<(), String> {
+    let circuit = circuit::Rec16Circuit {
+        metadata_present: halo2_proofs::circuit::Value::known(Fp::from(claim.public_value())),
+    };
+
+    let public_inputs = vec![vec![Fp::from(claim.public_value())]];
+    let prover = MockProver::run(8, &circuit, public_inputs)
+        .map_err(|e| format!("rec16 mock prover init failed: {:?}", e))?;
+
+    prover
+        .verify()
+        .map_err(|e| format!("rec16 mock prover verify failed: {:?}", e))
+}
+
+#[cfg(test)]
+mod tests;
+===== services/zk-prover/circuits/fatf-rec16/src/circuit.rs =====
+use halo2_proofs::{
+    circuit::{Layouter, SimpleFloorPlanner, Value},
+    pasta::Fp,
+    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
+};
+
+#[derive(Clone, Debug)]
+pub struct Rec16Config {
+    pub advice: Column<Advice>,
+    pub instance: Column<Instance>,
+    pub selector: Selector,
+}
+
+#[derive(Default, Clone, Debug)]
+pub struct Rec16Circuit {
+    pub metadata_present: Value<Fp>,
+}
+
+impl Circuit<Fp> for Rec16Circuit {
+    type Config = Rec16Config;
+    type FloorPlanner = SimpleFloorPlanner;
+
+    fn without_witnesses(&self) -> Self {
+        Self {
+            metadata_present: Value::unknown(),
+        }
+    }
+
+    fn configure(meta: &mut ConstraintSystem<Fp>) -> Self::Config {
+        let advice = meta.advice_column();
+        let instance = meta.instance_column();
+        let selector = meta.selector();
+
+        meta.enable_equality(advice);
+        meta.enable_equality(instance);
+
+        Rec16Config {
+            advice,
+            instance,
+            selector,
+        }
+    }
+
+    fn synthesize(
+        &self,
+        config: Self::Config,
+        mut layouter: impl Layouter<Fp>,
+    ) -> Result<(), Error> {
+        let assigned = layouter.assign_region(
+            || "rec16 region",
+            |mut region| {
+                config.selector.enable(&mut region, 0)?;
+
+                let cell = region.assign_advice(
+                    || "rec16 metadata_present",
+                    config.advice,
+                    0,
+                    || self.metadata_present,
+                )?;
+
+                Ok(cell)
+            },
+        )?;
+
+        layouter.constrain_instance(assigned.cell(), config.instance, 0)?;
+
+        Ok(())
+    }
+}
+===== services/zk-prover/circuits/fatf-rec16/src/tests.rs =====
+use super::*;
+
+#[test]
+fn rec16_claim_passes_when_metadata_exists() {
+    let claim = Rec16Claim {
+        tx_id: "TX-REC16-1".into(),
+        originator_institution_present: true,
+        beneficiary_institution_present: true,
+        payment_metadata_present: true,
+    };
+
+    assert_eq!(claim.public_value(), 1);
+    assert!(verify_claim_with_circuit(&claim).is_ok());
+}
+
+#[test]
+fn rec16_claim_also_passes_when_metadata_missing_but_public_value_is_0() {
+    let claim = Rec16Claim {
+        tx_id: "TX-REC16-2".into(),
+        originator_institution_present: true,
+        beneficiary_institution_present: false,
+        payment_metadata_present: true,
+    };
+
+    assert_eq!(claim.public_value(), 0);
+    assert!(verify_claim_with_circuit(&claim).is_ok());
+}
+===== services/zk-prover/prover/src/main.rs =====
+#[path = "../../circuits/fatf-rec10/src/lib.rs"]
+mod fatf_rec10;
+#[path = "../../circuits/fatf-rec11/src/lib.rs"]
+mod fatf_rec11;
+#[path = "../../circuits/fatf-rec16/src/lib.rs"]
+mod fatf_rec16;
+
+mod prove;
+mod routes;
+
+use sqlx::postgres::PgPoolOptions;
+use std::{env, net::SocketAddr};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+#[tokio::main]
+async fn main() {
+    dotenvy::dotenv().ok();
+
+    tracing_subscriber::registry()
+        .with(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "info,zk_prover_service=debug".into()),
+        )
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
+    let database_url =
+        env::var("DATABASE_URL").expect("DATABASE_URL must be set in environment or .env");
+    let bind_addr = env::var("ZK_PROVER_BIND").unwrap_or_else(|_| "127.0.0.1:8084".to_string());
+
+    let pool = PgPoolOptions::new()
+        .max_connections(10)
+        .connect(&database_url)
+        .await
+        .expect("Failed to connect to PostgreSQL");
+
+    let app = routes::router(pool);
+
+    let addr: SocketAddr = bind_addr.parse().expect("Invalid ZK_PROVER_BIND");
+    tracing::info!("zk-prover-service listening on {}", addr);
+
+    let listener = tokio::net::TcpListener::bind(addr)
+        .await
+        .expect("Failed to bind listener");
+
+    axum::serve(listener, app)
+        .await
+        .expect("server failed");
+}
+===== services/zk-prover/prover/src/routes.rs =====
+use crate::prove::{generate_proofs_for_tx, get_proofs_for_tx, GenerateProofsRequest};
+use axum::{
+    extract::{Path, State},
+    http::StatusCode,
+    response::IntoResponse,
+    routing::{get, post},
+    Json, Router,
+};
+use serde_json::json;
+use sqlx::{PgPool, Row};
+use zk_verifier::{verify_proof_artifact, ProofArtifactRecord};
+
+pub fn router(pool: PgPool) -> Router {
+    Router::new()
+        .route("/health", get(health))
+        .route("/proofs/generate", post(generate))
+        .route("/proofs/tx/:tx_id", get(list_by_tx))
+        .route("/proofs/:proof_id/verify", post(verify_by_id))
+        .with_state(pool)
+}
+
+async fn health() -> impl IntoResponse {
+    (StatusCode::OK, Json(json!({"status": "ok"})))
+}
+
+async fn generate(
+    State(pool): State<PgPool>,
+    Json(req): Json<GenerateProofsRequest>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let proofs = generate_proofs_for_tx(&pool, &req.tx_id)
+        .await
+        .map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(proofs)))
+}
+
+async fn list_by_tx(
+    State(pool): State<PgPool>,
+    Path(tx_id): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let proofs = get_proofs_for_tx(&pool, &tx_id)
+        .await
+        .map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(proofs)))
+}
+
+async fn verify_by_id(
+    State(pool): State<PgPool>,
+    Path(proof_id): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let row = sqlx::query(
+        r#"
+        SELECT id, tx_id, rule_id, claim_hash, proof_blob, public_signal, verification_status
+        FROM proofs
+        WHERE id = $1
+        "#,
+    )
+    .bind(uuid::Uuid::parse_str(&proof_id).map_err(internal_error)?)
+    .fetch_one(&pool)
+    .await
+    .map_err(internal_error)?;
+
+    let record = ProofArtifactRecord {
+        id: row.try_get::<uuid::Uuid, _>("id").unwrap().to_string(),
+        tx_id: row.try_get::<String, _>("tx_id").unwrap(),
+        rule_id: row.try_get::<String, _>("rule_id").unwrap(),
+        claim_hash: row.try_get::<String, _>("claim_hash").unwrap(),
+        proof_blob: row.try_get::<serde_json::Value, _>("proof_blob").unwrap(),
+        public_signal: row.try_get::<bool, _>("public_signal").unwrap(),
+        verification_status: row.try_get::<String, _>("verification_status").unwrap(),
+    };
+
+    let outcome = verify_proof_artifact(&record).map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(outcome)))
+}
+
+fn internal_error<E: std::fmt::Display>(err: E) -> (StatusCode, Json<serde_json::Value>) {
+    let msg = err.to_string();
+    tracing::error!("zk-prover internal error: {}", msg);
+
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json(json!({
+            "error": "internal_server_error",
+            "message": msg
+        })),
+    )
+}
+===== services/zk-prover/prover/src/prove.rs =====
+use crate::{fatf_rec10, fatf_rec11, fatf_rec16};
+use chrono::Utc;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use sha2::{Digest, Sha256};
+use sqlx::{PgPool, Row};
+use uuid::Uuid;
+use zk_verifier::{verify_proof_artifact, ProofArtifactRecord};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ProofArtifact {
+    pub id: String,
+    pub tx_id: String,
+    pub rule_id: String,
+    pub claim_hash: String,
+    pub proof_blob: Value,
+    pub public_signal: bool,
+    pub verification_status: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct GenerateProofsRequest {
+    pub tx_id: String,
+}
+
+fn hash_json(value: &Value) -> Result<String, String> {
+    let canonical = serde_json::to_vec(value).map_err(|e| e.to_string())?;
+    let mut hasher = Sha256::new();
+    hasher.update(&canonical);
+    Ok(hex::encode(hasher.finalize()))
+}
+
+async fn fetch_transaction(
+    pool: &PgPool,
+    tx_id: &str,
+) -> Result<Option<sqlx::postgres::PgRow>, String> {
+    sqlx::query(
+        r#"
+        SELECT tx_id, originator_institution, beneficiary_institution, status
+        FROM transactions
+        WHERE tx_id = $1
+        "#,
+    )
+    .bind(tx_id)
+    .fetch_optional(pool)
+    .await
+    .map_err(|e| e.to_string())
+}
+
+async fn fetch_audit_rows(
+    pool: &PgPool,
+    tx_id: &str,
+) -> Result<Vec<sqlx::postgres::PgRow>, String> {
+    sqlx::query(
+        r#"
+        SELECT event_type, event_status, event_ref, details
+        FROM audit_logs
+        WHERE tx_id = $1
+        ORDER BY created_at ASC
+        "#,
+    )
+    .bind(tx_id)
+    .fetch_all(pool)
+    .await
+    .map_err(|e| e.to_string())
+}
+
+async fn store_proof(pool: &PgPool, artifact: &ProofArtifact) -> Result<(), String> {
+    sqlx::query(
+        r#"
+        INSERT INTO proofs
+            (id, tx_id, rule_id, claim_hash, proof_blob, public_signal, verification_status, created_at)
+        VALUES
+            ($1, $2, $3, $4, $5, $6, $7, $8)
+        "#,
+    )
+    .bind(Uuid::parse_str(&artifact.id).unwrap())
+    .bind(&artifact.tx_id)
+    .bind(&artifact.rule_id)
+    .bind(&artifact.claim_hash)
+    .bind(&artifact.proof_blob)
+    .bind(artifact.public_signal)
+    .bind(&artifact.verification_status)
+    .bind(Utc::now())
+    .execute(pool)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+pub async fn generate_proofs_for_tx(
+    pool: &PgPool,
+    tx_id: &str,
+) -> Result<Vec<ProofArtifact>, String> {
+    tracing::info!("proof generation started for tx_id={}", tx_id);
+
+    let tx_row = fetch_transaction(pool, tx_id).await?;
+    let tx_row = tx_row.ok_or_else(|| format!("transaction not found: {}", tx_id))?;
+    tracing::info!("transaction fetched for tx_id={}", tx_id);
+
+    let audit_rows = fetch_audit_rows(pool, tx_id).await?;
+    let audit_count = audit_rows.len() as u64;
+    tracing::info!("audit rows fetched for tx_id={} count={}", tx_id, audit_count);
+
+    let sender_screening_performed = audit_rows.iter().any(|r| {
+        r.try_get::<String, _>("event_type")
+            .map(|v| v == "sender_screening_completed")
+            .unwrap_or(false)
+    });
+
+    let receiver_screening_performed = audit_rows.iter().any(|r| {
+        r.try_get::<String, _>("event_type")
+            .map(|v| v == "receiver_screening_completed")
+            .unwrap_or(false)
+    });
+
+    let transaction_exists = true;
+
+    let originator_institution_present = tx_row
+        .try_get::<Option<String>, _>("originator_institution")
+        .ok()
+        .flatten()
+        .map(|v| !v.trim().is_empty())
+        .unwrap_or(false);
+
+    let beneficiary_institution_present = tx_row
+        .try_get::<Option<String>, _>("beneficiary_institution")
+        .ok()
+        .flatten()
+        .map(|v| !v.trim().is_empty())
+        .unwrap_or(false);
+
+    let status = tx_row
+        .try_get::<String, _>("status")
+        .unwrap_or_else(|_| "unknown".into());
+
+    tracing::info!("running FATF_REC10 for tx_id={}", tx_id);
+    let rec10_claim = fatf_rec10::Rec10Claim {
+        tx_id: tx_id.to_string(),
+        cdd_check_executed: true,
+        sender_screening_performed,
+        receiver_screening_performed,
+    };
+    fatf_rec10::verify_claim_with_circuit(&rec10_claim)?;
+
+    tracing::info!("running FATF_REC11 for tx_id={}", tx_id);
+    let rec11_claim = fatf_rec11::Rec11Claim {
+        tx_id: tx_id.to_string(),
+        transaction_exists,
+        audit_event_count: audit_count,
+    };
+    fatf_rec11::verify_claim_with_circuit(&rec11_claim)?;
+
+    tracing::info!("running FATF_REC16 for tx_id={}", tx_id);
+    let rec16_claim = fatf_rec16::Rec16Claim {
+        tx_id: tx_id.to_string(),
+        originator_institution_present,
+        beneficiary_institution_present,
+        payment_metadata_present: originator_institution_present
+            && beneficiary_institution_present,
+    };
+    fatf_rec16::verify_claim_with_circuit(&rec16_claim)?;
+
+    let rec10_blob = serde_json::to_value(&rec10_claim).map_err(|e| e.to_string())?;
+    let rec11_blob = serde_json::to_value(&rec11_claim).map_err(|e| e.to_string())?;
+    let rec16_blob = serde_json::to_value(&rec16_claim).map_err(|e| e.to_string())?;
+
+    let mut artifacts = vec![
+        ProofArtifact {
+            id: Uuid::new_v4().to_string(),
+            tx_id: tx_id.to_string(),
+            rule_id: "FATF_REC10".into(),
+            claim_hash: hash_json(&rec10_blob)?,
+            proof_blob: rec10_blob,
+            public_signal: rec10_claim.public_value() == 1,
+            verification_status: "generated".into(),
+        },
+        ProofArtifact {
+            id: Uuid::new_v4().to_string(),
+            tx_id: tx_id.to_string(),
+            rule_id: "FATF_REC11".into(),
+            claim_hash: hash_json(&rec11_blob)?,
+            proof_blob: rec11_blob,
+            public_signal: rec11_claim.public_value() == 1,
+            verification_status: "generated".into(),
+        },
+        ProofArtifact {
+            id: Uuid::new_v4().to_string(),
+            tx_id: tx_id.to_string(),
+            rule_id: "FATF_REC16".into(),
+            claim_hash: hash_json(&rec16_blob)?,
+            proof_blob: rec16_blob,
+            public_signal: rec16_claim.public_value() == 1,
+            verification_status: "generated".into(),
+        },
+    ];
+
+    tracing::info!(
+        "prepared {} proof artifacts for tx_id={}",
+        artifacts.len(),
+        tx_id
+    );
+
+    for artifact in &mut artifacts {
+        tracing::info!(
+            "verifying/storing proof tx_id={} rule_id={}",
+            artifact.tx_id,
+            artifact.rule_id
+        );
+
+        let outcome = verify_proof_artifact(&ProofArtifactRecord {
+            id: artifact.id.clone(),
+            tx_id: artifact.tx_id.clone(),
+            rule_id: artifact.rule_id.clone(),
+            claim_hash: artifact.claim_hash.clone(),
+            proof_blob: artifact.proof_blob.clone(),
+            public_signal: artifact.public_signal,
+            verification_status: artifact.verification_status.clone(),
+        })?;
+
+        artifact.verification_status = if outcome.verified {
+            "verified".into()
+        } else {
+            "generated".into()
+        };
+
+        store_proof(pool, artifact).await?;
+    }
+
+    tracing::info!("generated proof set for tx_id={} status={}", tx_id, status);
+    Ok(artifacts)
+}
+
+pub async fn get_proofs_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<ProofArtifact>, String> {
+    let rows = sqlx::query(
+        r#"
+        SELECT id, tx_id, rule_id, claim_hash, proof_blob, public_signal, verification_status
+        FROM proofs
+        WHERE tx_id = $1
+
+===== services/zk-prover/verifier/src/lib.rs =====
+mod verify;
+
+pub use verify::{verify_proof_artifact, ProofArtifactRecord, VerificationOutcome};
+===== services/zk-prover/verifier/src/verify.rs =====
+#[path = "../../circuits/fatf-rec10/src/lib.rs"]
+mod fatf_rec10;
+#[path = "../../circuits/fatf-rec11/src/lib.rs"]
+mod fatf_rec11;
+#[path = "../../circuits/fatf-rec16/src/lib.rs"]
+mod fatf_rec16;
+
+use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ProofArtifactRecord {
+    pub id: String,
+    pub tx_id: String,
+    pub rule_id: String,
+    pub claim_hash: String,
+    pub proof_blob: serde_json::Value,
+    pub public_signal: bool,
+    pub verification_status: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct VerificationOutcome {
+    pub proof_id: String,
+    pub tx_id: String,
+    pub rule_id: String,
+    pub verified: bool,
+    pub reason: String,
+}
+
+fn hash_json(value: &serde_json::Value) -> Result<String, String> {
+    let canonical = serde_json::to_vec(value).map_err(|e| e.to_string())?;
+    let mut hasher = Sha256::new();
+    hasher.update(&canonical);
+    Ok(hex::encode(hasher.finalize()))
+}
+
+pub fn verify_proof_artifact(
+    record: &ProofArtifactRecord,
+) -> Result<VerificationOutcome, String> {
+    let recomputed_hash = hash_json(&record.proof_blob)?;
+    if recomputed_hash != record.claim_hash {
+        return Ok(VerificationOutcome {
+            proof_id: record.id.clone(),
+            tx_id: record.tx_id.clone(),
+            rule_id: record.rule_id.clone(),
+            verified: false,
+            reason: "claim hash mismatch".into(),
+        });
+    }
+
+    let verified = match record.rule_id.as_str() {
+        "FATF_REC10" => {
+            let claim: fatf_rec10::Rec10Claim =
+                serde_json::from_value(record.proof_blob.clone()).map_err(|e| e.to_string())?;
+            fatf_rec10::verify_claim_with_circuit(&claim).is_ok()
+        }
+        "FATF_REC11" => {
+            let claim: fatf_rec11::Rec11Claim =
+                serde_json::from_value(record.proof_blob.clone()).map_err(|e| e.to_string())?;
+            fatf_rec11::verify_claim_with_circuit(&claim).is_ok()
+        }
+        "FATF_REC16" => {
+            let claim: fatf_rec16::Rec16Claim =
+                serde_json::from_value(record.proof_blob.clone()).map_err(|e| e.to_string())?;
+            fatf_rec16::verify_claim_with_circuit(&claim).is_ok()
+        }
+        other => {
+            return Ok(VerificationOutcome {
+                proof_id: record.id.clone(),
+                tx_id: record.tx_id.clone(),
+                rule_id: record.rule_id.clone(),
+                verified: false,
+                reason: format!("unknown rule_id: {}", other),
+            });
+        }
+    };
+
+    Ok(VerificationOutcome {
+        proof_id: record.id.clone(),
+        tx_id: record.tx_id.clone(),
+        rule_id: record.rule_id.clone(),
+        verified,
+        reason: if verified {
+            "verification passed".into()
+        } else {
+            "circuit verification failed".into()
+        },
+    })
+}
+===== services/encryption-service/api/src/main.rs =====
+mod pseudonymize;
+mod routes;
+mod smpc_client;
+
+use axum::Router;
+use sqlx::postgres::PgPoolOptions;
+use std::{env, net::SocketAddr};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+#[tokio::main]
+async fn main() {
+    dotenvy::dotenv().ok();
+
+    tracing_subscriber::registry()
+        .with(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "info,encryption_service_api=debug".into()),
+        )
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
+    let database_url =
+        env::var("DATABASE_URL").expect("DATABASE_URL must be set in environment or .env");
+    let bind_addr = env::var("ENCRYPTION_SERVICE_BIND")
+        .unwrap_or_else(|_| "127.0.0.1:8081".to_string());
+
+    let pool = PgPoolOptions::new()
+        .max_connections(10)
+        .connect(&database_url)
+        .await
+        .expect("Failed to connect to PostgreSQL");
+
+    let app: Router = routes::router(pool);
+
+    let addr: SocketAddr = bind_addr.parse().expect("Invalid ENCRYPTION_SERVICE_BIND");
+    tracing::info!("encryption-service listening on {}", addr);
+
+    let listener = tokio::net::TcpListener::bind(addr)
+        .await
+        .expect("Failed to bind listener");
+
+    axum::serve(listener, app)
+        .await
+        .expect("server failed");
+}
+===== services/encryption-service/api/src/routes.rs =====
+use crate::pseudonymize::{
+    pseudonymize_transaction, PseudonymizedTransaction, TransactionInput,
+    TransactionSubmissionResponse,
+};
+use crate::smpc_client;
+use axum::{
+    extract::State,
+    http::StatusCode,
+    response::IntoResponse,
+    routing::{get, post},
+    Json, Router,
+};
+use chrono::Utc;
+use serde_json::json;
+use sha2::{Digest, Sha256};
+use sqlx::PgPool;
+use std::{env, sync::Arc};
+use uuid::Uuid;
+
+#[derive(Clone)]
+pub struct AppState {
+    pub pool: PgPool,
+    pub pseudo_salt: Arc<String>,
+    pub smpc_base_url: Arc<String>,
+}
+
+pub fn router(pool: PgPool) -> Router {
+    let pseudo_salt = env::var("PSEUDO_SALT").unwrap_or_else(|_| "dev_demo_salt_change_me".into());
+    let smpc_base_url =
+        env::var("SMPC_BASE_URL").unwrap_or_else(|_| "http://127.0.0.1:8083".into());
+
+    let state = AppState {
+        pool,
+        pseudo_salt: Arc::new(pseudo_salt),
+        smpc_base_url: Arc::new(smpc_base_url),
+    };
+
+    Router::new()
+        .route("/health", get(health))
+        .route("/transactions/submit", post(submit_transaction))
+        .with_state(state)
+}
+
+pub fn pseudonymize_identifier(raw: &str, salt: &str) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(salt.as_bytes());
+    hasher.update(b":");
+    hasher.update(raw.as_bytes());
+    let digest = hasher.finalize();
+    let hexed = hex::encode(digest);
+    format!("psd_{}", &hexed[..24])
+}
+
+pub fn derive_entity_id(raw: &str) -> i64 {
+    let digits: String = raw.chars().filter(|c| c.is_ascii_digit()).collect();
+    if digits.is_empty() {
+        1000
+    } else {
+        1000 + digits.parse::<i64>().unwrap_or(0)
+    }
+}
+
+async fn health() -> impl IntoResponse {
+    (StatusCode::OK, Json(json!({ "status": "ok" })))
+}
+
+async fn submit_transaction(
+    State(state): State<AppState>,
+    Json(input): Json<TransactionInput>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let pseudo: PseudonymizedTransaction = pseudonymize_transaction(&input, &state.pseudo_salt);
+
+    let sender_screen = smpc_client::screen_entity(
+        &state.smpc_base_url,
+        &pseudo.tx_id,
+        pseudo.sender_entity_id,
+    )
+    .await
+    .map_err(internal_error)?;
+
+    let receiver_screen = smpc_client::screen_entity(
+        &state.smpc_base_url,
+        &pseudo.tx_id,
+        pseudo.receiver_entity_id,
+    )
+    .await
+    .map_err(internal_error)?;
+
+    let final_status = if sender_screen.screening_result == "match"
+        || receiver_screen.screening_result == "match"
+    {
+        "screened_match"
+    } else {
+        "screened_clear"
+    };
+
+    let mut tx = state.pool.begin().await.map_err(internal_error)?;
+
+    sqlx::query(
+        r#"
+        INSERT INTO transactions
+            (tx_id, sender_pseudo, receiver_pseudo, amount_cipher_ref, currency, transaction_type,
+             originator_institution, beneficiary_institution, status, created_at)
+        VALUES
+            ($1, $2, $3, NULL, $4, $5, $6, $7, $8, $9)
+        "#,
+    )
+    .bind(&pseudo.tx_id)
+    .bind(&pseudo.sender_pseudo)
+    .bind(&pseudo.receiver_pseudo)
+    .bind(&pseudo.currency)
+    .bind(&pseudo.transaction_type)
+    .bind(&pseudo.originator_institution)
+    .bind(&pseudo.beneficiary_institution)
+    .bind(final_status)
+    .bind(pseudo.timestamp)
+    .execute(&mut *tx)
+    .await
+    .map_err(internal_error)?;
+
+    let audit_event_id = Uuid::new_v4().to_string();
+
+    sqlx::query(
+        r#"
+        INSERT INTO audit_logs
+            (id, tx_id, event_type, event_status, event_ref, details, created_at)
+        VALUES
+            ($1, $2, $3, $4, $5, $6, $7)
+        "#,
+    )
+    .bind(Uuid::parse_str(&audit_event_id).unwrap())
+    .bind(&pseudo.tx_id)
+    .bind("transaction_submitted_and_pseudonymized")
+    .bind("success")
+    .bind(Option::<String>::None)
+    .bind(json!({
+        "sender_pseudo": pseudo.sender_pseudo,
+        "receiver_pseudo": pseudo.receiver_pseudo,
+        "sender_entity_id": pseudo.sender_entity_id,
+        "receiver_entity_id": pseudo.receiver_entity_id,
+        "timestamp": pseudo.timestamp,
+    }))
+    .bind(Utc::now())
+    .execute(&mut *tx)
+    .await
+    .map_err(internal_error)?;
+
+    sqlx::query(
+        r#"
+        INSERT INTO audit_logs
+            (id, tx_id, event_type, event_status, event_ref, details, created_at)
+        VALUES
+            ($1, $2, $3, $4, $5, $6, $7)
+        "#,
+    )
+    .bind(Uuid::new_v4())
+    .bind(&pseudo.tx_id)
+    .bind("sender_screening_completed")
+    .bind(&sender_screen.screening_result)
+    .bind(pseudo.sender_entity_id.to_string())
+    .bind(json!({
+        "entity_id": pseudo.sender_entity_id,
+        "screening_result": sender_screen.screening_result
+    }))
+    .bind(Utc::now())
+    .execute(&mut *tx)
+    .await
+    .map_err(internal_error)?;
+
+    sqlx::query(
+        r#"
+        INSERT INTO audit_logs
+            (id, tx_id, event_type, event_status, event_ref, details, created_at)
+        VALUES
+            ($1, $2, $3, $4, $5, $6, $7)
+        "#,
+    )
+    .bind(Uuid::new_v4())
+    .bind(&pseudo.tx_id)
+    .bind("receiver_screening_completed")
+    .bind(&receiver_screen.screening_result)
+    .bind(pseudo.receiver_entity_id.to_string())
+    .bind(json!({
+        "entity_id": pseudo.receiver_entity_id,
+        "screening_result": receiver_screen.screening_result
+    }))
+    .bind(Utc::now())
+    .execute(&mut *tx)
+    .await
+    .map_err(internal_error)?;
+
+    tx.commit().await.map_err(internal_error)?;
+
+    let response = TransactionSubmissionResponse {
+        tx_id: pseudo.tx_id,
+        sender_pseudo: pseudo.sender_pseudo,
+        receiver_pseudo: pseudo.receiver_pseudo,
+        sender_screening_result: sender_screen.screening_result,
+        receiver_screening_result: receiver_screen.screening_result,
+        status: final_status.to_string(),
+        audit_event_id,
+    };
+
+    Ok((StatusCode::CREATED, Json(response)))
+}
+
+fn internal_error<E: std::fmt::Display>(err: E) -> (StatusCode, Json<serde_json::Value>) {
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json(json!({
+            "error": "internal_server_error",
+            "message": err.to_string()
+        })),
+    )
+}
+===== services/encryption-service/api/src/pseudonymize.rs =====
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct TransactionInput {
+    pub tx_id: String,
+    pub sender_id: String,
+    pub receiver_id: String,
+    pub sender_entity_id: Option<i64>,
+    pub receiver_entity_id: Option<i64>,
+    pub amount: f64,
+    pub currency: String,
+    pub transaction_type: String,
+    pub originator_name: Option<String>,
+    pub beneficiary_name: Option<String>,
+    pub originator_institution: String,
+    pub beneficiary_institution: String,
+    pub timestamp: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PseudonymizedTransaction {
+    pub tx_id: String,
+    pub sender_pseudo: String,
+    pub receiver_pseudo: String,
+    pub sender_entity_id: i64,
+    pub receiver_entity_id: i64,
+    pub amount: f64,
+    pub currency: String,
+    pub transaction_type: String,
+    pub originator_name: Option<String>,
+    pub beneficiary_name: Option<String>,
+    pub originator_institution: String,
+    pub beneficiary_institution: String,
+    pub timestamp: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct TransactionSubmissionResponse {
+    pub tx_id: String,
+    pub sender_pseudo: String,
+    pub receiver_pseudo: String,
+    pub sender_screening_result: String,
+    pub receiver_screening_result: String,
+    pub status: String,
+    pub audit_event_id: String,
+}
+
+pub fn pseudonymize_transaction(input: &TransactionInput, salt: &str) -> PseudonymizedTransaction {
+    PseudonymizedTransaction {
+        tx_id: input.tx_id.clone(),
+        sender_pseudo: crate::routes::pseudonymize_identifier(&input.sender_id, salt),
+        receiver_pseudo: crate::routes::pseudonymize_identifier(&input.receiver_id, salt),
+        sender_entity_id: input
+            .sender_entity_id
+            .unwrap_or_else(|| crate::routes::derive_entity_id(&input.sender_id)),
+        receiver_entity_id: input
+            .receiver_entity_id
+            .unwrap_or_else(|| crate::routes::derive_entity_id(&input.receiver_id)),
+        amount: input.amount,
+        currency: input.currency.clone(),
+        transaction_type: input.transaction_type.clone(),
+        originator_name: input.originator_name.clone(),
+        beneficiary_name: input.beneficiary_name.clone(),
+        originator_institution: input.originator_institution.clone(),
+        beneficiary_institution: input.beneficiary_institution.clone(),
+        timestamp: input.timestamp,
+    }
+}
+===== services/encryption-service/api/src/smpc_client.rs =====
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize)]
+struct ScreenRequest {
+    tx_id: String,
+    entity_id: i64,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct ScreenResponse {
+    pub tx_id: String,
+    pub entity_id: i64,
+    pub screening_result: String,
+}
+
+pub async fn screen_entity(
+    smpc_base_url: &str,
+    tx_id: &str,
+    entity_id: i64,
+) -> Result<ScreenResponse, String> {
+    let client = Client::new();
+    let url = format!("{}/smpc/screen", smpc_base_url.trim_end_matches('/'));
+
+    let response = client
+        .post(&url)
+        .json(&ScreenRequest {
+            tx_id: tx_id.to_string(),
+            entity_id,
+        })
+        .send()
+        .await
+        .map_err(|e| format!("failed to call SMPC runtime: {}", e))?;
+
+    let status = response.status();
+
+    if !status.is_success() {
+        let body = response
+            .text()
+            .await
+            .unwrap_or_else(|_| "<unreadable error body>".to_string());
+        return Err(format!(
+            "SMPC runtime returned non-success status {}: {}",
+            status, body
+        ));
+    }
+
+    response
+        .json::<ScreenResponse>()
+        .await
+        .map_err(|e| format!("failed to decode SMPC response: {}", e))
+}   
+===== services/encryption-service/fpe/mod.rs =====
+use sha2::{Digest, Sha256};
+
+pub fn deterministic_pseudonymize(raw: &str, salt: &str) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(salt.as_bytes());
+    hasher.update(b":");
+    hasher.update(raw.as_bytes());
+    let digest = hasher.finalize();
+    let hexed = hex::encode(digest);
+    format!("psd_{}", &hexed[..24])
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn deterministic_output_is_stable() {
+        let salt = "demo-salt";
+        let a = deterministic_pseudonymize("ACC-001", salt);
+        let b = deterministic_pseudonymize("ACC-001", salt);
+        assert_eq!(a, b);
+    }
+}
+===== services/regulator-api/backend/src/main.rs =====
+mod routes;
+mod proofs;
+mod audit;
+mod db;
+
+use sqlx::postgres::PgPoolOptions;
+use std::{env, net::SocketAddr};
+use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+#[tokio::main]
+async fn main() {
+    dotenvy::dotenv().ok();
+
+    tracing_subscriber::registry()
+        .with(
+            tracing_subscriber::EnvFilter::try_from_default_env()
+                .unwrap_or_else(|_| "info,regulator_api_backend=debug".into()),
+        )
+        .with(tracing_subscriber::fmt::layer())
+        .init();
+
+    let database_url =
+        env::var("DATABASE_URL").expect("DATABASE_URL must be set in environment or .env");
+    let bind_addr =
+        env::var("REGULATOR_API_BIND").unwrap_or_else(|_| "127.0.0.1:8085".to_string());
+
+    let pool = PgPoolOptions::new()
+        .max_connections(10)
+        .connect(&database_url)
+        .await
+        .expect("Failed to connect to PostgreSQL");
+
+    let app = routes::router(pool);
+
+    let addr: SocketAddr = bind_addr.parse().expect("Invalid REGULATOR_API_BIND");
+    tracing::info!("regulator-api listening on {}", addr);
+
+    let listener = tokio::net::TcpListener::bind(addr)
+        .await
+        .expect("Failed to bind listener");
+
+    axum::serve(listener, app)
+        .await
+        .expect("server failed");
+}
+
+===== services/regulator-api/backend/src/routes.rs =====
+use crate::{db, proofs};
+use axum::{
+    extract::{Path, Query, State},
+    http::StatusCode,
+    response::IntoResponse,
+    routing::{get, post},
+    Json, Router,
+};
+use serde::Deserialize;
+use serde_json::json;
+use sqlx::PgPool;
+use std::env;
+use uuid::Uuid;
+
+#[derive(Debug, Deserialize)]
+pub struct ProofQuery {
+    pub tx_id: Option<String>,
+}
+
+pub fn router(pool: PgPool) -> Router {
+    Router::new()
+        .route("/health", get(health))
+        .route("/proofs", get(list_proofs))
+        .route("/proofs/:proof_id", get(get_proof))
+        .route("/proofs/:proof_id/verify", post(verify_proof))
+        .route("/audit/:tx_id", get(get_audit_timeline))
+        .with_state(pool)
+}
+
+async fn health() -> impl IntoResponse {
+    (StatusCode::OK, Json(json!({"status": "ok"})))
+}
+
+async fn list_proofs(
+    State(pool): State<PgPool>,
+    Query(query): Query<ProofQuery>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let proofs = db::list_proofs(&pool, query.tx_id.as_deref())
+        .await
+        .map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(proofs)))
+}
+
+async fn get_proof(
+    State(pool): State<PgPool>,
+    Path(proof_id): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let proof_id = Uuid::parse_str(&proof_id).map_err(internal_error)?;
+    let proof = db::get_proof(&pool, proof_id)
+        .await
+        .map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(proof)))
+}
+
+async fn verify_proof(
+    Path(proof_id): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let zk_prover_base_url =
+        env::var("ZK_PROVER_BASE_URL").unwrap_or_else(|_| "http://127.0.0.1:8084".into());
+
+    let outcome = proofs::verify_proof_via_zk_service(&zk_prover_base_url, &proof_id)
+        .await
+        .map_err(internal_error)?;
+
+    Ok((StatusCode::OK, Json(outcome)))
+}
+
+async fn get_audit_timeline(
+    State(pool): State<PgPool>,
+    Path(tx_id): Path<String>,
+) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let timeline = db::list_audit_for_tx(&pool, &tx_id)
+        .await
+        .map_err(internal_error)?;
+    Ok((StatusCode::OK, Json(timeline)))
+}
+
+fn internal_error<E: std::fmt::Display>(err: E) -> (StatusCode, Json<serde_json::Value>) {
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        Json(json!({
+            "error": "internal_server_error",
+            "message": err.to_string()
+        })),
+    )
+}
+===== services/regulator-api/backend/src/proofs.rs =====
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct VerificationOutcome {
+    pub proof_id: String,
+    pub tx_id: String,
+    pub rule_id: String,
+    pub verified: bool,
+    pub reason: String,
+}
+
+pub async fn verify_proof_via_zk_service(
+    zk_prover_base_url: &str,
+    proof_id: &str,
+) -> Result<VerificationOutcome, String> {
+    let client = Client::new();
+    let url = format!(
+        "{}/proofs/{}/verify",
+        zk_prover_base_url.trim_end_matches('/'),
+        proof_id
+    );
+
+    let response = client
+        .post(url)
+        .send()
+        .await
+        .map_err(|e| format!("failed to call zk prover verify endpoint: {}", e))?;
+
+    if !response.status().is_success() {
+        let body = response.text().await.unwrap_or_else(|_| "<no-body>".into());
+        return Err(format!("zk prover verify returned error: {}", body));
+    }
+
+    response
+        .json::<VerificationOutcome>()
+        .await
+        .map_err(|e| format!("failed to decode verification response: {}", e))
+}
+===== services/regulator-api/backend/src/audit.rs =====
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AuditTimelineItem {
+    pub id: String,
+    pub tx_id: String,
+    pub event_type: String,
+    pub event_status: String,
+    pub event_ref: Option<String>,
+    pub details: serde_json::Value,
+    pub created_at: chrono::DateTime<chrono::Utc>,
+}
+===== services/regulator-api/backend/src/db.rs =====
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use sqlx::{FromRow, PgPool, Row};
+use uuid::Uuid;
+
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+pub struct RegulatorProofRow {
+    pub id: Uuid,
+    pub tx_id: String,
+    pub rule_id: String,
+    pub claim_hash: String,
+    pub public_signal: bool,
+    pub verification_status: String,
+    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+pub struct AuditRow {
+    pub id: Uuid,
+    pub tx_id: String,
+    pub event_type: String,
+    pub event_status: String,
+    pub event_ref: Option<String>,
+    pub details: serde_json::Value,
+    pub created_at: DateTime<Utc>,
+}
+
+pub async fn list_proofs(
+    pool: &PgPool,
+    tx_id: Option<&str>,
+) -> Result<Vec<RegulatorProofRow>, String> {
+    if let Some(tx_id) = tx_id {
+        sqlx::query_as::<_, RegulatorProofRow>(
+            r#"
+            SELECT id, tx_id, rule_id, claim_hash, public_signal, verification_status, created_at
+            FROM v_regulator_proofs
+            WHERE tx_id = $1
+            ORDER BY created_at ASC
+            "#,
+        )
+        .bind(tx_id)
+        .fetch_all(pool)
+        .await
+        .map_err(|e| e.to_string())
+    } else {
+        sqlx::query_as::<_, RegulatorProofRow>(
+            r#"
+            SELECT id, tx_id, rule_id, claim_hash, public_signal, verification_status, created_at
+            FROM v_regulator_proofs
+            ORDER BY created_at DESC
+            "#,
+        )
+        .fetch_all(pool)
+        .await
+        .map_err(|e| e.to_string())
+    }
+}
+
+pub async fn get_proof(pool: &PgPool, proof_id: Uuid) -> Result<serde_json::Value, String> {
+    let row = sqlx::query(
+        r#"
+        SELECT id, tx_id, rule_id, claim_hash, proof_blob, public_signal, verification_status, created_at
+        FROM proofs
+        WHERE id = $1
+        "#,
+    )
+    .bind(proof_id)
+    .fetch_one(pool)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    Ok(serde_json::json!({
+        "id": row.try_get::<Uuid, _>("id").map_err(|e| e.to_string())?.to_string(),
+        "tx_id": row.try_get::<String, _>("tx_id").map_err(|e| e.to_string())?,
+        "rule_id": row.try_get::<String, _>("rule_id").map_err(|e| e.to_string())?,
+        "claim_hash": row.try_get::<String, _>("claim_hash").map_err(|e| e.to_string())?,
+        "proof_blob": row.try_get::<serde_json::Value, _>("proof_blob").map_err(|e| e.to_string())?,
+        "public_signal": row.try_get::<bool, _>("public_signal").map_err(|e| e.to_string())?,
+        "verification_status": row.try_get::<String, _>("verification_status").map_err(|e| e.to_string())?,
+        "created_at": row.try_get::<DateTime<Utc>, _>("created_at").map_err(|e| e.to_string())?
+    }))
+}
+
+pub async fn list_audit_for_tx(pool: &PgPool, tx_id: &str) -> Result<Vec<AuditRow>, String> {
+    sqlx::query_as::<_, AuditRow>(
+        r#"
+        SELECT id, tx_id, event_type, event_status, event_ref, details, created_at
+        FROM v_regulator_audit_timeline
+        WHERE tx_id = $1
+        ORDER BY created_at ASC
+        "#,
+    )
+    .bind(tx_id)
+    .fetch_all(pool)
+    .await
+    .map_err(|e| e.to_string())
+}
+Route context saved to:
+/home/trovas/Downloads/sem32/a_final_year_project/AML_SMPC/aml-system/tests/evidence/phase7_1/route_context

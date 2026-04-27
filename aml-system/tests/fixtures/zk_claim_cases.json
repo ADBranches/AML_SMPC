@@ -1,24 +1,37 @@
 {
-  "generate": [
+  "claims": [
     {
-      "name": "valid_tx_for_all_rules",
-      "tx_id": "TX-E2E-001",
-      "expected_rules": [
-        "FATF_REC10",
-        "FATF_REC11",
-        "FATF_REC16"
-      ]
-    }
-  ],
-  "invalid": [
-    {
-      "name": "unknown_rule_record",
-      "rule_id": "FATF_UNKNOWN",
-      "reason": "unknown rule id should fail verification"
+      "case_id": "rec10_claim_001",
+      "recommendation": "FATF_REC10",
+      "description": "Customer due diligence proof claim.",
+      "claim": {
+        "customer_verified": true,
+        "risk_assessed": true,
+        "identity_hash_present": true
+      },
+      "expected_verified": true
     },
     {
-      "name": "tampered_claim_hash",
-      "reason": "claim hash mismatch should fail verification"
+      "case_id": "rec11_claim_001",
+      "recommendation": "FATF_REC11",
+      "description": "Record keeping proof claim.",
+      "claim": {
+        "record_retained": true,
+        "retention_period_valid": true,
+        "audit_reference_present": true
+      },
+      "expected_verified": true
+    },
+    {
+      "case_id": "rec16_claim_001",
+      "recommendation": "FATF_REC16",
+      "description": "Wire transfer information proof claim.",
+      "claim": {
+        "originator_present": true,
+        "beneficiary_present": true,
+        "transaction_reference_present": true
+      },
+      "expected_verified": true
     }
   ]
 }

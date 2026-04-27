@@ -1,0 +1,21 @@
+from Compiler.types import sint
+from Compiler.library import print_ln
+
+# MVP simplification:
+# party 0 supplies the queried entity_id
+# party 1 supplies three sanctioned IDs
+# party 2 supplies three padding values (or future extension values)
+
+query = sint.get_input_from(0)
+
+s1 = sint.get_input_from(1)
+s2 = sint.get_input_from(1)
+s3 = sint.get_input_from(1)
+
+p1 = sint.get_input_from(2)
+p2 = sint.get_input_from(2)
+p3 = sint.get_input_from(2)
+
+match = (query == s1) + (query == s2) + (query == s3) + (query == p1) + (query == p2) + (query == p3)
+
+print_ln('%s', match.reveal())

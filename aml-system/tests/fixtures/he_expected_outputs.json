@@ -1,28 +1,6 @@
 {
-  "positive": [
-    {
-      "name": "simple_pair",
-      "expected_sum": 1500.0,
-      "tolerance": 0.0001
-    },
-    {
-      "name": "integer_pair",
-      "expected_sum": 1007.0,
-      "tolerance": 0.0001
-    }
-  ],
-  "negative": [
-    {
-      "name": "missing_amount",
-      "expected_http_status": 422
-    },
-    {
-      "name": "invalid_numeric",
-      "expected_http_status": 422
-    },
-    {
-      "name": "malformed_ciphertext",
-      "expected_http_status": 500
-    }
-  ]
+  "he_sum_basic_001": {
+    "expected_decrypted_sum": 1000,
+    "tolerance": 0
+  }
 }

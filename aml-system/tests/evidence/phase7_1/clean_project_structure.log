@@ -1,0 +1,404 @@
+services
+├── bank-client
+│   ├── api
+│   │   ├── Cargo.toml
+│   │   ├── Dockerfile
+│   │   └── src
+│   │       └── main.rs
+│   ├── attestation
+│   └── web
+├── encryption-service
+│   ├── api
+│   │   ├── Cargo.toml
+│   │   ├── Dockerfile
+│   │   └── src
+│   │       ├── main.rs
+│   │       ├── pseudonymize.rs
+│   │       ├── routes.rs
+│   │       └── smpc_client.rs
+│   ├── config
+│   │   └── compliance
+│   │       ├── gdpr.toml
+│   │       └── retention.toml
+│   ├── fpe
+│   │   └── mod.rs
+│   └── schemas
+│       ├── pseudonymized-transaction.schema.json
+│       └── transaction.schema.json
+├── he-orchestrator
+│   ├── healthchecks
+│   ├── runtime
+│   │   ├── Cargo.toml
+│   │   └── src
+│   │       ├── main.rs
+│   │       ├── mp_spdz.rs
+│   │       ├── parser.rs
+│   │       └── routes.rs
+│   ├── rust-gateway
+│   │   ├── build.rs
+│   │   ├── Cargo.toml
+│   │   ├── Dockerfile
+│   │   └── src
+│   │       ├── ffi.rs
+│   │       ├── main.rs
+│   │       └── routes.rs
+│   └── seal-core
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   └── seal_bridge.hpp
+│       └── src
+│           ├── context.cpp
+│           ├── decrypt.cpp
+│           ├── encrypt.cpp
+│           └── sum.cpp
+├── regulator-api
+│   ├── backend
+│   │   ├── Cargo.toml
+│   │   ├── Dockerfile
+│   │   └── src
+│   │       ├── audit.rs
+│   │       ├── db.rs
+│   │       ├── main.rs
+│   │       ├── proofs.rs
+│   │       └── routes.rs
+│   ├── frontend
+│   │   ├── eslint.config.js
+│   │   ├── index.html
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   ├── public
+│   │   │   ├── favicon.svg
+│   │   │   └── icons.svg
+│   │   ├── README.md
+│   │   ├── src
+│   │   │   ├── App.jsx
+│   │   │   ├── assets
+│   │   │   ├── components
+│   │   │   ├── lib
+│   │   │   ├── main.jsx
+│   │   │   ├── pages
+│   │   │   ├── router.jsx
+│   │   │   └── styles
+│   │   └── vite.config.js
+│   └── package-lock.json
+├── smpc-orchestrator
+│   ├── formal-verification
+│   │   └── tamarin
+│   ├── programs
+│   │   ├── entity_match.mpc
+│   │   ├── sanction_check.mpc
+│   │   └── threshold_alert.mpc
+│   └── runtime
+│       ├── Cargo.toml
+│       ├── Dockerfile
+│       └── src
+│           └── main.rs
+└── zk-prover
+    ├── circuits
+    │   ├── fatf-rec10
+    │   │   └── src
+    │   ├── fatf-rec11
+    │   │   └── src
+    │   └── fatf-rec16
+    │       └── src
+    ├── plugins
+    │   └── wasm
+    │       ├── Cargo.toml
+    │       ├── package.json
+    │       └── src
+    ├── prover
+    │   ├── Cargo.toml
+    │   ├── Dockerfile
+    │   └── src
+    │       ├── main.rs
+    │       ├── prove.rs
+    │       └── routes.rs
+    └── verifier
+        ├── Cargo.toml
+        └── src
+            ├── lib.rs
+            └── verify.rs
+tests
+├── compliance
+│   ├── compliance_assertions.md
+│   ├── compliance_results_template.md
+│   ├── rec10_proof_test.sh
+│   ├── rec10_validation.sh
+│   ├── rec11_proof_test.sh
+│   ├── rec11_validation.sh
+│   ├── rec16_proof_test.sh
+│   └── rec16_validation.sh
+├── environment
+│   ├── demo_seed_reference_test.sh
+│   ├── env_consistency_test.sh
+│   ├── evidence_layout_test.sh
+│   ├── README.md
+│   └── script_naming_test.sh
+├── evidence
+│   ├── compliance
+│   │   ├── rec10_proof_test_20260401T131337Z.json
+│   │   ├── rec10_validation_20260401T131338Z.json
+│   │   ├── rec10_validation_20260401T143925Z.json
+│   │   ├── rec11_proof_test_20260401T131337Z.json
+│   │   ├── rec11_validation_20260401T131338Z.json
+│   │   ├── rec11_validation_20260401T143949Z.json
+│   │   ├── rec16_proof_test_20260401T131337Z.json
+│   │   ├── rec16_validation_20260401T131338Z.json
+│   │   └── rec16_validation_20260401T143956Z.json
+│   ├── environment
+│   │   ├── demo_seed_reference_test_20260401T184008Z.json
+│   │   ├── demo_seed_reference_test_20260401T184117Z.json
+│   │   ├── env_consistency_test_20260401T183944Z.json
+│   │   ├── env_consistency_test_20260401T184116Z.json
+│   │   ├── evidence_layout_test_20260401T184001Z.json
+│   │   ├── evidence_layout_test_20260401T184117Z.json
+│   │   ├── script_naming_test_20260401T183954Z.json
+│   │   └── script_naming_test_20260401T184117Z.json
+│   ├── functional
+│   │   ├── api
+│   │   │   ├── api_end_to_end_test_20260401T081514Z.json
+│   │   │   ├── api_end_to_end_test_20260401T093701Z.json
+│   │   │   ├── api_end_to_end_test_20260401T110915Z.json
+│   │   │   ├── api_end_to_end_test_20260401T124227Z.json
+│   │   │   ├── api_end_to_end_test_20260401T131336Z.json
+│   │   │   ├── api_end_to_end_test_20260401T133508Z.json
+│   │   │   ├── api_end_to_end_test_20260402T031618Z.json
+│   │   │   ├── api_end_to_end_test_20260402T041136Z.json
+│   │   │   ├── e2e_invalid_payload_test_20260401T081515Z.json
+│   │   │   ├── e2e_invalid_payload_test_20260401T124229Z.json
+│   │   │   ├── regulator_flow_test_20260401T081515Z.json
+│   │   │   └── regulator_flow_test_20260401T124229Z.json
+│   │   ├── he
+│   │   │   ├── he_encrypt_decrypt_positive_test_20260401T073910Z.json
+│   │   │   ├── he_encrypt_decrypt_positive_test_20260401T075701Z.json
+│   │   │   ├── he_encrypt_decrypt_positive_test_20260401T081511Z.json
+│   │   │   ├── he_encrypt_decrypt_positive_test_20260401T124224Z.json
+│   │   │   ├── he_gateway_api_test_20260401T073911Z.json
+│   │   │   ├── he_gateway_api_test_20260401T075703Z.json
+│   │   │   ├── he_gateway_api_test_20260401T081512Z.json
+│   │   │   ├── he_gateway_api_test_20260401T124226Z.json
+│   │   │   ├── he_invalid_input_negative_test_20260401T081513Z.json
+│   │   │   └── he_invalid_input_negative_test_20260401T124226Z.json
+│   │   ├── smpc
+│   │   │   ├── smpc_api_test_20260401T081513Z.json
+│   │   │   ├── smpc_api_test_20260401T124227Z.json
+│   │   │   ├── smpc_invalid_entity_negative_test_20260401T081514Z.json
+│   │   │   ├── smpc_invalid_entity_negative_test_20260401T124227Z.json
+│   │   │   ├── smpc_match_positive_test_20260401T081513Z.json
+│   │   │   ├── smpc_match_positive_test_20260401T124226Z.json
+│   │   │   ├── smpc_no_match_positive_test_20260401T081513Z.json
+│   │   │   └── smpc_no_match_positive_test_20260401T124226Z.json
+│   │   └── zk
+│   │       ├── zk_invalid_proof_test_20260401T081515Z.json
+│   │       ├── zk_invalid_proof_test_20260401T124228Z.json
+│   │       ├── zk_proof_generation_test_20260401T081514Z.json
+│   │       ├── zk_proof_generation_test_20260401T124228Z.json
+│   │       ├── zk_proof_verification_test_20260401T081515Z.json
+│   │       └── zk_proof_verification_test_20260401T124228Z.json
+│   └── phase7_1
+│       ├── checks
+│       │   └── filtered_structure.log
+│       ├── clean_project_structure.log
+│       ├── preflight_check.log
+│       ├── route_context
+│       │   ├── services_encryption-service_api_src_main.rs
+│       │   ├── services_encryption-service_api_src_pseudonymize.rs
+│       │   ├── services_encryption-service_api_src_routes.rs
+│       │   ├── services_encryption-service_api_src_smpc_client.rs
+│       │   ├── services_encryption-service_fpe_mod.rs
+│       │   ├── services_he-orchestrator_rust-gateway_build.rs
+│       │   ├── services_he-orchestrator_rust-gateway_Cargo.toml
+│       │   ├── services_he-orchestrator_rust-gateway_src_ffi.rs
+│       │   ├── services_he-orchestrator_rust-gateway_src_main.rs
+│       │   ├── services_he-orchestrator_rust-gateway_src_routes.rs
+│       │   ├── services_he-orchestrator_seal-core_CMakeLists.txt
+│       │   ├── services_he-orchestrator_seal-core_include_seal_bridge.hpp
+│       │   ├── services_he-orchestrator_seal-core_src_context.cpp
+│       │   ├── services_he-orchestrator_seal-core_src_decrypt.cpp
+│       │   ├── services_he-orchestrator_seal-core_src_encrypt.cpp
+│       │   ├── services_he-orchestrator_seal-core_src_sum.cpp
+│       │   ├── services_regulator-api_backend_src_audit.rs
+│       │   ├── services_regulator-api_backend_src_db.rs
+│       │   ├── services_regulator-api_backend_src_main.rs
+│       │   ├── services_regulator-api_backend_src_proofs.rs
+│       │   ├── services_regulator-api_backend_src_routes.rs
+│       │   ├── services_smpc-orchestrator_programs_entity_match.mpc
+│       │   ├── services_smpc-orchestrator_programs_sanction_check.mpc
+│       │   ├── services_smpc-orchestrator_programs_threshold_alert.mpc
+│       │   ├── services_smpc-orchestrator_runtime_Cargo.toml
+│       │   ├── services_smpc-orchestrator_runtime_src_main.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec10_src_circuit.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec10_src_lib.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec10_src_tests.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec11_src_circuit.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec11_src_lib.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec11_src_tests.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec16_src_circuit.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec16_src_lib.rs
+│       │   ├── services_zk-prover_circuits_fatf-rec16_src_tests.rs
+│       │   ├── services_zk-prover_prover_src_main.rs
+│       │   ├── services_zk-prover_prover_src_prove.rs
+│       │   ├── services_zk-prover_prover_src_routes.rs
+│       │   ├── services_zk-prover_verifier_src_lib.rs
+│       │   └── services_zk-prover_verifier_src_verify.rs
+│       └── route_context.log
+├── fixtures
+│   ├── e2e_transactions.json
+│   ├── he_expected_outputs.json
+│   ├── he_test_vectors.json
+│   ├── performance_transactions.json
+│   ├── sample_entities.csv
+│   ├── sample_transactions.json
+│   ├── sanction_list.csv
+│   ├── smpc_test_cases.json
+│   └── zk_claim_cases.json
+├── integration
+│   ├── api_end_to_end_test.sh
+│   ├── e2e_invalid_payload_test.sh
+│   ├── he_encrypt_decrypt_positive_test.sh
+│   ├── he_gateway_api_test.sh
+│   ├── he_invalid_input_negative_test.sh
+│   ├── regulator_flow_test.sh
+│   ├── smpc_api_test.sh
+│   ├── smpc_invalid_entity_negative_test.sh
+│   ├── smpc_match_positive_test.sh
+│   ├── smpc_no_match_positive_test.sh
+│   ├── zk_invalid_proof_test.sh
+│   ├── zk_proof_generation_test.sh
+│   └── zk_proof_verification_test.sh
+├── logs
+│   ├── compliance
+│   │   ├── rec10_proof_test_20260401T131337Z.log
+│   │   ├── rec10_validation_20260401T131338Z.log
+│   │   ├── rec10_validation_20260401T143925Z.log
+│   │   ├── rec11_proof_test_20260401T131337Z.log
+│   │   ├── rec11_validation_20260401T131338Z.log
+│   │   ├── rec11_validation_20260401T143949Z.log
+│   │   ├── rec16_proof_test_20260401T131337Z.log
+│   │   ├── rec16_validation_20260401T131338Z.log
+│   │   ├── rec16_validation_20260401T143956Z.log
+│   │   └── run_phase7_3_summary_20260401T131040Z.md
+│   ├── environment
+│   │   ├── demo_seed_reference_test_20260401T184008Z.log
+│   │   ├── demo_seed_reference_test_20260401T184117Z.log
+│   │   ├── env_consistency_test_20260401T183944Z.log
+│   │   ├── env_consistency_test_20260401T184116Z.log
+│   │   ├── evidence_layout_test_20260401T184001Z.log
+│   │   ├── evidence_layout_test_20260401T184117Z.log
+│   │   ├── script_naming_test_20260401T183954Z.log
+│   │   └── script_naming_test_20260401T184117Z.log
+│   └── functional
+│       ├── api
+│       │   ├── api_end_to_end_test_20260401T081514Z.log
+│       │   ├── api_end_to_end_test_20260401T093701Z.log
+│       │   ├── api_end_to_end_test_20260401T110915Z.log
+│       │   ├── api_end_to_end_test_20260401T124227Z.log
+│       │   ├── api_end_to_end_test_20260401T131336Z.log
+│       │   ├── api_end_to_end_test_20260401T133508Z.log
+│       │   ├── api_end_to_end_test_20260402T031618Z.log
+│       │   ├── api_end_to_end_test_20260402T041136Z.log
+│       │   ├── e2e_invalid_payload_test_20260401T081515Z.log
+│       │   ├── e2e_invalid_payload_test_20260401T124229Z.log
+│       │   ├── regulator_flow_test_20260401T081515Z.log
+│       │   └── regulator_flow_test_20260401T124229Z.log
+│       ├── he
+│       │   ├── he_encrypt_decrypt_positive_test_20260401T073910Z.log
+│       │   ├── he_encrypt_decrypt_positive_test_20260401T075701Z.log
+│       │   ├── he_encrypt_decrypt_positive_test_20260401T081511Z.log
+│       │   ├── he_encrypt_decrypt_positive_test_20260401T124224Z.log
+│       │   ├── he_gateway_api_test_20260401T073911Z.log
+│       │   ├── he_gateway_api_test_20260401T075703Z.log
+│       │   ├── he_gateway_api_test_20260401T081512Z.log
+│       │   ├── he_gateway_api_test_20260401T124226Z.log
+│       │   ├── he_invalid_input_negative_test_20260401T081513Z.log
+│       │   └── he_invalid_input_negative_test_20260401T124226Z.log
+│       ├── smpc
+│       │   ├── smpc_api_test_20260401T081513Z.log
+│       │   ├── smpc_api_test_20260401T124227Z.log
+│       │   ├── smpc_invalid_entity_negative_test_20260401T081514Z.log
+│       │   ├── smpc_invalid_entity_negative_test_20260401T124227Z.log
+│       │   ├── smpc_match_positive_test_20260401T081513Z.log
+│       │   ├── smpc_match_positive_test_20260401T124226Z.log
+│       │   ├── smpc_no_match_positive_test_20260401T081513Z.log
+│       │   └── smpc_no_match_positive_test_20260401T124226Z.log
+│       └── zk
+│           ├── zk_invalid_proof_test_20260401T081515Z.log
+│           ├── zk_invalid_proof_test_20260401T124228Z.log
+│           ├── zk_proof_generation_test_20260401T081514Z.log
+│           ├── zk_proof_generation_test_20260401T124228Z.log
+│           ├── zk_proof_verification_test_20260401T081515Z.log
+│           └── zk_proof_verification_test_20260401T124228Z.log
+├── performance
+│   ├── locustfile.py
+│   ├── logs
+│   │   ├── proof_measured_20260401T110310Z.log
+│   │   ├── proof_measured_20260401T132949Z.log
+│   │   ├── proof_warmup_20260401T110310Z.log
+│   │   ├── proof_warmup_20260401T132949Z.log
+│   │   ├── run_phase7_2_summary_20260401T110310Z.md
+│   │   ├── run_phase7_2_summary_20260401T132949Z.md
+│   │   ├── transaction_measured_20260401T110310Z.log
+│   │   ├── transaction_measured_20260401T132949Z.log
+│   │   ├── transaction_warmup_20260401T110310Z.log
+│   │   └── transaction_warmup_20260401T132949Z.log
+│   ├── performance_results_template.md
+│   ├── performance_targets.md
+│   ├── proof_generation_load_test.py
+│   └── transactions_load_test.py
+├── README.md
+└── TEST_ORDER.md
+scripts
+├── ci
+│   ├── build-all.sh
+│   ├── package-demo.sh
+│   ├── phase71_collect_route_context.sh
+│   ├── phase71_collect_route_context.sh.bak.20260427T145551Z
+│   ├── phase71_preflight_check.sh
+│   ├── test-all.sh
+│   ├── test-compliance.sh
+│   ├── test-functional.sh
+│   └── test-performance.sh
+├── demo
+│   ├── demo-env.sh
+│   ├── run-phase2-demo.sh
+│   ├── run-phase3-integrated-demo.sh
+│   ├── run-phase4-demo.sh
+│   ├── run-phase5-demo.sh
+│   ├── run-phase6-demo.sh
+│   ├── run_phase7_1.sh
+│   ├── run_phase7_2.sh
+│   ├── run_phase7_3.sh
+│   ├── run-phase7-validation.sh
+│   ├── seed-demo-data.sh
+│   ├── start-local-stack.sh
+│   ├── stop-local-stack.sh
+│   └── verify-demo-prereqs.sh
+└── dev
+    ├── bootstrap-phase2.sh
+    ├── bootstrap-tree.sh
+    ├── check-env-consistency.sh
+    ├── load-env.sh
+    ├── run_mp_spdz_local.sh
+    ├── run-phase3-integrated-demo.sh
+    └── seed_sanction_list.sh
+docs
+├── architecture
+├── archive
+│   └── scaffolds
+│       ├── PHASE6_SCAFFOLD_NOTE.md
+│       └── phase6_scaffold.zip
+├── compliance
+│   ├── audit-traceability.md
+│   ├── fatf-mapping.md
+│   └── gdpr-controls.md
+├── demo
+│   ├── demo-environment-baseline.md
+│   └── regulator-dashboard-demo.md
+├── investor
+├── research
+│   ├── phase7-functional-plan.md
+│   ├── phase-r0-stabilization-plan.md
+│   └── phase-r1-regulator-frontend-plan.md
+└── tutorials
+
+93 directories, 309 files
