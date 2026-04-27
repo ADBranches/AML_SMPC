@@ -1,4 +1,3 @@
-
 # Local safety snapshots
 aml-system-safety-snapshots/
 
@@ -21,3 +20,4 @@ aml-system/**/*.pyc
 # Phase 8 generated distribution bundles
 aml-system/dist/*.tar.gz
 aml-system/dist/*.zip
+\naml-system/services/regulator-api/frontend/tsconfig.tsbuildinfo\naml-system/services/regulator-api/frontend/dist/\naml-system/services/regulator-api/frontend/.frontend-backups/\n
