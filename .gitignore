@@ -17,3 +17,7 @@ aml-system/scripts/**/*.bak.*
 # Python local cache
 aml-system/**/__pycache__/
 aml-system/**/*.pyc
+
+# Phase 8 generated distribution bundles
+aml-system/dist/*.tar.gz
+aml-system/dist/*.zip
