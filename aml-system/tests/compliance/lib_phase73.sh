@@ -2,10 +2,13 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-EVIDENCE_DIR="$ROOT_DIR/tests/evidence/phase7_3"
-mkdir -p "$EVIDENCE_DIR"
 
 source "$ROOT_DIR/tests/integration/lib_phase71.sh"
+
+# Re-declare Phase 7.3 evidence directory after sourcing Phase 7.1 helpers,
+# because lib_phase71.sh defines its own EVIDENCE_DIR.
+EVIDENCE_DIR="$ROOT_DIR/tests/evidence/phase7_3"
+mkdir -p "$EVIDENCE_DIR"
 
 phase73_load() {
   phase71_load_env
