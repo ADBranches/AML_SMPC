@@ -1,36 +1,70 @@
-# Compliance Validation Results Template
+# Phase 7.3 Compliance Validation Results
 
-## Run metadata
+## Test Date
 
-- Date:
-- Operator:
-- Environment:
-- Database URL / profile:
+YYYY-MM-DD
 
-## FATF Rec 10
+## Purpose
 
-- Proof found:
-- Verification outcome:
-- Evidence file:
-- Result: PASS / FAIL
+Phase 7.3 validates that the AML SMPC system produces compliance evidence aligned with FATF Recommendations 10, 11, and 16.
 
-## FATF Rec 11
+## Compliance Scope
 
-- Audit rows found:
-- Proof found:
-- Evidence file:
-- Result: PASS / FAIL
+- FATF Recommendation 10: Customer due diligence validation
+- FATF Recommendation 11: Record keeping and auditability validation
+- FATF Recommendation 16: Wire transfer information validation
 
-## FATF Rec 16
+## Validation Summary
 
-- Metadata present:
-- Proof found:
-- Evidence file:
-- Result: PASS / FAIL
+Status: PENDING
 
-## Summary
+## FATF REC10 Results
 
-- Overall compliance validation result:
-- Observations:
-- Deviations:
-- Report/demo notes:
+Expected result: customer due diligence proof is generated and verified.
+
+Observed result:
+
+Evidence file:
+
+Status: PENDING
+
+## FATF REC11 Results
+
+Expected result: transaction record keeping proof is generated and verified.
+
+Observed result:
+
+Evidence file:
+
+Status: PENDING
+
+## FATF REC16 Results
+
+Expected result: wire transfer originator and beneficiary information proof is generated and verified.
+
+Observed result:
+
+Evidence file:
+
+Status: PENDING
+
+## Audit Evidence
+
+Expected result: audit trail exists for transaction submission, SMPC screening, proof generation, and regulator retrieval.
+
+Observed result:
+
+Evidence file:
+
+Status: PENDING
+
+## Compliance Decision
+
+Overall status: PENDING
+
+Reviewer notes:
+
+## Evidence Directory
+
+tests/evidence/phase7_3/
+
