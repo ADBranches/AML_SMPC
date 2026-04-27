@@ -1,71 +1,70 @@
 import type { ProofDetail, VerifyProofResponse } from "../../types/proof";
+import { formatDate } from "../../utils/formatDate";
+import { Card } from "../ui/Card";
+import { EmptyState } from "../ui/EmptyState";
+import { JsonViewer } from "../ui/JsonViewer";
 import { StatusBadge } from "../ui/StatusBadge";
 
 type ProofDetailPanelProps = {
-  proof?: ProofDetail | null;
-  verification?: VerifyProofResponse | null;
+  proof: ProofDetail | null;
+  verification: VerifyProofResponse | null;
 };
 
-export function ProofDetailPanel({
-  proof,
-  verification,
-}: ProofDetailPanelProps) {
+export function ProofDetailPanel({ proof, verification }: ProofDetailPanelProps) {
   if (!proof) {
-    return (
-      <div className="rounded-2xl border bg-white p-6 text-sm text-slate-600">
-        Select a proof to view compliance-safe details.
-      </div>
-    );
+    return <EmptyState message="Select a proof to view compliance-safe details." />;
   }
 
   return (
-    <section className="space-y-4 rounded-2xl border bg-white p-6 shadow-sm">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h3 className="text-lg font-bold text-slate-900">
-            {proof.rule_id} proof
-          </h3>
-          <p className="font-mono text-xs text-slate-500">{proof.id}</p>
+    <div className="space-y-4">
+      <Card>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase text-slate-500">Proof Detail</p>
+            <h3 className="mt-1 text-lg font-bold text-slate-950">{proof.rule_id}</h3>
+          </div>
+          <StatusBadge status={proof.verification_status} />
         </div>
-        <StatusBadge status={proof.verification_status} />
-      </div>
 
-      <dl className="grid gap-3 text-sm sm:grid-cols-2">
-        <div>
-          <dt className="font-semibold text-slate-500">Transaction ID</dt>
-          <dd className="font-mono text-slate-900">{proof.tx_id}</dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-slate-500">Public Signal</dt>
-          <dd className="text-slate-900">
-            {proof.public_signal ? "true" : "false"}
-          </dd>
-        </div>
-        <div className="sm:col-span-2">
-          <dt className="font-semibold text-slate-500">Claim Hash</dt>
-          <dd className="break-all font-mono text-xs text-slate-900">
-            {proof.claim_hash ?? "not recorded"}
-          </dd>
-        </div>
-      </dl>
+        <dl className="mt-5 grid gap-4 text-sm">
+          <div>
+            <dt className="font-semibold text-slate-500">Proof ID</dt>
+            <dd className="break-all font-mono text-xs text-slate-800">{proof.id}</dd>
+          </div>
 
-      <div>
-        <h4 className="mb-2 text-sm font-semibold text-slate-700">
-          Proof Signal Payload
-        </h4>
-        <pre className="max-h-72 overflow-auto rounded-xl bg-slate-950 p-4 text-xs text-slate-50">
-          {JSON.stringify(proof.proof_blob ?? {}, null, 2)}
-        </pre>
-      </div>
+          <div>
+            <dt className="font-semibold text-slate-500">Transaction ID</dt>
+            <dd className="font-mono text-xs text-slate-800">{proof.tx_id}</dd>
+          </div>
+
+          <div>
+            <dt className="font-semibold text-slate-500">Claim Hash</dt>
+            <dd className="break-all font-mono text-xs text-slate-800">{proof.claim_hash}</dd>
+          </div>
+
+          <div>
+            <dt className="font-semibold text-slate-500">Created At</dt>
+            <dd className="text-slate-800">{formatDate(proof.created_at)}</dd>
+          </div>
+        </dl>
+      </Card>
 
       {verification ? (
-        <div className="rounded-xl border bg-slate-50 p-4 text-sm">
-          <p className="font-semibold text-slate-900">
-            Verification result: {verification.verified ? "verified" : "failed"}
+        <Card>
+          <p className="text-xs font-semibold uppercase text-slate-500">Verification Result</p>
+          <h3 className="mt-2 text-2xl font-bold text-emerald-700">
+            verified = {String(verification.verified)}
+          </h3>
+          <p className="mt-2 text-sm text-slate-600">
+            {verification.reason ?? verification.verification_status ?? "Proof verification completed."}
           </p>
-          <p className="mt-1 text-slate-600">{verification.reason}</p>
-        </div>
+        </Card>
       ) : null}
-    </section>
+
+      <Card>
+        <p className="mb-3 text-sm font-semibold text-slate-700">Proof Blob / Public Metadata</p>
+        <JsonViewer value={proof.proof_blob ?? proof} />
+      </Card>
+    </div>
   );
 }

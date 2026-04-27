@@ -1,4 +1,5 @@
 import type { AuditEvent } from "../../types/audit";
+import { EmptyState } from "../ui/EmptyState";
 import { AuditEventCard } from "./AuditEventCard";
 
 type AuditTimelineProps = {
@@ -7,21 +8,13 @@ type AuditTimelineProps = {
 
 export function AuditTimeline({ events }: AuditTimelineProps) {
   if (events.length === 0) {
-    return (
-      <div className="rounded-2xl border bg-white p-6 text-sm text-slate-600">
-        No audit events loaded yet. Search by transaction ID to begin.
-      </div>
-    );
+    return <EmptyState message="No audit events loaded yet. Search by transaction ID to begin." />;
   }
 
   return (
     <div className="space-y-4">
       {events.map((event, index) => (
-        <AuditEventCard
-          key={event.id ?? `${event.event_type}-${index}`}
-          event={event}
-          index={index}
-        />
+        <AuditEventCard key={event.id ?? `${event.event_type}-${index}`} event={event} index={index} />
       ))}
     </div>
   );

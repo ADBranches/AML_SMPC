@@ -1,6 +1,8 @@
 import type { ProofRow } from "../../types/proof";
+import { formatDate } from "../../utils/formatDate";
 import { StatusBadge } from "../ui/StatusBadge";
-import { VerifyProofButton } from "./VerifyProofButton";
+import { EmptyState } from "../ui/EmptyState";
+import { Button } from "../ui/Button";
 
 type ProofsTableProps = {
   proofs: ProofRow[];
@@ -18,61 +20,48 @@ export function ProofsTable({
   onVerifyProof,
 }: ProofsTableProps) {
   if (proofs.length === 0) {
-    return (
-      <div className="rounded-2xl border bg-white p-6 text-sm text-slate-600">
-        No proofs loaded yet. Search by transaction ID to begin.
-      </div>
-    );
+    return <EmptyState message="No proofs loaded yet. Search by transaction ID to begin." />;
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
-      <table className="min-w-full divide-y divide-slate-200 text-sm">
-        <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <table className="w-full text-left text-sm">
+        <thead className="bg-slate-100 text-xs uppercase tracking-wide text-slate-500">
           <tr>
-            <th className="px-4 py-3">Rule</th>
             <th className="px-4 py-3">Proof ID</th>
-            <th className="px-4 py-3">Public Signal</th>
+            <th className="px-4 py-3">Recommendation</th>
+            <th className="px-4 py-3">Signal</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Created</th>
-            <th className="px-4 py-3 text-right">Actions</th>
+            <th className="px-4 py-3">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+
+        <tbody>
           {proofs.map((proof) => (
             <tr
               key={proof.id}
-              className={
-                proof.id === selectedProofId ? "bg-slate-50" : "bg-white"
-              }
+              className={`border-t border-slate-100 ${selectedProofId === proof.id ? "bg-slate-50" : ""}`}
             >
-              <td className="px-4 py-3 font-semibold text-slate-900">
-                {proof.rule_id}
-              </td>
-              <td className="max-w-[220px] truncate px-4 py-3 font-mono text-xs text-slate-600">
+              <td className="max-w-[220px] truncate px-4 py-3 font-mono text-xs text-slate-700">
                 {proof.id}
               </td>
-              <td className="px-4 py-3">
-                {proof.public_signal ? "true" : "false"}
-              </td>
+              <td className="px-4 py-3 font-semibold text-slate-900">{proof.rule_id}</td>
+              <td className="px-4 py-3">{String(proof.public_signal)}</td>
               <td className="px-4 py-3">
                 <StatusBadge status={proof.verification_status} />
               </td>
-              <td className="px-4 py-3 text-slate-500">
-                {proof.created_at ?? "not recorded"}
-              </td>
-              <td className="space-x-2 px-4 py-3 text-right">
-                <button
-                  type="button"
-                  onClick={() => onSelectProof(proof.id)}
-                  className="rounded-lg bg-slate-950 px-3 py-2 text-xs font-semibold text-white"
-                >
+              <td className="px-4 py-3 text-xs text-slate-500">{formatDate(proof.created_at)}</td>
+              <td className="flex gap-2 px-4 py-3">
+                <Button variant="secondary" onClick={() => onSelectProof(proof.id)}>
                   View
-                </button>
-                <VerifyProofButton
-                  isLoading={verifyingProofId === proof.id}
-                  onVerify={() => onVerifyProof(proof.id)}
-                />
+                </Button>
+                <Button
+                  onClick={() => onVerifyProof(proof.id)}
+                  disabled={verifyingProofId === proof.id}
+                >
+                  {verifyingProofId === proof.id ? "Verifying..." : "Verify"}
+                </Button>
               </td>
             </tr>
           ))}
