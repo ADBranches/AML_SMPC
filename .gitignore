@@ -1,3 +1,19 @@
 
 # Local safety snapshots
 aml-system-safety-snapshots/
+
+# AML SMPC generated evidence, benchmark outputs, and local backups
+aml-system/tests/evidence/**
+!aml-system/tests/evidence/
+!aml-system/tests/evidence/**/
+!aml-system/tests/evidence/**/PHASE_*_RESULTS.md
+!aml-system/tests/evidence/**/PHASE_*_EVIDENCE_SUMMARY.md
+
+aml-system/tests/**/*.bak.*
+aml-system/tests/fixtures/*.bak.*
+aml-system/scripts/**/*.bak.*
+.gitignore.bak.*
+
+# Python local cache
+aml-system/**/__pycache__/
+aml-system/**/*.pyc
