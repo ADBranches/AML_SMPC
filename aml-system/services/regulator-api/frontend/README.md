@@ -1,24 +1,43 @@
-# Frontend Validation Notes (Phase R1)
+# AML SMPC Regulator Frontend
 
-This folder documents how to validate the regulator frontend manually during Phase R1.
+## Overview
 
-## Manual smoke validation
+Browser-based regulator console for the AML SMPC prototype.
 
-1. start the regulator backend,
-2. start the frontend,
-3. open the dashboard,
-4. confirm proof list loads,
-5. open one proof detail page,
-6. trigger proof verification,
-7. confirm audit timeline renders.
+## Stack
 
-## Expected visible fields
-- proof ID,
-- transaction ID,
-- rule ID,
-- verification status,
-- created timestamp,
-- audit event list.
+React + Vite + TypeScript + Tailwind CSS
 
-## Privacy expectation
-The frontend must avoid exposing raw customer identifiers in normal regulator views.
+## Environment
+
+cp .env.example .env
+
+## Install
+
+npm install
+
+## Run
+
+npm run dev -- --host 127.0.0.1 --port 5173
+
+## Build
+
+npm run build
+
+## Demo
+
+From project root:
+
+./scripts/demo/run-frontend-demo.sh
+
+## Main Routes
+
+- /dashboard
+- /proofs
+- /audit
+- /performance
+- /about
+
+## Data Safety
+
+Use synthetic data only. Do not use real customer information in screenshots, fixtures, commits, logs, or reports.
