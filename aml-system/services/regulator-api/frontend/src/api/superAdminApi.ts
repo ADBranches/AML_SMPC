@@ -24,8 +24,6 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
   if (session?.token) {
     headers.set("Authorization", `Bearer ${session.token}`);
-  } else if (session?.email) {
-    headers.set("X-Acting-User-Email", session.email);
   }
 
   const response = await fetch(`${env.regulatorApiBaseUrl}${path}`, {

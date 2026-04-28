@@ -1,3 +1,16 @@
+function getAuthToken(): string {
+  const raw = window.localStorage.getItem("aml_smpc_auth_session");
+
+  if (!raw) return "";
+
+  try {
+    const session = JSON.parse(raw) as { token?: string };
+    return session.token ?? "";
+  } catch {
+    return "";
+  }
+}
+
 export class ApiError extends Error {
   status: number;
   payload: unknown;
@@ -27,14 +40,25 @@ async function request<T>(
   );
 
   try {
+    const headers = new Headers(init.headers);
+    headers.set("Content-Type", "application/json");
+
+    if (options.headers) {
+      new Headers(options.headers).forEach((value, key) => {
+        headers.set(key, value);
+      });
+    }
+
+    const token = getAuthToken();
+
+    if (token && !headers.has("Authorization")) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+
     const response = await fetch(url, {
       ...init,
       signal: controller.signal,
-      headers: {
-        "Content-Type": "application/json",
-        ...(options.headers ?? {}),
-        ...(init.headers ?? {}),
-      },
+      headers,
     });
 
     const text = await response.text();

@@ -1,5 +1,6 @@
 use crate::{auth, db, proofs};
 use axum::{
+    http::HeaderMap,
     extract::{Path, Query, State},
     http::StatusCode,
     response::IntoResponse,
@@ -32,10 +33,12 @@ async fn health() -> impl IntoResponse {
     (StatusCode::OK, Json(json!({"status": "ok"})))
 }
 
-async fn list_proofs(
+async fn list_proofs(headers: HeaderMap,
     State(pool): State<PgPool>,
     Query(query): Query<ProofQuery>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    auth::require_permission(&headers, "proofs:read")?;
+
     let proofs = db::list_proofs(&pool, query.tx_id.as_deref())
         .await
         .map_err(internal_error)?;
@@ -53,7 +56,7 @@ async fn get_proof(
     Ok((StatusCode::OK, Json(proof)))
 }
 
-async fn verify_proof(
+async fn verify_proof(headers: HeaderMap,
     Path(proof_id): Path<String>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let zk_prover_base_url =
@@ -66,7 +69,7 @@ async fn verify_proof(
     Ok((StatusCode::OK, Json(outcome)))
 }
 
-async fn get_audit_timeline(
+async fn get_audit_timeline(headers: HeaderMap,
     State(pool): State<PgPool>,
     Path(tx_id): Path<String>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {

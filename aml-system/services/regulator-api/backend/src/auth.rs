@@ -780,7 +780,71 @@ async fn require_super_admin(
     }
 }
 
-fn require_auth_claims(headers: &HeaderMap) -> Result<Claims, (StatusCode, Json<serde_json::Value>)> {
+pub fn require_roles(
+    headers: &HeaderMap,
+    allowed_roles: &[&str],
+) -> Result<Claims, (StatusCode, Json<serde_json::Value>)> {
+    let claims = require_auth_claims(headers)?;
+
+    if claims.account_status != "active" {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "account_not_active",
+                "message": "Only active accounts can access this resource.",
+                "account_status": claims.account_status
+            })),
+        ));
+    }
+
+    if !allowed_roles.iter().any(|role| *role == claims.role) {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "insufficient_role",
+                "message": "Your role is not allowed to access this resource.",
+                "required_roles": allowed_roles,
+                "current_role": claims.role
+            })),
+        ));
+    }
+
+    Ok(claims)
+}
+
+pub fn require_permission(
+    headers: &HeaderMap,
+    permission: &str,
+) -> Result<Claims, (StatusCode, Json<serde_json::Value>)> {
+    let claims = require_auth_claims(headers)?;
+
+    if claims.account_status != "active" {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "account_not_active",
+                "message": "Only active accounts can access this resource.",
+                "account_status": claims.account_status
+            })),
+        ));
+    }
+
+    if !claims.permissions.iter().any(|item| item == permission) {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "insufficient_permission",
+                "message": "Your role does not have the required permission.",
+                "required_permission": permission,
+                "current_role": claims.role
+            })),
+        ));
+    }
+
+    Ok(claims)
+}
+
+pub fn require_auth_claims(headers: &HeaderMap) -> Result<Claims, (StatusCode, Json<serde_json::Value>)> {
     let auth_header = headers
         .get("authorization")
         .and_then(|value| value.to_str().ok())
