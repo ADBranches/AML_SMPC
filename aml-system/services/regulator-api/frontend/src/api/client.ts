@@ -12,6 +12,7 @@ export class ApiError extends Error {
 
 type RequestOptions = {
   timeoutMs?: number;
+  headers?: HeadersInit;
 };
 
 async function request<T>(
@@ -31,6 +32,7 @@ async function request<T>(
       signal: controller.signal,
       headers: {
         "Content-Type": "application/json",
+        ...(options.headers ?? {}),
         ...(init.headers ?? {}),
       },
     });

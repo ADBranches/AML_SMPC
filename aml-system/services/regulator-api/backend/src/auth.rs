@@ -1,5 +1,5 @@
 use argon2::{
-    password_hash::SaltString,
+    password_hash::{PasswordHash, PasswordVerifier, SaltString},
     Argon2, PasswordHasher,
 };
 use axum::{
@@ -9,6 +9,8 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
+use chrono::{Duration, Utc};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
 use rand_core::OsRng;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -34,6 +36,37 @@ pub struct RegisterResponse {
     pub requested_role: String,
     pub account_status: String,
     pub message: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct LoginRequest {
+    pub email: String,
+    pub password: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct LoginResponse {
+    pub user_id: String,
+    pub full_name: String,
+    pub email: String,
+    pub role: String,
+    pub organization_id: Option<String>,
+    pub organization_name: Option<String>,
+    pub account_status: String,
+    pub permissions: Vec<String>,
+    pub token: String,
+    pub token_type: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Claims {
+    pub sub: String,
+    pub email: String,
+    pub role: String,
+    pub organization_id: Option<String>,
+    pub account_status: String,
+    pub permissions: Vec<String>,
+    pub exp: usize,
 }
 
 #[derive(Debug, Deserialize)]
@@ -66,9 +99,23 @@ pub struct AdminUserRow {
     pub created_at: String,
 }
 
+#[derive(Debug, FromRow)]
+struct LoginUserRow {
+    id: Uuid,
+    organization_id: Option<Uuid>,
+    organization_name: Option<String>,
+    full_name: String,
+    email: String,
+    password_hash: String,
+    role: String,
+    account_status: String,
+}
+
 pub fn routes() -> Router<PgPool> {
     Router::new()
         .route("/auth/register", post(register))
+        .route("/auth/login", post(login))
+        .route("/auth/me", get(me))
         .route("/admin/users", get(list_users))
         .route("/admin/users/pending", get(list_pending_users))
         .route("/admin/users/:user_id/approve", post(approve_user))
@@ -201,6 +248,171 @@ async fn register(
             message: "Registration submitted. Your account is pending super admin approval.".to_string(),
         }),
     ))
+}
+
+async fn login(
+    State(pool): State<PgPool>,
+    Json(input): Json<LoginRequest>,
+) -> Result<Json<LoginResponse>, (StatusCode, Json<serde_json::Value>)> {
+    let email = input.email.trim().to_lowercase();
+    let password = input.password.trim();
+
+    if email.is_empty() || password.is_empty() {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(json!({
+                "error": "validation_failed",
+                "message": "Email and password are required."
+            })),
+        ));
+    }
+
+    let user = sqlx::query_as::<_, LoginUserRow>(
+        r#"
+        SELECT
+            u.id,
+            u.organization_id,
+            o.name AS organization_name,
+            u.full_name,
+            u.email,
+            u.password_hash,
+            u.role,
+            u.account_status
+        FROM app_users u
+        LEFT JOIN organizations o ON o.id = u.organization_id
+        WHERE LOWER(u.email) = LOWER($1)
+        "#,
+    )
+    .bind(&email)
+    .fetch_optional(&pool)
+    .await
+    .map_err(internal_error)?
+    .ok_or_else(|| {
+        (
+            StatusCode::UNAUTHORIZED,
+            Json(json!({
+                "error": "invalid_credentials",
+                "message": "Invalid email or password."
+            })),
+        )
+    })?;
+
+    if user.account_status != "active" {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "account_not_active",
+                "message": "Your account is not active. It must be approved by the super admin before login.",
+                "account_status": user.account_status
+            })),
+        ));
+    }
+
+    verify_password_or_bootstrap(&user, password)?;
+
+    let permissions = permissions_for_role(&user.role);
+    let token = issue_token(
+        user.id,
+        &user.email,
+        &user.role,
+        user.organization_id,
+        &user.account_status,
+        &permissions,
+    )?;
+
+    Ok(Json(LoginResponse {
+        user_id: user.id.to_string(),
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role,
+        organization_id: user.organization_id.map(|id| id.to_string()),
+        organization_name: user.organization_name,
+        account_status: user.account_status,
+        permissions,
+        token,
+        token_type: "Bearer".to_string(),
+    }))
+}
+
+async fn me(
+    State(pool): State<PgPool>,
+    headers: HeaderMap,
+) -> Result<Json<LoginResponse>, (StatusCode, Json<serde_json::Value>)> {
+    let claims = require_auth_claims(&headers)?;
+
+    let user_id = Uuid::parse_str(&claims.sub).map_err(|_| {
+        (
+            StatusCode::UNAUTHORIZED,
+            Json(json!({
+                "error": "invalid_token",
+                "message": "Token subject is invalid."
+            })),
+        )
+    })?;
+
+    let user = sqlx::query_as::<_, LoginUserRow>(
+        r#"
+        SELECT
+            u.id,
+            u.organization_id,
+            o.name AS organization_name,
+            u.full_name,
+            u.email,
+            u.password_hash,
+            u.role,
+            u.account_status
+        FROM app_users u
+        LEFT JOIN organizations o ON o.id = u.organization_id
+        WHERE u.id = $1
+        "#,
+    )
+    .bind(user_id)
+    .fetch_optional(&pool)
+    .await
+    .map_err(internal_error)?
+    .ok_or_else(|| {
+        (
+            StatusCode::UNAUTHORIZED,
+            Json(json!({
+                "error": "user_not_found",
+                "message": "Token user no longer exists."
+            })),
+        )
+    })?;
+
+    if user.account_status != "active" {
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "account_not_active",
+                "message": "Account is not active.",
+                "account_status": user.account_status
+            })),
+        ));
+    }
+
+    let permissions = permissions_for_role(&user.role);
+    let token = issue_token(
+        user.id,
+        &user.email,
+        &user.role,
+        user.organization_id,
+        &user.account_status,
+        &permissions,
+    )?;
+
+    Ok(Json(LoginResponse {
+        user_id: user.id.to_string(),
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role,
+        organization_id: user.organization_id.map(|id| id.to_string()),
+        organization_name: user.organization_name,
+        account_status: user.account_status,
+        permissions,
+        token,
+        token_type: "Bearer".to_string(),
+    }))
 }
 
 async fn list_pending_users(
@@ -356,7 +568,6 @@ async fn reject_user(
     Json(input): Json<RejectUserRequest>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let admin_id = require_super_admin(&pool, &headers).await?;
-
     let reason = input.reason.unwrap_or_else(|| "Rejected by super admin.".to_string());
 
     let mut tx = pool.begin().await.map_err(internal_error)?;
@@ -504,6 +715,28 @@ async fn require_super_admin(
     pool: &PgPool,
     headers: &HeaderMap,
 ) -> Result<Uuid, (StatusCode, Json<serde_json::Value>)> {
+    if let Ok(claims) = require_auth_claims(headers) {
+        if claims.role == "super_admin" && claims.account_status == "active" {
+            return Uuid::parse_str(&claims.sub).map_err(|_| {
+                (
+                    StatusCode::UNAUTHORIZED,
+                    Json(json!({
+                        "error": "invalid_token",
+                        "message": "Token subject is invalid."
+                    })),
+                )
+            });
+        }
+
+        return Err((
+            StatusCode::FORBIDDEN,
+            Json(json!({
+                "error": "super_admin_required",
+                "message": "Only an active super_admin can perform this action."
+            })),
+        ));
+    }
+
     let email = headers
         .get("x-acting-user-email")
         .and_then(|value| value.to_str().ok())
@@ -516,7 +749,7 @@ async fn require_super_admin(
             StatusCode::UNAUTHORIZED,
             Json(json!({
                 "error": "missing_super_admin_identity",
-                "message": "Missing X-Acting-User-Email header. JWT identity will replace this in the next auth phase."
+                "message": "Missing Authorization bearer token or X-Acting-User-Email header."
             })),
         ));
     }
@@ -545,6 +778,179 @@ async fn require_super_admin(
             })),
         )),
     }
+}
+
+fn require_auth_claims(headers: &HeaderMap) -> Result<Claims, (StatusCode, Json<serde_json::Value>)> {
+    let auth_header = headers
+        .get("authorization")
+        .and_then(|value| value.to_str().ok())
+        .unwrap_or("");
+
+    let token = auth_header
+        .strip_prefix("Bearer ")
+        .ok_or_else(|| {
+            (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({
+                    "error": "missing_bearer_token",
+                    "message": "Authorization header must be Bearer <token>."
+                })),
+            )
+        })?;
+
+    decode::<Claims>(
+        token,
+        &DecodingKey::from_secret(jwt_secret().as_bytes()),
+        &Validation::default(),
+    )
+    .map(|data| data.claims)
+    .map_err(|err| {
+        (
+            StatusCode::UNAUTHORIZED,
+            Json(json!({
+                "error": "invalid_token",
+                "message": err.to_string()
+            })),
+        )
+    })
+}
+
+fn issue_token(
+    user_id: Uuid,
+    email: &str,
+    role: &str,
+    organization_id: Option<Uuid>,
+    account_status: &str,
+    permissions: &[String],
+) -> Result<String, (StatusCode, Json<serde_json::Value>)> {
+    let exp = Utc::now()
+        .checked_add_signed(Duration::hours(8))
+        .ok_or_else(|| {
+            (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(json!({
+                    "error": "token_time_error",
+                    "message": "Failed to calculate token expiry."
+                })),
+            )
+        })?
+        .timestamp() as usize;
+
+    let claims = Claims {
+        sub: user_id.to_string(),
+        email: email.to_string(),
+        role: role.to_string(),
+        organization_id: organization_id.map(|id| id.to_string()),
+        account_status: account_status.to_string(),
+        permissions: permissions.to_vec(),
+        exp,
+    };
+
+    encode(
+        &Header::default(),
+        &claims,
+        &EncodingKey::from_secret(jwt_secret().as_bytes()),
+    )
+    .map_err(internal_error)
+}
+
+fn jwt_secret() -> String {
+    std::env::var("REGULATOR_JWT_SECRET")
+        .or_else(|_| std::env::var("JWT_SECRET"))
+        .unwrap_or_else(|_| "dev-only-change-this-regulator-jwt-secret".to_string())
+}
+
+fn verify_password_or_bootstrap(
+    user: &LoginUserRow,
+    password: &str,
+) -> Result<(), (StatusCode, Json<serde_json::Value>)> {
+    if user.email == "super.admin@aml-smpc.local"
+        && user.password_hash == "bootstrap-password-login-pending"
+    {
+        let expected = std::env::var("BOOTSTRAP_SUPER_ADMIN_PASSWORD")
+            .unwrap_or_else(|_| "SuperAdmin123".to_string());
+
+        if password == expected {
+            return Ok(());
+        }
+    }
+
+    let parsed_hash = PasswordHash::new(&user.password_hash).map_err(|_| {
+        (
+            StatusCode::UNAUTHORIZED,
+            Json(json!({
+                "error": "invalid_credentials",
+                "message": "Invalid email or password."
+            })),
+        )
+    })?;
+
+    Argon2::default()
+        .verify_password(password.as_bytes(), &parsed_hash)
+        .map_err(|_| {
+            (
+                StatusCode::UNAUTHORIZED,
+                Json(json!({
+                    "error": "invalid_credentials",
+                    "message": "Invalid email or password."
+                })),
+            )
+        })
+}
+
+fn permissions_for_role(role: &str) -> Vec<String> {
+    match role {
+        "super_admin" => vec![
+            "users:read",
+            "users:approve",
+            "users:reject",
+            "users:activate",
+            "users:deactivate",
+            "roles:assign",
+            "organizations:manage",
+            "system:admin",
+        ],
+        "admin" => vec![
+            "system:read",
+            "services:read",
+            "retention:read",
+            "evidence:read",
+        ],
+        "institution_admin" => vec![
+            "transactions:create",
+            "transactions:read",
+            "transactions:review",
+            "transactions:approve",
+            "proofs:generate",
+            "screening:read",
+        ],
+        "transaction_submitter" => vec![
+            "transactions:create",
+            "transactions:read_own",
+            "screening:read_own",
+        ],
+        "transaction_reviewer" => vec![
+            "transactions:read",
+            "transactions:review",
+            "transactions:approve",
+            "proofs:generate",
+        ],
+        "regulator" => vec![
+            "proofs:read",
+            "proofs:verify",
+            "audit:read",
+            "compliance:read",
+        ],
+        "auditor" => vec![
+            "audit:read",
+            "proofs:read",
+            "compliance:read",
+        ],
+        _ => vec![],
+    }
+    .into_iter()
+    .map(String::from)
+    .collect()
 }
 
 fn validate_registration(

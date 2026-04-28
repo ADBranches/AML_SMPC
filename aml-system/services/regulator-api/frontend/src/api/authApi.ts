@@ -1,6 +1,6 @@
 import { apiClient } from "./client";
 import { env } from "../config/env";
-import type { UserRole } from "../auth/authStore";
+import type { AuthSession, UserRole } from "../auth/authStore";
 
 export type RegisterPayload = {
   full_name: string;
@@ -21,12 +21,37 @@ export type RegisterResponse = {
   message: string;
 };
 
+export type LoginPayload = {
+  email: string;
+  password: string;
+};
+
 export const authApi = {
   register(payload: RegisterPayload) {
     return apiClient.post<RegisterResponse>(
       `${env.regulatorApiBaseUrl}/auth/register`,
       payload,
       { timeoutMs: 15000 }
+    );
+  },
+
+  login(payload: LoginPayload) {
+    return apiClient.post<AuthSession>(
+      `${env.regulatorApiBaseUrl}/auth/login`,
+      payload,
+      { timeoutMs: 15000 }
+    );
+  },
+
+  me(token: string) {
+    return apiClient.get<AuthSession>(
+      `${env.regulatorApiBaseUrl}/auth/me`,
+      {
+        timeoutMs: 15000,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
   },
 };

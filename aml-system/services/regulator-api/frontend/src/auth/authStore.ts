@@ -9,16 +9,23 @@ export type UserRole =
   | "regulator"
   | "auditor";
 
-export type AccountStatus = "pending_approval" | "active" | "disabled";
+export type AccountStatus =
+  | "pending_approval"
+  | "active"
+  | "rejected"
+  | "disabled";
 
 export type AuthSession = {
   user_id: string;
   full_name: string;
   email: string;
   role: UserRole;
+  organization_id?: string | null;
+  organization_name?: string | null;
   account_status: AccountStatus;
-  organization_name?: string;
-  token?: string;
+  permissions: string[];
+  token: string;
+  token_type?: string;
 };
 
 const STORAGE_KEY = "aml_smpc_auth_session";
