@@ -120,6 +120,11 @@ async fn compatibility_screening(
         .unwrap_or("unknown_tx")
         .to_string();
 
+    let entity_id = input
+        .get("entity_id")
+        .and_then(|value| value.as_i64())
+        .unwrap_or(0);
+
     let amount = input
         .get("amount")
         .or_else(|| input.get("transaction_amount"))
@@ -143,6 +148,7 @@ async fn compatibility_screening(
         "service": "smpc-orchestrator",
         "execution_model": "legacy_transaction_screening_compatibility",
         "tx_id": tx_id,
+        "entity_id": entity_id,
         "public_signal": true,
         "risk_score": risk_score,
         "risk_level": risk_level,
