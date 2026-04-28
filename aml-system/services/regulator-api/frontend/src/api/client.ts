@@ -1,3 +1,15 @@
+export class ApiError extends Error {
+  status: number;
+  payload: unknown;
+
+  constructor(status: number, message: string, payload: unknown) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.payload = payload;
+  }
+}
+
 type RequestOptions = {
   timeoutMs?: number;
 };
@@ -23,15 +35,61 @@ async function request<T>(
       },
     });
 
+    const text = await response.text();
+    const payload = text ? safeJsonParse(text) : null;
+
     if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`HTTP ${response.status}: ${body}`);
+      const message =
+        getErrorMessage(payload) ||
+        `Request failed with HTTP ${response.status}`;
+
+      throw new ApiError(response.status, message, payload);
     }
 
-    return (await response.json()) as T;
+    return payload as T;
+  } catch (err) {
+    if (err instanceof ApiError) {
+      throw err;
+    }
+
+    if (err instanceof DOMException && err.name === "AbortError") {
+      throw new Error("Request timed out. Confirm the backend service is running.");
+    }
+
+    throw err instanceof Error
+      ? err
+      : new Error("Unexpected network error occurred.");
   } finally {
     window.clearTimeout(timeout);
   }
+}
+
+function safeJsonParse(text: string): unknown {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
+}
+
+function getErrorMessage(payload: unknown): string {
+  if (payload && typeof payload === "object") {
+    const record = payload as Record<string, unknown>;
+
+    if (typeof record.message === "string") {
+      return record.message;
+    }
+
+    if (typeof record.error === "string") {
+      return record.error;
+    }
+  }
+
+  if (typeof payload === "string") {
+    return payload;
+  }
+
+  return "";
 }
 
 export const apiClient = {
