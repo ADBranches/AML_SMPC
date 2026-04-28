@@ -62,6 +62,7 @@ const groups: NavGroup[] = [
     links: [
       { to: "/regulator/dashboard", label: "Regulator Dashboard" },
       { to: "/regulator/proofs", label: "Proofs" },
+      { to: "/regulator/three-bank-smpc-demo", label: "Three-Bank SMPC" },
       { to: "/regulator/audit", label: "Audit" },
       { to: "/regulator/performance", label: "Performance" },
       { to: "/regulator/compliance-report", label: "Compliance Report" },

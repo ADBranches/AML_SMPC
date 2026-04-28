@@ -27,6 +27,7 @@ import { PendingUsersPage } from "../pages/super-admin/PendingUsersPage";
 import { UserManagementPage } from "../pages/super-admin/UserManagementPage";
 import { OrganizationManagementPage } from "../pages/super-admin/OrganizationManagementPage";
 import { RoleManagementPage } from "../pages/super-admin/RoleManagementPage";
+import { ThreeBankSmpcDemoPage } from "../pages/regulator/ThreeBankSmpcDemoPage";
 
 export const router = createBrowserRouter([
   {
@@ -109,6 +110,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={roleGroups.regulatorEvidenceReadOnly}>
             <RegulatorProofsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "regulator/three-bank-smpc-demo",
+        element: (
+          <ProtectedRoute allowedRoles={["regulator", "auditor", "super_admin"]}>
+            <ThreeBankSmpcDemoPage />
           </ProtectedRoute>
         ),
       },
