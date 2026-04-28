@@ -1,4 +1,4 @@
-use crate::{db, proofs};
+use crate::{auth, db, proofs};
 use axum::{
     extract::{Path, Query, State},
     http::StatusCode,
@@ -24,6 +24,7 @@ pub fn router(pool: PgPool) -> Router {
         .route("/proofs/:proof_id", get(get_proof))
         .route("/proofs/:proof_id/verify", post(verify_proof))
         .route("/audit/:tx_id", get(get_audit_timeline))
+        .merge(auth::routes())
         .with_state(pool)
 }
 
