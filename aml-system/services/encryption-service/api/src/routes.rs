@@ -70,6 +70,24 @@ async fn submit_transaction(
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let pseudo: PseudonymizedTransaction = pseudonymize_transaction(&input, &state.pseudo_salt);
 
+    if let Some(existing_tx_id) = sqlx::query_scalar::<_, String>(
+        "SELECT tx_id FROM transactions WHERE tx_id = $1",
+    )
+    .bind(&pseudo.tx_id)
+    .fetch_optional(&state.pool)
+    .await
+    .map_err(internal_error)?
+    {
+        return Err((
+            StatusCode::CONFLICT,
+            Json(json!({
+                "error": "transaction_already_exists",
+                "message": "A transaction with this tx_id already exists. Generate a new transaction ID and submit again.",
+                "tx_id": existing_tx_id
+            })),
+        ));
+    }
+
     let sender_screen = smpc_client::screen_entity(
         &state.smpc_base_url,
         &pseudo.tx_id,

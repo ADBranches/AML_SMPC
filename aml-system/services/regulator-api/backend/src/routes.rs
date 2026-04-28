@@ -1,8 +1,7 @@
 use crate::{auth, db, proofs};
 use axum::{
-    http::HeaderMap,
     extract::{Path, Query, State},
-    http::StatusCode,
+    http::{HeaderMap, StatusCode},
     response::IntoResponse,
     routing::{get, post},
     Json, Router,
@@ -33,7 +32,8 @@ async fn health() -> impl IntoResponse {
     (StatusCode::OK, Json(json!({"status": "ok"})))
 }
 
-async fn list_proofs(headers: HeaderMap,
+async fn list_proofs(
+    headers: HeaderMap,
     State(pool): State<PgPool>,
     Query(query): Query<ProofQuery>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
@@ -42,23 +42,32 @@ async fn list_proofs(headers: HeaderMap,
     let proofs = db::list_proofs(&pool, query.tx_id.as_deref())
         .await
         .map_err(internal_error)?;
+
     Ok((StatusCode::OK, Json(proofs)))
 }
 
 async fn get_proof(
+    headers: HeaderMap,
     State(pool): State<PgPool>,
     Path(proof_id): Path<String>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    auth::require_permission(&headers, "proofs:read")?;
+
     let proof_id = Uuid::parse_str(&proof_id).map_err(internal_error)?;
+
     let proof = db::get_proof(&pool, proof_id)
         .await
         .map_err(internal_error)?;
+
     Ok((StatusCode::OK, Json(proof)))
 }
 
-async fn verify_proof(headers: HeaderMap,
+async fn verify_proof(
+    headers: HeaderMap,
     Path(proof_id): Path<String>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    auth::require_permission(&headers, "proofs:verify")?;
+
     let zk_prover_base_url =
         env::var("ZK_PROVER_BASE_URL").unwrap_or_else(|_| "http://127.0.0.1:8084".into());
 
@@ -69,13 +78,17 @@ async fn verify_proof(headers: HeaderMap,
     Ok((StatusCode::OK, Json(outcome)))
 }
 
-async fn get_audit_timeline(headers: HeaderMap,
+async fn get_audit_timeline(
+    headers: HeaderMap,
     State(pool): State<PgPool>,
     Path(tx_id): Path<String>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    auth::require_permission(&headers, "audit:read")?;
+
     let timeline = db::list_audit_for_tx(&pool, &tx_id)
         .await
         .map_err(internal_error)?;
+
     Ok((StatusCode::OK, Json(timeline)))
 }
 

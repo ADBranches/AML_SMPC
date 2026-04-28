@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { auditApi } from "../../api/auditApi";
 import { AuditTimeline } from "../../components/audit/AuditTimeline";
 import { Card } from "../../components/ui/Card";
@@ -9,7 +10,9 @@ import { StatusBadge } from "../../components/ui/StatusBadge";
 import type { AuditEvent } from "../../types/audit";
 
 export function ScreeningResultsPage() {
-  const [txId, setTxId] = useState("TX-UI-DEMO-001");
+  const [searchParams] = useSearchParams();
+  const initialTxId = searchParams.get("tx_id") ?? "TX-UI-DEMO-001";
+  const [txId, setTxId] = useState(initialTxId);
   const [events, setEvents] = useState<AuditEvent[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
