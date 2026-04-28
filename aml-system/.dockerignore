@@ -8,3 +8,11 @@ docs
 tests
 external/SEAL/build
 services/he-orchestrator/seal-core/build
+
+# Render full-stack Docker build ignores
+external/
+**/target/
+**/node_modules/
+**/dist/
+**/.frontend-backups/
+.bank1-backups/

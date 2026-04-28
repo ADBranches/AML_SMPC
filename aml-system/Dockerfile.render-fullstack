@@ -1,0 +1,27 @@
+FROM node:20-bookworm-slim AS frontend-builder
+WORKDIR /app
+COPY services/regulator-api/frontend/package*.json ./
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+COPY services/regulator-api/frontend/ ./
+ARG VITE_REGULATOR_API_BASE_URL=/api/regulator
+ENV VITE_REGULATOR_API_BASE_URL=${VITE_REGULATOR_API_BASE_URL}
+RUN npm run build
+
+FROM rust:1.89-bookworm AS backend-builder
+WORKDIR /app
+COPY services/regulator-api/backend/Cargo.toml services/regulator-api/backend/Cargo.lock ./services/regulator-api/backend/
+COPY services/regulator-api/backend/src ./services/regulator-api/backend/src
+RUN cargo build --release --manifest-path services/regulator-api/backend/Cargo.toml
+
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates nginx && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY --from=backend-builder /app/services/regulator-api/backend/target/release/regulator-api-backend /usr/local/bin/regulator-api-backend
+COPY --from=frontend-builder /app/dist /usr/share/nginx/html
+COPY infra/render/nginx.fullstack.conf.template /etc/nginx/templates/default.conf.template
+COPY scripts/render/start-fullstack.sh /usr/local/bin/start-fullstack.sh
+RUN chmod +x /usr/local/bin/start-fullstack.sh
+ENV RUST_LOG=info
+ENV REGULATOR_API_BIND=127.0.0.1:18085
+EXPOSE 10000
+CMD ["/usr/local/bin/start-fullstack.sh"]
