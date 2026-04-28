@@ -2,7 +2,7 @@
 set -euo pipefail
 
 API_BASE="${SMPC_BASE:-http://127.0.0.1:8083}"
-EVIDENCE_DIR="tests/evidence/three_bank_smpc"
+EVIDENCE_DIR="${EVIDENCE_DIR:-.runtime-evidence/three_bank_smpc}"
 RESULT_JSON="$EVIDENCE_DIR/three_bank_smpc_result.json"
 RESULT_MD="$EVIDENCE_DIR/THREE_BANK_SMPC_EVIDENCE_SUMMARY.md"
 

@@ -8,3 +8,6 @@ infra/softhsm/tokens/*
 !infra/softhsm/tokens/.gitkeep
 libs/security/mtls/ca/*.key
 libs/security/mtls/certs/**/*.key
+
+# Runtime-only demo outputs
+.runtime-evidence/
