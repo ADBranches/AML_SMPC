@@ -26,6 +26,7 @@ export function dashboardForRole(role: UserRole): string {
 }
 
 export const roleGroups = {
+  institutionAll: ["institution_admin", "transaction_submitter", "transaction_reviewer"] as UserRole[],
   institutionManagement: ["institution_admin"] as UserRole[],
   transactionSubmission: ["institution_admin", "transaction_submitter"] as UserRole[],
   transactionReview: ["institution_admin", "transaction_reviewer"] as UserRole[],

@@ -1,3 +1,4 @@
+mod transactions;
 mod auth;
 mod routes;
 mod proofs;

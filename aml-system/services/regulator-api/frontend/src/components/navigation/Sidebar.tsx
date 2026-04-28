@@ -32,7 +32,8 @@ const groups: NavGroup[] = [
     links: [
       { to: "/institution/dashboard", label: "Institution Dashboard" },
       { to: "/institution/transactions/new", label: "Submit Transaction" },
-      { to: "/institution/reviews", label: "Review Queue" },
+      { to: "/institution/transactions", label: "Review Queue" },
+      { to: "/institution/transactions/approved", label: "Approved Transactions" },
       { to: "/institution/screening-results", label: "Screening Evidence" },
     ],
   },
@@ -41,13 +42,15 @@ const groups: NavGroup[] = [
     roles: ["transaction_submitter"],
     links: [
       { to: "/institution/transactions/new", label: "Submit Transaction" },
+      { to: "/institution/transactions", label: "My Transactions" },
     ],
   },
   {
     title: "Transaction Reviewer",
     roles: ["transaction_reviewer"],
     links: [
-      { to: "/institution/reviews", label: "Review Queue" },
+      { to: "/institution/transactions", label: "Review Queue" },
+      { to: "/institution/transactions/approved", label: "Approved Transactions" },
       { to: "/institution/screening-results", label: "Screening Evidence" },
     ],
   },

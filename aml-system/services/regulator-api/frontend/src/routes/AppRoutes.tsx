@@ -12,6 +12,9 @@ import { InstitutionDashboardPage } from "../pages/institution/InstitutionDashbo
 import { NewTransactionPage } from "../pages/institution/NewTransactionPage";
 import { ScreeningResultsPage } from "../pages/institution/ScreeningResultsPage";
 import { TransactionReviewQueuePage } from "../pages/institution/TransactionReviewQueuePage";
+import { TransactionQueuePage } from "../pages/institution/TransactionQueuePage";
+import { TransactionReviewPage } from "../pages/institution/TransactionReviewPage";
+import { ApprovedTransactionsPage } from "../pages/institution/ApprovedTransactionsPage";
 
 import { RegulatorDashboardPage } from "../pages/regulator/RegulatorDashboardPage";
 import { RegulatorProofsPage } from "../pages/regulator/RegulatorProofsPage";
@@ -48,10 +51,35 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "institution/transactions",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.institutionAll}>
+            <TransactionQueuePage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/transactions/:txId/review",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.transactionReview}>
+            <TransactionReviewPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/transactions/approved",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.transactionReview}>
+            <ApprovedTransactionsPage />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
         path: "institution/reviews",
         element: (
           <ProtectedRoute allowedRoles={roleGroups.transactionReview}>
-            <TransactionReviewQueuePage />
+            <TransactionQueuePage />
           </ProtectedRoute>
         ),
       },
