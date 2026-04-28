@@ -6,12 +6,7 @@ PASSED
 
 ## Transaction Tested
 
-`TX-AUTH8-20260428090903`
-
-## Evidence Counts
-
-- Proof count: 3
-- Audit count: 3
+`TX-AUTH8-20260428085750`
 
 ## Verified Capabilities
 
@@ -27,3 +22,19 @@ PASSED
 - regulator can verify proofs.
 - auditor can read proofs.
 - auditor cannot verify proofs.
+
+## Evidence Counts
+
+- Proof count: 3
+- Audit count: 3
+
+## Demo Users
+
+| Role | Email |
+|---|---|
+| super_admin | super.admin@aml-smpc.local |
+| institution_admin | demo.institution.admin@example.com |
+| transaction_submitter | demo.submitter@example.com |
+| transaction_reviewer | demo.reviewer@example.com |
+| regulator | demo.regulator@example.com |
+| auditor | demo.auditor@example.com |
