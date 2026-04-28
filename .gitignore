@@ -1,23 +1,24 @@
 # Local safety snapshots
 aml-system-safety-snapshots/
-
 # AML SMPC generated evidence, benchmark outputs, and local backups
 aml-system/tests/evidence/**
 !aml-system/tests/evidence/
 !aml-system/tests/evidence/**/
 !aml-system/tests/evidence/**/PHASE_*_RESULTS.md
 !aml-system/tests/evidence/**/PHASE_*_EVIDENCE_SUMMARY.md
-
 aml-system/tests/**/*.bak.*
 aml-system/tests/fixtures/*.bak.*
 aml-system/scripts/**/*.bak.*
 .gitignore.bak.*
-
 # Python local cache
 aml-system/**/__pycache__/
 aml-system/**/*.pyc
-
 # Phase 8 generated distribution bundles
 aml-system/dist/*.tar.gz
 aml-system/dist/*.zip
-\naml-system/services/regulator-api/frontend/tsconfig.tsbuildinfo\naml-system/services/regulator-api/frontend/dist/\naml-system/services/regulator-api/frontend/.frontend-backups/\n
+aml-system/services/regulator-api/frontend/tsconfig.tsbuildinfo
+aml-system/services/regulator-api/frontend/dist/
+aml-system/services/regulator-api/frontend/.frontend-backups/
+aml-system/services/regulator-api/frontend/node_modules/
+aml-system/.env
+aml-system/services/regulator-api/frontend/.env
