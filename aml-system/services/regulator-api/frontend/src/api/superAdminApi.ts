@@ -19,15 +19,18 @@ export type AdminUserRow = {
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const session = getStoredSession();
 
-  const actingEmail = session?.email || "super.admin@aml-smpc.local";
+  const headers = new Headers(init.headers);
+  headers.set("Content-Type", "application/json");
+
+  if (session?.token) {
+    headers.set("Authorization", `Bearer ${session.token}`);
+  } else if (session?.email) {
+    headers.set("X-Acting-User-Email", session.email);
+  }
 
   const response = await fetch(`${env.regulatorApiBaseUrl}${path}`, {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Acting-User-Email": actingEmail,
-      ...(init.headers ?? {}),
-    },
+    headers,
   });
 
   const text = await response.text();
