@@ -24,6 +24,8 @@ const groups: NavGroup[] = [
       { to: "/super-admin/dashboard", label: "Dashboard" },
       { to: "/super-admin/pending-users", label: "Pending Users" },
       { to: "/super-admin/users", label: "User Management" },
+      { to: "/super-admin/organizations", label: "Organizations" },
+      { to: "/super-admin/roles", label: "Roles & Permissions" },
     ],
   },
   {

@@ -16,6 +16,22 @@ export type AdminUserRow = {
   created_at: string;
 };
 
+export type OrganizationAdminRow = {
+  organization_id: string;
+  organization_name: string;
+  status: string;
+  total_users: number;
+  active_users: number;
+  pending_users: number;
+  created_at: string;
+};
+
+export type RoleDefinition = {
+  role: string;
+  description: string;
+  permissions: string[];
+};
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const session = getStoredSession();
 
@@ -53,6 +69,14 @@ export const superAdminApi = {
 
   listUsers() {
     return request<AdminUserRow[]>("/admin/users");
+  },
+
+  listOrganizations() {
+    return request<OrganizationAdminRow[]>("/admin/organizations");
+  },
+
+  listRoles() {
+    return request<RoleDefinition[]>("/admin/roles");
   },
 
   approveUser(userId: string, assignedRole: string) {

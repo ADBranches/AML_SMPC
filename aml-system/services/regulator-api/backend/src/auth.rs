@@ -99,6 +99,24 @@ pub struct AdminUserRow {
     pub created_at: String,
 }
 
+#[derive(Debug, Serialize, FromRow)]
+pub struct OrganizationAdminRow {
+    pub organization_id: String,
+    pub organization_name: String,
+    pub status: String,
+    pub total_users: i64,
+    pub active_users: i64,
+    pub pending_users: i64,
+    pub created_at: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct RoleDefinition {
+    pub role: String,
+    pub description: String,
+    pub permissions: Vec<String>,
+}
+
 #[derive(Debug, FromRow)]
 struct LoginUserRow {
     id: Uuid,
@@ -122,6 +140,8 @@ pub fn routes() -> Router<PgPool> {
         .route("/admin/users/:user_id/reject", post(reject_user))
         .route("/admin/users/:user_id/activate", post(activate_user))
         .route("/admin/users/:user_id/deactivate", post(deactivate_user))
+        .route("/admin/organizations", get(list_organizations))
+        .route("/admin/roles", get(list_roles))
 }
 
 async fn register(
@@ -481,6 +501,78 @@ async fn list_users(
     .map_err(internal_error)?;
 
     Ok(Json(users))
+}
+
+
+async fn list_organizations(
+    State(pool): State<PgPool>,
+    headers: HeaderMap,
+) -> Result<Json<Vec<OrganizationAdminRow>>, (StatusCode, Json<serde_json::Value>)> {
+    require_super_admin(&pool, &headers).await?;
+
+    let organizations = sqlx::query_as::<_, OrganizationAdminRow>(
+        r#"
+        SELECT
+            o.id::text AS organization_id,
+            o.name AS organization_name,
+            o.status,
+            COUNT(u.id)::bigint AS total_users,
+            COUNT(u.id) FILTER (WHERE u.account_status = 'active')::bigint AS active_users,
+            COUNT(u.id) FILTER (WHERE u.account_status = 'pending_approval')::bigint AS pending_users,
+            o.created_at::text AS created_at
+        FROM organizations o
+        LEFT JOIN app_users u ON u.organization_id = o.id
+        GROUP BY o.id, o.name, o.status, o.created_at
+        ORDER BY o.created_at DESC
+        "#,
+    )
+    .fetch_all(&pool)
+    .await
+    .map_err(internal_error)?;
+
+    Ok(Json(organizations))
+}
+
+async fn list_roles(
+    State(pool): State<PgPool>,
+    headers: HeaderMap,
+) -> Result<Json<Vec<RoleDefinition>>, (StatusCode, Json<serde_json::Value>)> {
+    require_super_admin(&pool, &headers).await?;
+
+    let roles = vec![
+        RoleDefinition {
+            role: "super_admin".to_string(),
+            description: "Controls user approvals, role assignment, organizations, and platform governance.".to_string(),
+            permissions: permissions_for_role("super_admin"),
+        },
+        RoleDefinition {
+            role: "institution_admin".to_string(),
+            description: "Supervises institution transaction submission, review, screening, and proof generation.".to_string(),
+            permissions: permissions_for_role("institution_admin"),
+        },
+        RoleDefinition {
+            role: "transaction_submitter".to_string(),
+            description: "Creates transaction workflow requests for reviewer approval.".to_string(),
+            permissions: permissions_for_role("transaction_submitter"),
+        },
+        RoleDefinition {
+            role: "transaction_reviewer".to_string(),
+            description: "Reviews, approves/rejects, screens, and generates proofs for approved transactions.".to_string(),
+            permissions: permissions_for_role("transaction_reviewer"),
+        },
+        RoleDefinition {
+            role: "regulator".to_string(),
+            description: "Reads and verifies regulator-facing proof and audit evidence.".to_string(),
+            permissions: permissions_for_role("regulator"),
+        },
+        RoleDefinition {
+            role: "auditor".to_string(),
+            description: "Read-only access to audit, proof, and compliance evidence.".to_string(),
+            permissions: permissions_for_role("auditor"),
+        },
+    ];
+
+    Ok(Json(roles))
 }
 
 async fn approve_user(

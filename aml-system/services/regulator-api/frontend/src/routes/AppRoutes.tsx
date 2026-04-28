@@ -23,6 +23,10 @@ import { RegulatorPerformancePage } from "../pages/regulator/RegulatorPerformanc
 import { RegulatorComplianceReportPage } from "../pages/regulator/RegulatorComplianceReportPage";
 
 import { SuperAdminDashboardPage } from "../pages/super-admin/SuperAdminDashboardPage";
+import { PendingUsersPage } from "../pages/super-admin/PendingUsersPage";
+import { UserManagementPage } from "../pages/super-admin/UserManagementPage";
+import { OrganizationManagementPage } from "../pages/super-admin/OrganizationManagementPage";
+import { RoleManagementPage } from "../pages/super-admin/RoleManagementPage";
 
 export const router = createBrowserRouter([
   {
@@ -145,7 +149,7 @@ export const router = createBrowserRouter([
         path: "super-admin/users",
         element: (
           <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
-            <SuperAdminDashboardPage />
+            <UserManagementPage />
           </ProtectedRoute>
         ),
       },
@@ -153,7 +157,23 @@ export const router = createBrowserRouter([
         path: "super-admin/pending-users",
         element: (
           <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
-            <SuperAdminDashboardPage />
+            <PendingUsersPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "super-admin/organizations",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
+            <OrganizationManagementPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "super-admin/roles",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
+            <RoleManagementPage />
           </ProtectedRoute>
         ),
       },
