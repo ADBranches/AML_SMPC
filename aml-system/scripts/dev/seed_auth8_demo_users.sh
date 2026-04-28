@@ -23,6 +23,15 @@ if [ -z "$SUPER_TOKEN" ] || [ "$SUPER_TOKEN" = "null" ]; then
   exit 1
 fi
 
+get_user_json() {
+  local email="$1"
+
+  curl -fsS "$API_BASE/admin/users" \
+    -H "Authorization: Bearer $SUPER_TOKEN" \
+    | jq -c --arg email "$email" '.[] | select(.email == $email)' \
+    | head -n 1
+}
+
 seed_user() {
   local full_name="$1"
   local email="$2"
@@ -58,9 +67,7 @@ seed_user() {
     echo "$REGISTER_BODY" | jq . || echo "$REGISTER_BODY"
   fi
 
-  USER_JSON="$(curl -fsS "$API_BASE/admin/users" \
-    -H "Authorization: Bearer $SUPER_TOKEN" \
-    | jq -r --arg email "$email" '.[] | select(.email == $email)' | head -n 1)"
+  USER_JSON="$(get_user_json "$email")"
 
   USER_ID="$(echo "$USER_JSON" | jq -r '.user_id // empty')"
   CURRENT_STATUS="$(echo "$USER_JSON" | jq -r '.account_status // empty')"

@@ -65,12 +65,35 @@ echo "============================================================"
 curl -fsS "$API_BASE/health" >/dev/null
 pass "regulator API health check"
 
-SUPER_JSON="$(login super.admin@aml-smpc.local "$SUPER_PASSWORD")"
-INST_ADMIN_JSON="$(login demo.institution.admin@example.com "$PASSWORD")"
-SUBMITTER_JSON="$(login demo.submitter@example.com "$PASSWORD")"
-REVIEWER_JSON="$(login demo.reviewer@example.com "$PASSWORD")"
-REGULATOR_JSON="$(login demo.regulator@example.com "$PASSWORD")"
-AUDITOR_JSON="$(login demo.auditor@example.com "$PASSWORD")"
+login_or_fail() {
+  local email="$1"
+  local password="$2"
+
+  set +e
+  local response
+  response="$(curl -sS -w '\n%{http_code}' -X POST "$API_BASE/auth/login"     -H "Content-Type: application/json"     -d "{\"email\":\"$email\",\"password\":\"$password\"}")"
+  set -e
+
+  local code
+  local body
+  code="$(echo "$response" | tail -n 1)"
+  body="$(echo "$response" | sed '$d')"
+
+  if [ "$code" != "200" ]; then
+    echo "Login failed for $email with HTTP $code"
+    echo "$body" | jq . || echo "$body"
+    exit 1
+  fi
+
+  echo "$body"
+}
+
+SUPER_JSON="$(login_or_fail super.admin@aml-smpc.local "$SUPER_PASSWORD")"
+INST_ADMIN_JSON="$(login_or_fail demo.institution.admin@example.com "$PASSWORD")"
+SUBMITTER_JSON="$(login_or_fail demo.submitter@example.com "$PASSWORD")"
+REVIEWER_JSON="$(login_or_fail demo.reviewer@example.com "$PASSWORD")"
+REGULATOR_JSON="$(login_or_fail demo.regulator@example.com "$PASSWORD")"
+AUDITOR_JSON="$(login_or_fail demo.auditor@example.com "$PASSWORD")"
 
 SUPER_TOKEN="$(echo "$SUPER_JSON" | jq -r '.token')"
 INST_ADMIN_TOKEN="$(echo "$INST_ADMIN_JSON" | jq -r '.token')"
