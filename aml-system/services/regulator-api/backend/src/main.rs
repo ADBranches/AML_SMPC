@@ -23,8 +23,11 @@ async fn main() {
 
     let database_url =
         env::var("DATABASE_URL").expect("DATABASE_URL must be set in environment or .env");
-    let bind_addr =
-        env::var("REGULATOR_API_BIND").unwrap_or_else(|_| "127.0.0.1:8085".to_string());
+    let bind_addr = env::var("REGULATOR_API_BIND").unwrap_or_else(|_| {
+        env::var("PORT")
+            .map(|port| format!("0.0.0.0:{port}"))
+            .unwrap_or_else(|_| "127.0.0.1:8085".to_string())
+    });
 
     let pool = PgPoolOptions::new()
         .max_connections(10)
