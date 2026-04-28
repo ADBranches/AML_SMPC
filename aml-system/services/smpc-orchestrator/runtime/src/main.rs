@@ -139,6 +139,7 @@ async fn compatibility_screening(
     Json(json!({
         "status": "screened_clear",
         "screening_status": "screened_clear",
+        "screening_result": "clear",
         "service": "smpc-orchestrator",
         "execution_model": "legacy_transaction_screening_compatibility",
         "tx_id": tx_id,
