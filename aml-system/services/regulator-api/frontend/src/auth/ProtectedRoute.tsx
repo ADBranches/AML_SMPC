@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { dashboardForRole } from "./roleAccess";
 import { useAuthSession, type UserRole } from "./authStore";
 
 type ProtectedRouteProps = {
@@ -26,7 +27,7 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
   }
 
   if (!allowedRoles.includes(session.role)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={dashboardForRole(session.role)} replace />;
   }
 
   return <>{children}</>;

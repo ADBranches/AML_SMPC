@@ -1,5 +1,6 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from "../auth/ProtectedRoute";
+import { roleGroups } from "../auth/roleAccess";
 import { AppLayout } from "../layouts/AppLayout";
 
 import { HomePage } from "../pages/public/HomePage";
@@ -10,6 +11,7 @@ import { AboutPage } from "../pages/AboutPage";
 import { InstitutionDashboardPage } from "../pages/institution/InstitutionDashboardPage";
 import { NewTransactionPage } from "../pages/institution/NewTransactionPage";
 import { ScreeningResultsPage } from "../pages/institution/ScreeningResultsPage";
+import { TransactionReviewQueuePage } from "../pages/institution/TransactionReviewQueuePage";
 
 import { RegulatorDashboardPage } from "../pages/regulator/RegulatorDashboardPage";
 import { RegulatorProofsPage } from "../pages/regulator/RegulatorProofsPage";
@@ -17,19 +19,7 @@ import { RegulatorAuditPage } from "../pages/regulator/RegulatorAuditPage";
 import { RegulatorPerformancePage } from "../pages/regulator/RegulatorPerformancePage";
 import { RegulatorComplianceReportPage } from "../pages/regulator/RegulatorComplianceReportPage";
 
-import { AdminDashboardPage } from "../pages/admin/AdminDashboardPage";
-import { AdminServicesPage } from "../pages/admin/AdminServicesPage";
-import { AdminRetentionPage } from "../pages/admin/AdminRetentionPage";
-
 import { SuperAdminDashboardPage } from "../pages/super-admin/SuperAdminDashboardPage";
-
-const institutionRoles = [
-  "institution_admin",
-  "transaction_submitter",
-  "transaction_reviewer",
-] as const;
-
-const regulatorRoles = ["regulator", "auditor"] as const;
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +34,7 @@ export const router = createBrowserRouter([
       {
         path: "institution/dashboard",
         element: (
-          <ProtectedRoute allowedRoles={[...institutionRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.institutionManagement}>
             <InstitutionDashboardPage />
           </ProtectedRoute>
         ),
@@ -52,15 +42,23 @@ export const router = createBrowserRouter([
       {
         path: "institution/transactions/new",
         element: (
-          <ProtectedRoute allowedRoles={[...institutionRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.transactionSubmission}>
             <NewTransactionPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/reviews",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.transactionReview}>
+            <TransactionReviewQueuePage />
           </ProtectedRoute>
         ),
       },
       {
         path: "institution/screening-results",
         element: (
-          <ProtectedRoute allowedRoles={[...institutionRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.transactionReview}>
             <ScreeningResultsPage />
           </ProtectedRoute>
         ),
@@ -69,7 +67,7 @@ export const router = createBrowserRouter([
       {
         path: "regulator/dashboard",
         element: (
-          <ProtectedRoute allowedRoles={[...regulatorRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.regulatorFull}>
             <RegulatorDashboardPage />
           </ProtectedRoute>
         ),
@@ -77,7 +75,7 @@ export const router = createBrowserRouter([
       {
         path: "regulator/proofs",
         element: (
-          <ProtectedRoute allowedRoles={[...regulatorRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.regulatorEvidenceReadOnly}>
             <RegulatorProofsPage />
           </ProtectedRoute>
         ),
@@ -85,7 +83,7 @@ export const router = createBrowserRouter([
       {
         path: "regulator/audit",
         element: (
-          <ProtectedRoute allowedRoles={[...regulatorRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.regulatorEvidenceReadOnly}>
             <RegulatorAuditPage />
           </ProtectedRoute>
         ),
@@ -93,7 +91,7 @@ export const router = createBrowserRouter([
       {
         path: "regulator/performance",
         element: (
-          <ProtectedRoute allowedRoles={[...regulatorRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.regulatorFull}>
             <RegulatorPerformancePage />
           </ProtectedRoute>
         ),
@@ -101,33 +99,8 @@ export const router = createBrowserRouter([
       {
         path: "regulator/compliance-report",
         element: (
-          <ProtectedRoute allowedRoles={[...regulatorRoles]}>
+          <ProtectedRoute allowedRoles={roleGroups.regulatorEvidenceReadOnly}>
             <RegulatorComplianceReportPage />
-          </ProtectedRoute>
-        ),
-      },
-
-      {
-        path: "admin/dashboard",
-        element: (
-          <ProtectedRoute allowedRoles={["admin"]}>
-            <AdminDashboardPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "admin/services",
-        element: (
-          <ProtectedRoute allowedRoles={["admin"]}>
-            <AdminServicesPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "admin/retention",
-        element: (
-          <ProtectedRoute allowedRoles={["admin"]}>
-            <AdminRetentionPage />
           </ProtectedRoute>
         ),
       },
@@ -135,8 +108,33 @@ export const router = createBrowserRouter([
       {
         path: "super-admin/dashboard",
         element: (
-          <ProtectedRoute allowedRoles={["super_admin"]}>
+          <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
             <SuperAdminDashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "super-admin/users",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
+            <SuperAdminDashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "super-admin/pending-users",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
+            <SuperAdminDashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+
+      {
+        path: "admin/*",
+        element: (
+          <ProtectedRoute allowedRoles={roleGroups.superAdmin}>
+            <Navigate to="/super-admin/dashboard" replace />
           </ProtectedRoute>
         ),
       },

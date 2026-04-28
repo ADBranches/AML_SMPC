@@ -1,5 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { clearStoredSession, useAuthSession, type UserRole } from "../../auth/authStore";
+import {
+  clearStoredSession,
+  useAuthSession,
+  type UserRole,
+} from "../../auth/authStore";
 
 type NavItem = {
   to: string;
@@ -14,17 +18,42 @@ type NavGroup = {
 
 const groups: NavGroup[] = [
   {
-    title: "Institution",
-    roles: ["institution_admin", "transaction_submitter", "transaction_reviewer"],
+    title: "Super Admin",
+    roles: ["super_admin"],
+    links: [
+      { to: "/super-admin/dashboard", label: "Dashboard" },
+      { to: "/super-admin/pending-users", label: "Pending Users" },
+      { to: "/super-admin/users", label: "User Management" },
+    ],
+  },
+  {
+    title: "Institution Admin",
+    roles: ["institution_admin"],
     links: [
       { to: "/institution/dashboard", label: "Institution Dashboard" },
       { to: "/institution/transactions/new", label: "Submit Transaction" },
-      { to: "/institution/screening-results", label: "Screening Results" },
+      { to: "/institution/reviews", label: "Review Queue" },
+      { to: "/institution/screening-results", label: "Screening Evidence" },
+    ],
+  },
+  {
+    title: "Transaction Submitter",
+    roles: ["transaction_submitter"],
+    links: [
+      { to: "/institution/transactions/new", label: "Submit Transaction" },
+    ],
+  },
+  {
+    title: "Transaction Reviewer",
+    roles: ["transaction_reviewer"],
+    links: [
+      { to: "/institution/reviews", label: "Review Queue" },
+      { to: "/institution/screening-results", label: "Screening Evidence" },
     ],
   },
   {
     title: "Regulator",
-    roles: ["regulator", "auditor"],
+    roles: ["regulator"],
     links: [
       { to: "/regulator/dashboard", label: "Regulator Dashboard" },
       { to: "/regulator/proofs", label: "Proofs" },
@@ -34,19 +63,12 @@ const groups: NavGroup[] = [
     ],
   },
   {
-    title: "Admin",
-    roles: ["admin"],
+    title: "Auditor",
+    roles: ["auditor"],
     links: [
-      { to: "/admin/dashboard", label: "Admin Dashboard" },
-      { to: "/admin/services", label: "Services" },
-      { to: "/admin/retention", label: "Retention" },
-    ],
-  },
-  {
-    title: "Super Admin",
-    roles: ["super_admin"],
-    links: [
-      { to: "/super-admin/dashboard", label: "Super Admin Dashboard" },
+      { to: "/regulator/proofs", label: "Proof Evidence" },
+      { to: "/regulator/audit", label: "Audit Evidence" },
+      { to: "/regulator/compliance-report", label: "Compliance Report" },
     ],
   },
 ];
@@ -66,6 +88,9 @@ export function Sidebar() {
         <div className="text-lg font-bold">AML SMPC</div>
         <p className="mt-1 text-xs text-slate-400">
           {session.role.replaceAll("_", " ").toUpperCase()}
+        </p>
+        <p className="mt-1 truncate text-xs text-slate-500">
+          {session.email}
         </p>
       </div>
 

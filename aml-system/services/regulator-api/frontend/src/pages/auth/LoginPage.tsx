@@ -1,29 +1,12 @@
 import { FormEvent, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authApi } from "../../api/authApi";
-import { setStoredSession, type AuthSession, type UserRole } from "../../auth/authStore";
+import { setStoredSession, type AuthSession } from "../../auth/authStore";
+import { dashboardForRole } from "../../auth/roleAccess";
 import { Card } from "../../components/ui/Card";
 import { ErrorBanner } from "../../components/ui/ErrorBanner";
 import { LoadingState } from "../../components/ui/LoadingState";
 import { PageHeader } from "../../components/ui/PageHeader";
-
-function dashboardForRole(role: UserRole) {
-  switch (role) {
-    case "super_admin":
-      return "/super-admin/dashboard";
-    case "admin":
-      return "/admin/dashboard";
-    case "institution_admin":
-    case "transaction_submitter":
-    case "transaction_reviewer":
-      return "/institution/dashboard";
-    case "regulator":
-    case "auditor":
-      return "/regulator/dashboard";
-    default:
-      return "/";
-  }
-}
 
 export function LoginPage() {
   const navigate = useNavigate();

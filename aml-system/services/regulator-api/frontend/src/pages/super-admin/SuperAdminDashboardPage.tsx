@@ -15,7 +15,6 @@ const assignableRoles = [
   "transaction_reviewer",
   "regulator",
   "auditor",
-  "admin",
 ];
 
 export function SuperAdminDashboardPage() {
