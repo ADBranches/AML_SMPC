@@ -7,6 +7,8 @@ import { AboutPage } from "../pages/AboutPage";
 import { InstitutionDashboardPage } from "../pages/institution/InstitutionDashboardPage";
 import { NewTransactionPage } from "../pages/institution/NewTransactionPage";
 import { ScreeningResultsPage } from "../pages/institution/ScreeningResultsPage";
+import { ComplianceWorkflowPage } from "../pages/institution/ComplianceWorkflowPage";
+import { HeOperationsPage } from "../pages/institution/HeOperationsPage";
 
 import { RegulatorDashboardPage } from "../pages/regulator/RegulatorDashboardPage";
 import { RegulatorProofsPage } from "../pages/regulator/RegulatorProofsPage";
@@ -35,6 +37,8 @@ export const router = createBrowserRouter([
       { path: "institution/dashboard", element: <InstitutionDashboardPage /> },
       { path: "institution/transactions/new", element: <NewTransactionPage /> },
       { path: "institution/screening-results", element: <ScreeningResultsPage /> },
+      { path: "institution/compliance-workflow", element: <ComplianceWorkflowPage /> },
+      { path: "institution/he-operations", element: <HeOperationsPage /> },
 
       { path: "regulator/dashboard", element: <RegulatorDashboardPage /> },
       { path: "regulator/proofs", element: <RegulatorProofsPage /> },

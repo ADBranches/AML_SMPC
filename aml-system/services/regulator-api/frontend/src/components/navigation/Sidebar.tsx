@@ -14,6 +14,8 @@ const groups = [
       { to: "/institution/dashboard", label: "Institution Dashboard" },
       { to: "/institution/transactions/new", label: "Submit Transaction" },
       { to: "/institution/screening-results", label: "Screening Results" },
+      { to: "/institution/compliance-workflow", label: "Full Workflow" },
+      { to: "/institution/he-operations", label: "HE Operations" },
     ],
   },
   {
