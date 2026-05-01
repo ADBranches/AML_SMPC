@@ -35,6 +35,8 @@ const groups: NavGroup[] = [
       { to: "/institution/dashboard", label: "Institution Dashboard" },
       { to: "/institution/transactions/new", label: "Submit Transaction" },
       { to: "/institution/transactions", label: "Review Queue" },
+        { to: "/institution/suspicious-transactions", label: "Suspicious Transactions" },
+        { to: "/institution/risk-evaluation", label: "Risk Evaluation" },
       { to: "/institution/transactions/approved", label: "Approved Transactions" },
       { to: "/institution/screening-results", label: "Screening Evidence" },
     ],

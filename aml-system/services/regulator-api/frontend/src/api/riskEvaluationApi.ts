@@ -21,7 +21,7 @@ export type TransactionWorkflow = {
   risk_score?: number | null;
   risk_level?: string | null;
   suspicion_status?: string | null;
-  triggered_rules?: TriggeredRiskRule[] | unknown[] | null;
+  triggered_rules?: unknown;
   recommended_action?: string | null;
   risk_review_notes?: string | null;
   risk_screened_by?: string | null;

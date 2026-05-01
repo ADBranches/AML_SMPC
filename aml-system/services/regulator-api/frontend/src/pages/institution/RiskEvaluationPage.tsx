@@ -13,17 +13,20 @@ import { PageHeader } from "../../components/ui/PageHeader";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 
 function triggeredRules(row?: TransactionWorkflow | null): TriggeredRiskRule[] {
-  if (!row || !Array.isArray(row.triggered_rules)) return [];
+  const values: unknown[] = Array.isArray(row?.triggered_rules)
+    ? row.triggered_rules
+    : [];
 
-  return row.triggered_rules
-    .filter((item): item is TriggeredRiskRule => {
-      return Boolean(
-        item &&
-          typeof item === "object" &&
-          "rule_code" in item &&
-          "risk_weight" in item
-      );
-    });
+  return values.filter((item): item is TriggeredRiskRule => {
+    return Boolean(
+      item &&
+        typeof item === "object" &&
+        "rule_code" in item &&
+        "rule_name" in item &&
+        "risk_weight" in item &&
+        "reason" in item
+    );
+  });
 }
 
 function payloadValue(row: TransactionWorkflow | null, key: string): string {
