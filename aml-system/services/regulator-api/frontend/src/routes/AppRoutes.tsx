@@ -30,6 +30,10 @@ import { RoleManagementPage } from "../pages/super-admin/RoleManagementPage";
 import { ThreeBankSmpcDemoPage } from "../pages/regulator/ThreeBankSmpcDemoPage";
 import { SuspiciousTransactionsPage } from "../pages/institution/SuspiciousTransactionsPage";
 import { RiskEvaluationPage } from "../pages/institution/RiskEvaluationPage";
+import { AnomalyCasesPage } from "../pages/regulator/AnomalyCasesPage";
+import { AnomalyCaseDetailPage } from "../pages/regulator/AnomalyCaseDetailPage";
+import { BankAnomalyNoticesPage } from "../pages/institution/BankAnomalyNoticesPage";
+import { BankAnomalyNoticeDetailPage } from "../pages/institution/BankAnomalyNoticeDetailPage";
 
 export const router = createBrowserRouter([
   {
@@ -115,6 +119,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "institution/anomaly-notices",
+        element: (
+          <ProtectedRoute allowedRoles={["institution_admin", "transaction_reviewer"]}>
+            <BankAnomalyNoticesPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/anomaly-notices/:caseId",
+        element: (
+          <ProtectedRoute allowedRoles={["institution_admin", "transaction_reviewer"]}>
+            <BankAnomalyNoticeDetailPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "institution/screening-results",
         element: (
           <ProtectedRoute allowedRoles={roleGroups.transactionReview}>
@@ -144,6 +164,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["regulator", "auditor", "super_admin"]}>
             <ThreeBankSmpcDemoPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "regulator/anomaly-cases",
+        element: (
+          <ProtectedRoute allowedRoles={["regulator", "auditor", "super_admin"]}>
+            <AnomalyCasesPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "regulator/anomaly-cases/:caseId",
+        element: (
+          <ProtectedRoute allowedRoles={["regulator", "auditor", "super_admin"]}>
+            <AnomalyCaseDetailPage />
           </ProtectedRoute>
         ),
       },

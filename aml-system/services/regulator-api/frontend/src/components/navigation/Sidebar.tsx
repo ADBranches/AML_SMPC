@@ -39,6 +39,7 @@ const groups: NavGroup[] = [
         { to: "/institution/risk-evaluation", label: "Risk Evaluation" },
       { to: "/institution/transactions/approved", label: "Approved Transactions" },
       { to: "/institution/screening-results", label: "Screening Evidence" },
+      { to: "/institution/anomaly-notices", label: "Anomaly Notices" },
     ],
   },
   {
@@ -56,6 +57,7 @@ const groups: NavGroup[] = [
       { to: "/institution/transactions", label: "Review Queue" },
       { to: "/institution/transactions/approved", label: "Approved Transactions" },
       { to: "/institution/screening-results", label: "Screening Evidence" },
+      { to: "/institution/anomaly-notices", label: "Anomaly Notices" },
     ],
   },
   {
@@ -66,6 +68,7 @@ const groups: NavGroup[] = [
       { to: "/regulator/proofs", label: "Proofs" },
       { to: "/regulator/three-bank-smpc-demo", label: "Three-Bank SMPC" },
       { to: "/regulator/audit", label: "Audit" },
+      { to: "/regulator/anomaly-cases", label: "Anomaly Cases" },
       { to: "/regulator/performance", label: "Performance" },
       { to: "/regulator/compliance-report", label: "Compliance Report" },
     ],
@@ -76,6 +79,7 @@ const groups: NavGroup[] = [
     links: [
       { to: "/regulator/proofs", label: "Proof Evidence" },
       { to: "/regulator/audit", label: "Audit Evidence" },
+      { to: "/regulator/anomaly-cases", label: "Anomaly Cases" },
       { to: "/regulator/compliance-report", label: "Compliance Report" },
     ],
   },
