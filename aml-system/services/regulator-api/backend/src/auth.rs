@@ -22,7 +22,10 @@ pub struct RegisterRequest {
     pub full_name: String,
     pub email: String,
     pub password: String,
-    pub organization_name: String,
+    pub partner_bank_code: String,
+    pub bank_employee_id: String,
+    pub department: String,
+    pub job_title: String,
     pub requested_role: String,
     pub reason_for_access: String,
 }
@@ -31,6 +34,11 @@ pub struct RegisterRequest {
 pub struct RegisterResponse {
     pub user_id: String,
     pub organization_id: String,
+    pub organization_name: String,
+    pub partner_bank_code: String,
+    pub bank_employee_id: String,
+    pub department: String,
+    pub job_title: String,
     pub full_name: String,
     pub email: String,
     pub requested_role: String,
@@ -89,6 +97,13 @@ pub struct AdminUserRow {
     pub user_id: String,
     pub organization_id: Option<String>,
     pub organization_name: Option<String>,
+    pub bank_code: Option<String>,
+    pub organization_type: Option<String>,
+    pub bank_employee_id: Option<String>,
+    pub department: Option<String>,
+    pub job_title: Option<String>,
+    pub identity_verified: bool,
+    pub approved_partner_scope: bool,
     pub full_name: String,
     pub email: String,
     pub role: String,
@@ -103,6 +118,11 @@ pub struct AdminUserRow {
 pub struct OrganizationAdminRow {
     pub organization_id: String,
     pub organization_name: String,
+    pub bank_code: Option<String>,
+    pub organization_type: Option<String>,
+    pub country: Option<String>,
+    pub license_number: Option<String>,
+    pub is_partner: bool,
     pub status: String,
     pub total_users: i64,
     pub active_users: i64,
@@ -129,6 +149,14 @@ struct LoginUserRow {
     account_status: String,
 }
 
+#[derive(Debug, FromRow)]
+struct PartnerOrganizationRow {
+    id: Uuid,
+    name: String,
+    bank_code: String,
+    organization_type: Option<String>,
+}
+
 pub fn routes() -> Router<PgPool> {
     Router::new()
         .route("/auth/register", post(register))
@@ -151,7 +179,10 @@ async fn register(
     let full_name = input.full_name.trim();
     let email = input.email.trim().to_lowercase();
     let password = input.password.trim();
-    let organization_name = input.organization_name.trim();
+    let partner_bank_code = input.partner_bank_code.trim().to_uppercase();
+    let bank_employee_id = input.bank_employee_id.trim();
+    let department = input.department.trim();
+    let job_title = input.job_title.trim();
     let requested_role = input.requested_role.trim();
     let reason_for_access = input.reason_for_access.trim();
 
@@ -159,7 +190,10 @@ async fn register(
         full_name,
         &email,
         password,
-        organization_name,
+        &partner_bank_code,
+        bank_employee_id,
+        department,
+        job_title,
         requested_role,
         reason_for_access,
     )?;
@@ -182,6 +216,46 @@ async fn register(
         ));
     }
 
+    let organization = sqlx::query_as::<_, PartnerOrganizationRow>(
+        r#"
+        SELECT
+            id,
+            name,
+            bank_code,
+            organization_type
+        FROM organizations
+        WHERE UPPER(bank_code) = UPPER($1)
+          AND is_partner = true
+          AND status = 'active'
+        "#,
+    )
+    .bind(&partner_bank_code)
+    .fetch_optional(&pool)
+    .await
+    .map_err(internal_error)?
+    .ok_or_else(|| {
+        (
+            StatusCode::BAD_REQUEST,
+            Json(json!({
+                "error": "invalid_partner_bank_code",
+                "message": "Partner bank/organization code was not found, is inactive, or is not approved for this AML SMPC platform.",
+                "partner_bank_code": partner_bank_code
+            })),
+        )
+    })?;
+
+    if !role_allowed_for_organization(requested_role, organization.organization_type.as_deref()) {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(json!({
+                "error": "role_not_allowed_for_organization_type",
+                "message": "Requested role is not compatible with the selected partner organization type.",
+                "requested_role": requested_role,
+                "organization_type": organization.organization_type
+            })),
+        ));
+    }
+
     let password_hash = hash_password(password)?;
 
     let user_id = Uuid::new_v4();
@@ -189,51 +263,28 @@ async fn register(
 
     let mut tx = pool.begin().await.map_err(internal_error)?;
 
-    let organization_id = match sqlx::query_scalar::<_, Uuid>(
-        "SELECT id FROM organizations WHERE LOWER(name) = LOWER($1)",
-    )
-    .bind(organization_name)
-    .fetch_optional(&mut *tx)
-    .await
-    .map_err(internal_error)?
-    {
-        Some(existing_id) => existing_id,
-        None => {
-            let new_org_id = Uuid::new_v4();
-
-            sqlx::query(
-                r#"
-                INSERT INTO organizations (id, name, status, created_at)
-                VALUES ($1, $2, 'active', NOW())
-                "#,
-            )
-            .bind(new_org_id)
-            .bind(organization_name)
-            .execute(&mut *tx)
-            .await
-            .map_err(internal_error)?;
-
-            new_org_id
-        }
-    };
-
     sqlx::query(
         r#"
         INSERT INTO app_users
             (id, organization_id, full_name, email, password_hash, role,
-             account_status, reason_for_access, created_at)
+             account_status, reason_for_access, bank_employee_id, department, job_title,
+             identity_verified, approved_partner_scope, created_at)
         VALUES
             ($1, $2, $3, $4, $5, $6,
-             'pending_approval', $7, NOW())
+             'pending_approval', $7, $8, $9, $10,
+             false, false, NOW())
         "#,
     )
     .bind(user_id)
-    .bind(organization_id)
+    .bind(organization.id)
     .bind(full_name)
     .bind(&email)
     .bind(password_hash)
     .bind(requested_role)
     .bind(reason_for_access)
+    .bind(bank_employee_id)
+    .bind(department)
+    .bind(job_title)
     .execute(&mut *tx)
     .await
     .map_err(internal_error)?;
@@ -260,12 +311,17 @@ async fn register(
         StatusCode::CREATED,
         Json(RegisterResponse {
             user_id: user_id.to_string(),
-            organization_id: organization_id.to_string(),
+            organization_id: organization.id.to_string(),
+            organization_name: organization.name,
+            partner_bank_code: organization.bank_code,
+            bank_employee_id: bank_employee_id.to_string(),
+            department: department.to_string(),
+            job_title: job_title.to_string(),
             full_name: full_name.to_string(),
             email,
             requested_role: requested_role.to_string(),
             account_status: "pending_approval".to_string(),
-            message: "Registration submitted. Your account is pending super admin approval.".to_string(),
+            message: "Registration submitted under approved partner organization. Your account is pending super admin approval.".to_string(),
         }),
     ))
 }
@@ -447,6 +503,13 @@ async fn list_pending_users(
             u.id::text AS user_id,
             u.organization_id::text AS organization_id,
             o.name AS organization_name,
+            o.bank_code,
+            o.organization_type,
+            u.bank_employee_id,
+            u.department,
+            u.job_title,
+            u.identity_verified,
+            u.approved_partner_scope,
             u.full_name,
             u.email,
             u.role,
@@ -482,6 +545,13 @@ async fn list_users(
             u.id::text AS user_id,
             u.organization_id::text AS organization_id,
             o.name AS organization_name,
+            o.bank_code,
+            o.organization_type,
+            u.bank_employee_id,
+            u.department,
+            u.job_title,
+            u.identity_verified,
+            u.approved_partner_scope,
             u.full_name,
             u.email,
             u.role,
@@ -515,6 +585,11 @@ async fn list_organizations(
         SELECT
             o.id::text AS organization_id,
             o.name AS organization_name,
+            o.bank_code,
+            o.organization_type,
+            o.country,
+            o.license_number,
+            o.is_partner,
             o.status,
             COUNT(u.id)::bigint AS total_users,
             COUNT(u.id) FILTER (WHERE u.account_status = 'active')::bigint AS active_users,
@@ -522,7 +597,7 @@ async fn list_organizations(
             o.created_at::text AS created_at
         FROM organizations o
         LEFT JOIN app_users u ON u.organization_id = o.id
-        GROUP BY o.id, o.name, o.status, o.created_at
+        GROUP BY o.id, o.name, o.bank_code, o.organization_type, o.country, o.license_number, o.is_partner, o.status, o.created_at
         ORDER BY o.created_at DESC
         "#,
     )
@@ -603,7 +678,9 @@ async fn approve_user(
             account_status = 'active',
             approved_by = $2,
             approved_at = NOW(),
-            rejected_at = NULL
+            rejected_at = NULL,
+            identity_verified = true,
+            approved_partner_scope = true
         WHERE id = $3
           AND account_status IN ('pending_approval', 'rejected', 'disabled')
         "#,
@@ -738,7 +815,9 @@ async fn activate_user(
         r#"
         UPDATE app_users
         SET role = $1,
-            account_status = 'active'
+            account_status = 'active',
+            identity_verified = true,
+            approved_partner_scope = true
         WHERE id = $2
         "#,
     )
@@ -1113,7 +1192,10 @@ fn validate_registration(
     full_name: &str,
     email: &str,
     password: &str,
-    organization_name: &str,
+    partner_bank_code: &str,
+    bank_employee_id: &str,
+    department: &str,
+    job_title: &str,
     requested_role: &str,
     reason_for_access: &str,
 ) -> Result<(), (StatusCode, Json<serde_json::Value>)> {
@@ -1131,8 +1213,20 @@ fn validate_registration(
         errors.push("password must be at least 8 characters");
     }
 
-    if organization_name.len() < 2 {
-        errors.push("organization_name must be at least 2 characters");
+    if partner_bank_code.len() < 3 {
+        errors.push("partner_bank_code must be at least 3 characters");
+    }
+
+    if bank_employee_id.len() < 2 {
+        errors.push("bank_employee_id must be at least 2 characters");
+    }
+
+    if department.len() < 2 {
+        errors.push("department must be at least 2 characters");
+    }
+
+    if job_title.len() < 2 {
+        errors.push("job_title must be at least 2 characters");
     }
 
     if reason_for_access.len() < 10 {
@@ -1155,6 +1249,19 @@ fn validate_registration(
     }
 
     Ok(())
+}
+
+fn role_allowed_for_organization(role: &str, organization_type: Option<&str>) -> bool {
+    match organization_type.unwrap_or("bank") {
+        "bank" => matches!(
+            role,
+            "institution_admin" | "transaction_submitter" | "transaction_reviewer"
+        ),
+        "regulator" => role == "regulator",
+        "auditor" => role == "auditor",
+        "platform" => role == "auditor",
+        _ => false,
+    }
 }
 
 fn is_allowed_requested_role(role: &str) -> bool {

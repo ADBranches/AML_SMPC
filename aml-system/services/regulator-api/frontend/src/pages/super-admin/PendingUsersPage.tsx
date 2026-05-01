@@ -14,6 +14,15 @@ const assignableRoles = [
   "auditor",
 ];
 
+function Field({ label, value }: { label: string; value?: string | null }) {
+  return (
+    <div>
+      <p className="text-xs font-bold uppercase text-slate-500">{label}</p>
+      <p className="mt-1 text-sm font-semibold">{value || "N/A"}</p>
+    </div>
+  );
+}
+
 export function PendingUsersPage() {
   const [users, setUsers] = useState<AdminUserRow[]>([]);
   const [selectedRoles, setSelectedRoles] = useState<Record<string, string>>({});
@@ -62,8 +71,8 @@ export function PendingUsersPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Pending User Approvals"
-        description="Approve or reject new registration requests and assign final platform roles."
+        title="Pending Partner User Approvals"
+        description="Approve or reject registration requests after validating partner bank code, employee identity, department, and requested role."
       />
 
       {loading ? <LoadingState /> : null}
@@ -90,36 +99,42 @@ export function PendingUsersPage() {
                   <h4 className="text-lg font-bold">{user.full_name}</h4>
                   <p className="mt-1 text-sm text-slate-600">{user.email}</p>
                   <p className="mt-1 text-sm text-slate-600">
-                    Organization: <span className="font-semibold">{user.organization_name || "N/A"}</span>
+                    Partner:{" "}
+                    <span className="font-semibold">{user.organization_name || "N/A"}</span>{" "}
+                    <span className="font-mono text-xs text-slate-500">
+                      {user.bank_code ? `(${user.bank_code})` : ""}
+                    </span>
                   </p>
                 </div>
                 <StatusBadge status={user.account_status} />
               </div>
 
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
-                <div>
-                  <p className="text-xs font-bold uppercase text-slate-500">Requested Role</p>
-                  <p className="mt-1 font-mono text-sm">{user.requested_role || user.role}</p>
-                </div>
-
-                <label className="block text-sm font-semibold">
-                  Assign Role
-                  <select
-                    value={selectedRoles[user.user_id] || user.requested_role || user.role}
-                    onChange={(event) =>
-                      setSelectedRoles((current) => ({
-                        ...current,
-                        [user.user_id]: event.target.value,
-                      }))
-                    }
-                    className="mt-2 w-full rounded-xl border px-4 py-3"
-                  >
-                    {assignableRoles.map((role) => (
-                      <option key={role} value={role}>{role}</option>
-                    ))}
-                  </select>
-                </label>
+              <div className="mt-4 grid gap-4 md:grid-cols-3">
+                <Field label="Organization Type" value={user.organization_type} />
+                <Field label="Employee ID" value={user.bank_employee_id} />
+                <Field label="Department" value={user.department} />
+                <Field label="Job Title" value={user.job_title} />
+                <Field label="Requested Role" value={user.requested_role || user.role} />
+                <Field label="Approval Status" value={user.approval_status} />
               </div>
+
+              <label className="mt-4 block text-sm font-semibold">
+                Assign Role
+                <select
+                  value={selectedRoles[user.user_id] || user.requested_role || user.role}
+                  onChange={(event) =>
+                    setSelectedRoles((current) => ({
+                      ...current,
+                      [user.user_id]: event.target.value,
+                    }))
+                  }
+                  className="mt-2 w-full rounded-xl border px-4 py-3"
+                >
+                  {assignableRoles.map((role) => (
+                    <option key={role} value={role}>{role}</option>
+                  ))}
+                </select>
+              </label>
 
               <div className="mt-4 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
                 {user.reason_for_access}
@@ -152,7 +167,7 @@ export function PendingUsersPage() {
                   }
                   className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
                 >
-                  Approve
+                  Approve and Verify Partner Scope
                 </button>
 
                 <button

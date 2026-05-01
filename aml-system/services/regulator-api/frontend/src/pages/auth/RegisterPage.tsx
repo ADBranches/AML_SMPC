@@ -11,7 +11,10 @@ const initialPayload: RegisterPayload = {
   full_name: "",
   email: "",
   password: "",
-  organization_name: "",
+  partner_bank_code: "BANK_A_UG",
+  bank_employee_id: "",
+  department: "",
+  job_title: "",
   requested_role: "transaction_submitter",
   reason_for_access: "",
 };
@@ -52,13 +55,21 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <PageHeader
-        title="Request Access"
-        description="Register your organization and requested role. Your account remains pending until a super admin approves it."
+        title="Request Partner Access"
+        description="Register under an approved partner bank, regulator authority, auditor body, or platform organization. Your account remains pending until a super admin approves it."
       />
 
       <Card>
+        <div className="mb-5 rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm leading-6 text-blue-900">
+          <p className="font-bold">Partner organization codes for demo testing</p>
+          <p className="mt-1 font-mono text-xs">
+            BANK_A_UG, BANK_B_KE, BANK_C_TZ, DEMO_ORIGIN_BANK, DEMO_BENEFICIARY_BANK,
+            REGULATOR_AUTHORITY, AUDITOR_BODY
+          </p>
+        </div>
+
         <form onSubmit={submit} className="grid gap-4 md:grid-cols-2">
           <label className="block text-sm font-semibold">
             Full Name
@@ -94,16 +105,50 @@ export function RegisterPage() {
           </label>
 
           <label className="block text-sm font-semibold">
-            Organization
+            Partner Bank / Organization Code
             <input
-              value={payload.organization_name}
-              onChange={(event) => update("organization_name", event.target.value)}
-              className="mt-2 w-full rounded-xl border px-4 py-3"
+              value={payload.partner_bank_code}
+              onChange={(event) => update("partner_bank_code", event.target.value.toUpperCase())}
+              className="mt-2 w-full rounded-xl border px-4 py-3 font-mono"
+              placeholder="BANK_A_UG"
               required
             />
           </label>
 
-          <label className="block text-sm font-semibold md:col-span-2">
+          <label className="block text-sm font-semibold">
+            Bank Employee ID
+            <input
+              value={payload.bank_employee_id}
+              onChange={(event) => update("bank_employee_id", event.target.value)}
+              className="mt-2 w-full rounded-xl border px-4 py-3"
+              placeholder="EMP-001"
+              required
+            />
+          </label>
+
+          <label className="block text-sm font-semibold">
+            Department
+            <input
+              value={payload.department}
+              onChange={(event) => update("department", event.target.value)}
+              className="mt-2 w-full rounded-xl border px-4 py-3"
+              placeholder="Compliance"
+              required
+            />
+          </label>
+
+          <label className="block text-sm font-semibold">
+            Job Title
+            <input
+              value={payload.job_title}
+              onChange={(event) => update("job_title", event.target.value)}
+              className="mt-2 w-full rounded-xl border px-4 py-3"
+              placeholder="AML Analyst"
+              required
+            />
+          </label>
+
+          <label className="block text-sm font-semibold">
             Requested Role
             <select
               value={payload.requested_role}
@@ -139,7 +184,7 @@ export function RegisterPage() {
               disabled={loading}
               className="rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
             >
-              {loading ? "Submitting..." : "Submit Registration Request"}
+              {loading ? "Submitting..." : "Submit Partner Access Request"}
             </button>
           </div>
         </form>
@@ -153,9 +198,12 @@ export function RegisterPage() {
               Registration submitted successfully
             </h3>
             <p className="mt-2 text-sm text-emerald-700">
+              Your request was submitted under{" "}
+              <span className="font-bold">{response.organization_name}</span>{" "}
+              using partner code{" "}
+              <span className="font-mono font-bold">{response.partner_bank_code}</span>.
               Your account status is{" "}
               <span className="font-bold">{response.account_status}</span>.
-              You cannot access dashboards until a super admin approves your account.
             </p>
 
             <div className="mt-4">

@@ -61,8 +61,8 @@ export function UserManagementPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="User Management"
-        description="Manage active, disabled, rejected, and pending users across the AML SMPC platform."
+        title="Partner User Management"
+        description="Manage active, disabled, rejected, and pending users with partner-bank identity visibility."
       />
 
       {loading ? <LoadingState /> : null}
@@ -81,25 +81,36 @@ export function UserManagementPage() {
           </button>
         </div>
 
-        <div className="mt-5 overflow-hidden rounded-2xl border">
-          <table className="w-full text-left text-sm">
+        <div className="mt-5 overflow-x-auto rounded-2xl border">
+          <table className="min-w-[1100px] w-full text-left text-sm">
             <thead className="bg-slate-100 text-xs uppercase text-slate-500">
               <tr>
                 <th className="px-4 py-3">User</th>
-                <th className="px-4 py-3">Organization</th>
+                <th className="px-4 py-3">Partner Organization</th>
+                <th className="px-4 py-3">Employee Identity</th>
                 <th className="px-4 py-3">Role</th>
+                <th className="px-4 py-3">Verification</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.user_id} className="border-t">
+                <tr key={user.user_id} className="border-t align-top">
                   <td className="px-4 py-3">
                     <div className="font-semibold">{user.full_name}</div>
                     <div className="text-xs text-slate-500">{user.email}</div>
                   </td>
-                  <td className="px-4 py-3">{user.organization_name || "N/A"}</td>
+                  <td className="px-4 py-3">
+                    <div className="font-semibold">{user.organization_name || "N/A"}</div>
+                    <div className="font-mono text-xs text-slate-500">{user.bank_code || "N/A"}</div>
+                    <div className="text-xs text-slate-500">{user.organization_type || "N/A"}</div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="font-mono text-xs">{user.bank_employee_id || "N/A"}</div>
+                    <div className="text-xs text-slate-500">{user.department || "N/A"}</div>
+                    <div className="text-xs text-slate-500">{user.job_title || "N/A"}</div>
+                  </td>
                   <td className="px-4 py-3">
                     {user.role === "super_admin" ? (
                       <span className="font-mono text-xs">{user.role}</span>
@@ -119,6 +130,15 @@ export function UserManagementPage() {
                         ))}
                       </select>
                     )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="text-xs">
+                      Identity: <span className="font-bold">{user.identity_verified ? "Verified" : "Pending"}</span>
+                    </div>
+                    <div className="text-xs">
+                      Partner Scope:{" "}
+                      <span className="font-bold">{user.approved_partner_scope ? "Approved" : "Pending"}</span>
+                    </div>
                   </td>
                   <td className="px-4 py-3">
                     <StatusBadge status={user.account_status} />
