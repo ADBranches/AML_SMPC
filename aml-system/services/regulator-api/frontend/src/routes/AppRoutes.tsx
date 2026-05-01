@@ -28,6 +28,8 @@ import { UserManagementPage } from "../pages/super-admin/UserManagementPage";
 import { OrganizationManagementPage } from "../pages/super-admin/OrganizationManagementPage";
 import { RoleManagementPage } from "../pages/super-admin/RoleManagementPage";
 import { ThreeBankSmpcDemoPage } from "../pages/regulator/ThreeBankSmpcDemoPage";
+import { SuspiciousTransactionsPage } from "../pages/institution/SuspiciousTransactionsPage";
+import { RiskEvaluationPage } from "../pages/institution/RiskEvaluationPage";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +54,30 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={roleGroups.transactionSubmission}>
             <NewTransactionPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/suspicious-transactions",
+        element: (
+          <ProtectedRoute allowedRoles={["institution_admin", "transaction_reviewer", "super_admin"]}>
+            <SuspiciousTransactionsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/risk-evaluation",
+        element: (
+          <ProtectedRoute allowedRoles={["institution_admin", "transaction_reviewer", "super_admin"]}>
+            <RiskEvaluationPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "institution/transactions/:txId/risk",
+        element: (
+          <ProtectedRoute allowedRoles={["institution_admin", "transaction_reviewer", "super_admin"]}>
+            <RiskEvaluationPage />
           </ProtectedRoute>
         ),
       },
