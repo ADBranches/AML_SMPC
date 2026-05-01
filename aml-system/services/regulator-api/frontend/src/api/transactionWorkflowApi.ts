@@ -18,6 +18,15 @@ export type TransactionWorkflowRow = {
   screening_completed_at: string | null;
   proof_generated_at: string | null;
   last_error: string | null;
+  risk_score?: number | null;
+  risk_level?: string | null;
+  suspicion_status?: string | null;
+  triggered_rules?: unknown;
+  recommended_action?: string | null;
+  risk_review_notes?: string | null;
+  risk_screened_by?: string | null;
+  risk_screened_by_email?: string | null;
+  risk_screened_at?: string | null;
 };
 
 export const transactionWorkflowApi = {
@@ -61,7 +70,11 @@ export const transactionWorkflowApi = {
   },
 
   runScreening(txId: string) {
-    return apiClient.post<unknown>(
+    return apiClient.post<{
+      workflow: TransactionWorkflowRow;
+      screening_response: unknown;
+      risk_update: unknown;
+    }>(
       `${env.regulatorApiBaseUrl}/transactions/${encodeURIComponent(txId)}/run-screening`
     );
   },
