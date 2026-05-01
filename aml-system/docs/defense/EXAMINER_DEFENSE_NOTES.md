@@ -1,32 +1,31 @@
 # Examiner Defense Notes
 
-## 1. Is this a single-bank system or a multi-bank system?
+## Question: Who identifies suspicious transactions?
 
-It is presented as a multi-bank privacy-preserving AML prototype.
+The bank identifies suspicious transactions first. The regulator verifies evidence and opens cases later.
 
-The internal transaction workflow shows how a financial institution controls submission, review, screening, and proof generation. BANK-1 extends this by explicitly demonstrating a three-bank SMPC collaboration model.
+## Question: What does SMPC add?
 
-## 2. Who participates in SMPC?
+SMPC adds collaborative evidence across banks without exposing raw private inputs.
 
-The banks participate in the SMPC-style screening model.
+## Question: What does the regulator see?
 
-In the demo, Bank A, Bank B, and Bank C contribute private or pseudonymized references and encrypted risk-score inputs.
+The regulator sees proof status, audit evidence, risk level, triggered rules, aggregate evidence, and anomaly cases.
 
-## 3. Is the regulator part of the SMPC computation?
+## Question: What does the regulator not see?
 
-No. The regulator is not modeled as a raw-input SMPC party.
+The regulator does not receive other banks' raw customer IDs, raw account IDs, or raw transaction payloads.
 
-The regulator verifies downstream proof and audit evidence.
+## Question: How is RBAC demonstrated?
 
-## 4. What does the regulator see?
+The system enforces role-specific access:
 
-- proof metadata
-- verification status
-- audit timeline
-- compliance evidence for FATF R.10, R.11, and R.16
+- super admin manages users and organizations
+- submitter creates transactions
+- reviewer evaluates risk, approves, screens, and generates proofs
+- regulator verifies evidence and opens cases
+- auditor reads evidence only
 
-The regulator does not need raw bank private inputs in the demonstrated model.
+## Question: How is privacy shown in the UI?
 
-## 5. What did the project prove?
-
-It proved that AML compliance can support role-governed transaction workflows, privacy-preserving collaborative screening, regulator-verifiable proof evidence, and auditable records without exposing unnecessary raw private data.
+The bank notice and regulator dashboard explicitly show that raw bank inputs are not exposed.
