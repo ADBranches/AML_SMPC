@@ -30,11 +30,53 @@ pub struct TransactionWorkflowRow {
     pub screening_completed_at: Option<DateTime<Utc>>,
     pub proof_generated_at: Option<DateTime<Utc>>,
     pub last_error: Option<String>,
+    pub risk_score: Option<i32>,
+    pub risk_level: Option<String>,
+    pub suspicion_status: Option<String>,
+    pub triggered_rules: Option<Value>,
+    pub recommended_action: Option<String>,
+    pub risk_review_notes: Option<String>,
+    pub risk_screened_by: Option<Uuid>,
+    pub risk_screened_by_email: Option<String>,
+    pub risk_screened_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct ReviewDecisionRequest {
     pub note: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RiskEvaluationRequest {
+    pub review_notes: Option<String>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct TriggeredRiskRule {
+    pub rule_code: String,
+    pub rule_name: String,
+    pub risk_weight: i32,
+    pub reason: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct RiskEvaluationResponse {
+    pub tx_id: String,
+    pub risk_score: i32,
+    pub risk_level: String,
+    pub suspicion_status: String,
+    pub triggered_rules: Vec<TriggeredRiskRule>,
+    pub recommended_action: String,
+    pub reviewer: String,
+    pub screened_at: DateTime<Utc>,
+    pub workflow: TransactionWorkflowRow,
+}
+
+#[derive(Debug, FromRow)]
+struct AmlRuleLookupRow {
+    rule_code: String,
+    rule_name: String,
+    risk_weight: i32,
 }
 
 pub fn routes() -> Router<PgPool> {
@@ -44,6 +86,7 @@ pub fn routes() -> Router<PgPool> {
         .route("/transactions/:tx_id/submit-for-review", post(submit_for_review))
         .route("/transactions/:tx_id/approve", post(approve_transaction))
         .route("/transactions/:tx_id/reject", post(reject_transaction))
+        .route("/transactions/:tx_id/evaluate-risk", post(evaluate_risk))
         .route("/transactions/:tx_id/run-screening", post(run_screening))
         .route("/transactions/:tx_id/generate-proofs", post(generate_proofs))
 }
@@ -301,6 +344,294 @@ async fn reject_transaction(
     Ok((StatusCode::OK, Json(json!(row))))
 }
 
+
+async fn evaluate_risk(
+    headers: HeaderMap,
+    State(pool): State<PgPool>,
+    Path(tx_id): Path<String>,
+    input: Option<Json<RiskEvaluationRequest>>,
+) -> Result<impl IntoResponse, (StatusCode, Json<Value>)> {
+    let claims = auth::require_permission(&headers, "transactions:flag_suspicious")?;
+    let reviewer_id = parse_user_id(&claims.sub)?;
+
+    let row = fetch_workflow(&pool, &tx_id).await?;
+    let payload = &row.payload;
+
+    let review_notes = input
+        .map(|Json(request)| request.review_notes)
+        .flatten()
+        .unwrap_or_else(|| "Bank-side AML risk evaluation executed by reviewer.".to_string());
+
+    let mut triggered_rules: Vec<TriggeredRiskRule> = Vec::new();
+
+    let amount = json_number(payload, &["amount", "transaction_amount", "amount_value"])
+        .unwrap_or(0.0);
+
+    if amount >= 100000.0 {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "AMOUNT_HIGH_VALUE",
+            25,
+            "Transaction amount meets or exceeds the high-value review threshold.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    let originator = json_string(
+        payload,
+        &["originator_institution", "originator_bank", "sender_institution"],
+    )
+    .unwrap_or_default();
+
+    let beneficiary = json_string(
+        payload,
+        &["beneficiary_institution", "beneficiary_bank", "receiver_institution"],
+    )
+    .unwrap_or_default();
+
+    if originator.trim().is_empty() || beneficiary.trim().is_empty() {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "MISSING_PAYMENT_TRANSPARENCY",
+            30,
+            "Originator or beneficiary institution metadata is missing.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    if !originator.trim().is_empty()
+        && !beneficiary.trim().is_empty()
+        && originator.to_lowercase() != beneficiary.to_lowercase()
+    {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "CROSS_BORDER_TRANSFER",
+            15,
+            "Originator and beneficiary institutions differ, requiring cross-institution AML review.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    let text_blob = payload.to_string().to_lowercase();
+
+    if contains_any(
+        &text_blob,
+        &["watchlist", "sanction", "sanctions", "blocked", "high_risk", "high-risk"],
+    ) {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "SANCTIONS_SCREEN_ATTENTION",
+            50,
+            "Payload contains watchlist, sanctions, blocked, or high-risk screening indicators.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    if contains_any(
+        &text_blob,
+        &["counterparty_risk", "high_risk_counterparty", "shared_counterparty"],
+    ) {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "HIGH_RISK_COUNTERPARTY",
+            30,
+            "Counterparty indicators suggest enhanced review is required.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    if contains_any(
+        &text_blob,
+        &["cdd_incomplete", "kyc_incomplete", "missing_cdd", "due_diligence_incomplete"],
+    ) {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "CDD_INCOMPLETE",
+            25,
+            "Customer due diligence or KYC metadata appears incomplete.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    let smpc_overlap = json_number(
+        payload,
+        &[
+            "possible_cross_bank_overlap_count",
+            "cross_bank_overlap_count",
+            "smpc_overlap_count",
+        ],
+    )
+    .unwrap_or(0.0);
+
+    if smpc_overlap > 0.0 || contains_any(&text_blob, &["shared_counterparty_hash", "smpc_overlap"]) {
+        if let Some(rule) = load_rule_hit(
+            &pool,
+            "SMPC_CROSS_BANK_OVERLAP",
+            35,
+            "Privacy-preserving SMPC indicators suggest cross-bank overlap evidence.",
+        )
+        .await?
+        {
+            triggered_rules.push(rule);
+        }
+    }
+
+    let risk_score: i32 = triggered_rules.iter().map(|rule| rule.risk_weight).sum();
+
+    let risk_level = if risk_score >= 70 {
+        "high"
+    } else if risk_score >= 40 {
+        "medium"
+    } else {
+        "low"
+    };
+
+    let suspicion_status = if risk_score >= 70 {
+        "suspicious"
+    } else if risk_score >= 40 {
+        "under_review"
+    } else {
+        "not_suspicious"
+    };
+
+    let recommended_action = match suspicion_status {
+        "suspicious" => "Escalate for regulator-verifiable proof generation and anomaly case review.",
+        "under_review" => "Reviewer should complete enhanced due diligence before proof generation.",
+        _ => "Proceed with normal AML workflow monitoring.",
+    }
+    .to_string();
+
+    let sender_pseudo = json_string(payload, &["sender_pseudo", "sender_id", "originator_id"])
+        .unwrap_or_else(|| "unknown_sender".to_string());
+
+    let receiver_pseudo =
+        json_string(payload, &["receiver_pseudo", "receiver_id", "beneficiary_id"])
+            .unwrap_or_else(|| "unknown_receiver".to_string());
+
+    let amount_cipher_ref = json_string(payload, &["amount_cipher_ref", "amount_ref"])
+        .or_else(|| Some(format!("amount:{}", amount)));
+
+    let currency = json_string(payload, &["currency"]).unwrap_or_else(|| "USD".to_string());
+
+    let transaction_type =
+        json_string(payload, &["transaction_type"]).unwrap_or_else(|| "wire_transfer".to_string());
+
+    let triggered_rules_json = json!(triggered_rules);
+    let screened_at = Utc::now();
+
+    sqlx::query(
+        r#"
+        INSERT INTO transactions
+            (tx_id, sender_pseudo, receiver_pseudo, amount_cipher_ref, currency,
+             transaction_type, originator_institution, beneficiary_institution, status,
+             risk_score, risk_level, suspicion_status, triggered_rules,
+             recommended_action, review_notes, screened_by, screened_at, created_at)
+        VALUES
+            ($1, $2, $3, $4, $5,
+             $6, $7, $8, $9,
+             $10, $11, $12, $13,
+             $14, $15, $16, $17, NOW())
+        ON CONFLICT (tx_id) DO UPDATE
+        SET sender_pseudo = EXCLUDED.sender_pseudo,
+            receiver_pseudo = EXCLUDED.receiver_pseudo,
+            amount_cipher_ref = EXCLUDED.amount_cipher_ref,
+            currency = EXCLUDED.currency,
+            transaction_type = EXCLUDED.transaction_type,
+            originator_institution = EXCLUDED.originator_institution,
+            beneficiary_institution = EXCLUDED.beneficiary_institution,
+            risk_score = EXCLUDED.risk_score,
+            risk_level = EXCLUDED.risk_level,
+            suspicion_status = EXCLUDED.suspicion_status,
+            triggered_rules = EXCLUDED.triggered_rules,
+            recommended_action = EXCLUDED.recommended_action,
+            review_notes = EXCLUDED.review_notes,
+            screened_by = EXCLUDED.screened_by,
+            screened_at = EXCLUDED.screened_at
+        "#,
+    )
+    .bind(&tx_id)
+    .bind(sender_pseudo)
+    .bind(receiver_pseudo)
+    .bind(amount_cipher_ref)
+    .bind(currency)
+    .bind(transaction_type)
+    .bind(optional_string(originator))
+    .bind(optional_string(beneficiary))
+    .bind(&row.status)
+    .bind(risk_score)
+    .bind(risk_level)
+    .bind(suspicion_status)
+    .bind(&triggered_rules_json)
+    .bind(&recommended_action)
+    .bind(&review_notes)
+    .bind(reviewer_id)
+    .bind(screened_at)
+    .execute(&pool)
+    .await
+    .map_err(internal_error)?;
+
+    sqlx::query(
+        r#"
+        INSERT INTO audit_logs
+            (tx_id, event_type, event_status, event_ref, details, created_at)
+        VALUES
+            ($1, 'bank_side_risk_evaluation', $2, $3, $4, NOW())
+        "#,
+    )
+    .bind(&tx_id)
+    .bind(suspicion_status)
+    .bind(reviewer_id.to_string())
+    .bind(json!({
+        "risk_score": risk_score,
+        "risk_level": risk_level,
+        "suspicion_status": suspicion_status,
+        "triggered_rules": triggered_rules,
+        "recommended_action": recommended_action,
+        "review_notes": review_notes,
+        "evaluated_by_role": claims.role,
+        "bank_identifies_suspicion_before_regulator": true
+    }))
+    .execute(&pool)
+    .await
+    .map_err(internal_error)?;
+
+    let updated_workflow = fetch_workflow(&pool, &tx_id).await?;
+
+    Ok((
+        StatusCode::OK,
+        Json(json!(RiskEvaluationResponse {
+            tx_id,
+            risk_score,
+            risk_level: risk_level.to_string(),
+            suspicion_status: suspicion_status.to_string(),
+            triggered_rules,
+            recommended_action,
+            reviewer: claims.email,
+            screened_at,
+            workflow: updated_workflow,
+        })),
+    ))
+}
+
+
 async fn run_screening(
     headers: HeaderMap,
     State(pool): State<PgPool>,
@@ -487,6 +818,79 @@ async fn generate_proofs(
     ))
 }
 
+
+async fn load_rule_hit(
+    pool: &PgPool,
+    rule_code: &str,
+    default_weight: i32,
+    reason: &str,
+) -> Result<Option<TriggeredRiskRule>, (StatusCode, Json<Value>)> {
+    let row = sqlx::query_as::<_, AmlRuleLookupRow>(
+        r#"
+        SELECT rule_code, rule_name, risk_weight
+        FROM aml_rules
+        WHERE rule_code = $1
+          AND is_active = true
+        "#,
+    )
+    .bind(rule_code)
+    .fetch_optional(pool)
+    .await
+    .map_err(internal_error)?;
+
+    Ok(Some(match row {
+        Some(rule) => TriggeredRiskRule {
+            rule_code: rule.rule_code,
+            rule_name: rule.rule_name,
+            risk_weight: rule.risk_weight,
+            reason: reason.to_string(),
+        },
+        None => TriggeredRiskRule {
+            rule_code: rule_code.to_string(),
+            rule_name: rule_code.replace('_', " "),
+            risk_weight: default_weight,
+            reason: reason.to_string(),
+        },
+    }))
+}
+
+fn json_string(payload: &Value, keys: &[&str]) -> Option<String> {
+    keys.iter().find_map(|key| {
+        payload
+            .get(*key)
+            .and_then(Value::as_str)
+            .map(str::trim)
+            .filter(|value| !value.is_empty())
+            .map(ToString::to_string)
+    })
+}
+
+fn json_number(payload: &Value, keys: &[&str]) -> Option<f64> {
+    keys.iter().find_map(|key| {
+        payload.get(*key).and_then(|value| {
+            value
+                .as_f64()
+                .or_else(|| value.as_i64().map(|number| number as f64))
+                .or_else(|| value.as_u64().map(|number| number as f64))
+                .or_else(|| value.as_str().and_then(|text| text.parse::<f64>().ok()))
+        })
+    })
+}
+
+fn contains_any(text: &str, needles: &[&str]) -> bool {
+    needles.iter().any(|needle| text.contains(needle))
+}
+
+fn optional_string(value: String) -> Option<String> {
+    let trimmed = value.trim().to_string();
+    if trimmed.is_empty() {
+        None
+    } else {
+        Some(trimmed)
+    }
+}
+
+
 fn workflow_select_sql(inner_sql: &str) -> String {
     format!(
         r#"
@@ -508,10 +912,21 @@ fn workflow_select_sql(inner_sql: &str) -> String {
             w.screening_started_at,
             w.screening_completed_at,
             w.proof_generated_at,
-            w.last_error
+            w.last_error,
+            t.risk_score,
+            t.risk_level,
+            t.suspicion_status,
+            t.triggered_rules,
+            t.recommended_action,
+            t.review_notes AS risk_review_notes,
+            t.screened_by AS risk_screened_by,
+            risk_screener.email AS risk_screened_by_email,
+            t.screened_at AS risk_screened_at
         FROM workflow_base w
         LEFT JOIN app_users submitter ON submitter.id = w.submitted_by
         LEFT JOIN app_users reviewer ON reviewer.id = w.reviewed_by
+        LEFT JOIN transactions t ON t.tx_id = w.tx_id
+        LEFT JOIN app_users risk_screener ON risk_screener.id = t.screened_by
         "#,
         inner_sql
     )
