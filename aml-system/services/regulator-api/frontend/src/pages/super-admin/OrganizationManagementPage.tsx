@@ -28,27 +28,33 @@ export function OrganizationManagementPage() {
     load();
   }, []);
 
+  const partnerCount = organizations.filter((org) => org.is_partner).length;
+  const bankCount = organizations.filter((org) => org.organization_type === "bank").length;
+
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Organization Management"
-        description="Inspect participating institutions, regulator bodies, audit offices, and platform administration organizations."
+        title="Partner Organization Management"
+        description="Inspect approved partner banks, regulator bodies, audit offices, and platform administration organizations."
       />
 
       {loading ? <LoadingState /> : null}
       {error ? <ErrorBanner message={error} /> : null}
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 md:grid-cols-4">
         <Card>
           <p className="text-xs font-bold uppercase text-slate-500">Organizations</p>
           <h3 className="mt-2 text-3xl font-black">{organizations.length}</h3>
         </Card>
 
         <Card>
-          <p className="text-xs font-bold uppercase text-slate-500">Active Users</p>
-          <h3 className="mt-2 text-3xl font-black">
-            {organizations.reduce((total, org) => total + org.active_users, 0)}
-          </h3>
+          <p className="text-xs font-bold uppercase text-slate-500">Partner Enabled</p>
+          <h3 className="mt-2 text-3xl font-black">{partnerCount}</h3>
+        </Card>
+
+        <Card>
+          <p className="text-xs font-bold uppercase text-slate-500">Banks</p>
+          <h3 className="mt-2 text-3xl font-black">{bankCount}</h3>
         </Card>
 
         <Card>
@@ -61,7 +67,7 @@ export function OrganizationManagementPage() {
 
       <Card>
         <div className="flex items-center justify-between gap-3">
-          <h3 className="font-bold">Organizations</h3>
+          <h3 className="font-bold">Partner Organizations</h3>
           <button onClick={load} className="rounded-xl border px-4 py-2 text-sm font-semibold">
             Refresh
           </button>
@@ -78,7 +84,33 @@ export function OrganizationManagementPage() {
                 <StatusBadge status={org.status} />
               </div>
 
-              <div className="mt-4 grid grid-cols-3 gap-3 text-sm">
+              <div className="mt-4 grid gap-3 text-sm md:grid-cols-2">
+                <div className="rounded-xl bg-slate-50 p-3">
+                  <p className="text-xs text-slate-500">Partner Code</p>
+                  <p className="font-mono font-bold">{org.bank_code || "N/A"}</p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3">
+                  <p className="text-xs text-slate-500">Type</p>
+                  <p className="font-bold">{org.organization_type || "N/A"}</p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3">
+                  <p className="text-xs text-slate-500">Country</p>
+                  <p className="font-bold">{org.country || "N/A"}</p>
+                </div>
+
+                <div className="rounded-xl bg-slate-50 p-3">
+                  <p className="text-xs text-slate-500">License Number</p>
+                  <p className="font-mono text-xs font-bold">{org.license_number || "N/A"}</p>
+                </div>
+              </div>
+
+              <div className="mt-4 grid grid-cols-4 gap-3 text-sm">
+                <div className="rounded-xl bg-slate-50 p-3">
+                  <p className="text-xs text-slate-500">Partner</p>
+                  <p className="font-bold">{org.is_partner ? "Yes" : "No"}</p>
+                </div>
                 <div className="rounded-xl bg-slate-50 p-3">
                   <p className="text-xs text-slate-500">Total</p>
                   <p className="font-bold">{org.total_users}</p>

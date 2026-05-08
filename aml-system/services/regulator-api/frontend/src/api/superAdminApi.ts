@@ -6,6 +6,13 @@ export type AdminUserRow = {
   user_id: string;
   organization_id: string | null;
   organization_name: string | null;
+  bank_code: string | null;
+  organization_type: string | null;
+  bank_employee_id: string | null;
+  department: string | null;
+  job_title: string | null;
+  identity_verified: boolean;
+  approved_partner_scope: boolean;
   full_name: string;
   email: string;
   role: string;
@@ -19,6 +26,11 @@ export type AdminUserRow = {
 export type OrganizationAdminRow = {
   organization_id: string;
   organization_name: string;
+  bank_code: string | null;
+  organization_type: string | null;
+  country: string | null;
+  license_number: string | null;
+  is_partner: boolean;
   status: string;
   total_users: number;
   active_users: number;

@@ -1,4 +1,4 @@
-use crate::{auth, db, proofs, transactions};
+use crate::{anomaly_cases, auth, db, proofs, transactions};
 use axum::{
     extract::{Path, Query, State},
     http::{HeaderMap, StatusCode},
@@ -26,6 +26,7 @@ pub fn router(pool: PgPool) -> Router {
         .route("/audit/:tx_id", get(get_audit_timeline))
         .merge(auth::routes())
         .merge(transactions::routes())
+        .merge(anomaly_cases::routes())
         .with_state(pool)
 }
 

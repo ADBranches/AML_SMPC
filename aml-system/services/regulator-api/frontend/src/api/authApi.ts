@@ -6,7 +6,10 @@ export type RegisterPayload = {
   full_name: string;
   email: string;
   password: string;
-  organization_name: string;
+  partner_bank_code: string;
+  bank_employee_id: string;
+  department: string;
+  job_title: string;
   requested_role: Exclude<UserRole, "super_admin" | "admin">;
   reason_for_access: string;
 };
@@ -14,6 +17,11 @@ export type RegisterPayload = {
 export type RegisterResponse = {
   user_id: string;
   organization_id: string;
+  organization_name: string;
+  partner_bank_code: string;
+  bank_employee_id: string;
+  department: string;
+  job_title: string;
   full_name: string;
   email: string;
   requested_role: string;

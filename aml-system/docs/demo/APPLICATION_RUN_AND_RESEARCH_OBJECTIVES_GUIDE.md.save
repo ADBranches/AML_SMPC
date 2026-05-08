@@ -1,0 +1,36 @@
+
+
+
+
+
+# Application Run and Research Objectives Guide
+
+## Purpose
+
+This guide explains how to run the AML SMPC application locally, how to demonstrate it through the frontend UI and terminal, and how the implemented system meets the research thesis objectives.
+
+The project demonstrates a privacy-preserving AML compliance prototype for financial institutions using:
+
+- Secure Multi-Party Computation (SMPC)
+- Homomorphic Encryption-oriented architecture
+- Zero-Knowledge proof generation
+- JWT and role-based access control
+- Regulator proof verification
+- Audit traceability
+- Three-bank collaborative screening evidence
+
+---
+
+## 1. Correct Research Framing
+
+This project should be presented as a multi-bank privacy-preserving AML compliance prototype.
+
+The correct explanation is:
+
+```text
+Bank A, Bank B, and Bank C participate in privacy-preserving SMPC-style screening.
+The regulator is not a raw-input SMPC computation party.
+The regulator verifies downstream proof and audit evidence.
+The auditor has read-only evidence access.
+
+```
