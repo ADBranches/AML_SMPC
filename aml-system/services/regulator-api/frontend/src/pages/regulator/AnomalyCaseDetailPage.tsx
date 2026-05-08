@@ -21,7 +21,9 @@ export function AnomalyCaseDetailPage() {
     try {
       setItem(await anomalyCasesApi.getCase(caseId));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load anomaly case.");
+      setError(
+        err instanceof Error ? err.message : "Failed to load anomaly case."
+      );
     } finally {
       setLoading(false);
     }
@@ -35,7 +37,9 @@ export function AnomalyCaseDetailPage() {
       setItem(await anomalyCasesApi.closeCase(caseId));
       setNotice("Case closed successfully.");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to close case.");
+      setError(
+        err instanceof Error ? err.message : "Failed to close case."
+      );
     }
   }
 
@@ -52,6 +56,7 @@ export function AnomalyCaseDetailPage() {
 
       {loading ? <LoadingState /> : null}
       {error ? <ErrorBanner message={error} /> : null}
+
       {notice ? (
         <div className="rounded-2xl border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-700">
           {notice}
@@ -68,32 +73,52 @@ export function AnomalyCaseDetailPage() {
 
             <Card>
               <p className="text-xs font-bold uppercase text-slate-500">Risk</p>
-              <div className="mt-2"><StatusBadge status={item.risk_level} /></div>
+              <div className="mt-2">
+                <StatusBadge status={item.risk_level} />
+              </div>
             </Card>
 
             <Card>
               <p className="text-xs font-bold uppercase text-slate-500">Status</p>
-              <div className="mt-2"><StatusBadge status={item.case_status} /></div>
+              <div className="mt-2">
+                <StatusBadge status={item.case_status} />
+              </div>
             </Card>
 
             <Card>
-              <p className="text-xs font-bold uppercase text-slate-500">Banks Notified</p>
-              <h3 className="mt-2 text-3xl font-black">{item.bank_notices.length}</h3>
+              <p className="text-xs font-bold uppercase text-slate-500">
+                Banks Notified
+              </p>
+              <h3 className="mt-2 text-3xl font-black">
+                {item.bank_notices.length}
+              </h3>
             </Card>
           </section>
 
           <Card>
             <h3 className="font-bold">Finding</h3>
-            <p className="mt-3 text-sm leading-6 text-slate-700">{item.summary}</p>
-            <p className="mt-3 text-sm leading-6 text-slate-700">{item.regulator_finding}</p>
-            <p className="mt-3 text-sm leading-6 text-slate-700">{item.required_bank_action}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-700">
+              {item.summary}
+            </p>
+            {item.regulator_finding ? (
+              <p className="mt-3 text-sm leading-6 text-slate-700">
+                {item.regulator_finding}
+              </p>
+            ) : null}
+            {item.required_bank_action ? (
+              <p className="mt-3 text-sm leading-6 text-slate-700">
+                {item.required_bank_action}
+              </p>
+            ) : null}
 
-            <button
-              onClick={closeCase}
-              className="mt-5 rounded-xl border border-red-300 px-4 py-2 text-sm font-semibold text-red-700"
-            >
-              Close Case
-            </button>
+            {item.case_status !== "closed" ? (
+              <button
+                onClick={closeCase}
+                className="mt-5 rounded-xl border border-red-300 px-4 py-2 text-sm font-semibold text-red-700"
+              >
+                Close Case
+              </button>
+            ) : null}
           </Card>
 
           <Card>
@@ -111,11 +136,22 @@ export function AnomalyCaseDetailPage() {
                 </thead>
                 <tbody>
                   {item.bank_notices.map((notice) => (
-                    <tr key={notice.notice_id} className="border-t align-top">
-                      <td className="px-4 py-3">{notice.organization_name}</td>
-                      <td className="px-4 py-3 font-mono text-xs">{notice.bank_code || "N/A"}</td>
-                      <td className="px-4 py-3"><StatusBadge status={notice.notice_status} /></td>
-                      <td className="px-4 py-3 text-xs">{notice.bank_response || "No response yet"}</td>
+                    <tr
+                      key={notice.notice_id}
+                      className="border-t align-top"
+                    >
+                      <td className="px-4 py-3">
+                        {notice.organization_name}
+                      </td>
+                      <td className="px-4 py-3 font-mono text-xs">
+                        {notice.bank_code || "N/A"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <StatusBadge status={notice.notice_status} />
+                      </td>
+                      <td className="px-4 py-3 text-xs">
+                        {notice.bank_response || "No response yet"}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

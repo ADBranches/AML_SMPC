@@ -1,6 +1,4 @@
-import { ApiError } from "./client";
-import { env } from "../config/env";
-import { getStoredSession } from "../auth/authStore";
+import { apiClient } from "./client";
 
 export type BankNoticeSummary = {
   notice_id: string;
@@ -55,76 +53,45 @@ export type CreateAnomalyCasePayload = {
   notified_organization_ids?: string[];
 };
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const session = getStoredSession();
-  const headers = new Headers(init.headers);
-
-  headers.set("Content-Type", "application/json");
-
-  if (session?.token) {
-    headers.set("Authorization", `Bearer ${session.token}`);
-  }
-
-  const response = await fetch(`${env.regulatorApiBaseUrl}${path}`, {
-    ...init,
-    headers,
-  });
-
-  const text = await response.text();
-  const payload = text ? JSON.parse(text) : null;
-
-  if (!response.ok) {
-    const message =
-      payload?.message ||
-      payload?.error ||
-      `Request failed with HTTP ${response.status}`;
-
-    throw new ApiError(response.status, message, payload);
-  }
-
-  return payload as T;
-}
-
 export const anomalyCasesApi = {
+  // -------- Regulator --------
+
   listCases() {
-    return request<AnomalyCase[]>("/regulator/anomaly-cases");
+    return apiClient.get<AnomalyCase[]>("/regulator/anomaly-cases");
   },
 
   getCase(caseId: string) {
-    return request<AnomalyCase>(`/regulator/anomaly-cases/${encodeURIComponent(caseId)}`);
-  },
-
-  createCase(payload: CreateAnomalyCasePayload) {
-    return request<AnomalyCase>("/regulator/anomaly-cases", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
-  },
-
-  closeCase(caseId: string) {
-    return request<AnomalyCase>(
-      `/regulator/anomaly-cases/${encodeURIComponent(caseId)}/close`,
-      { method: "POST" }
+    return apiClient.get<AnomalyCase>(
+      `/regulator/anomaly-cases/${encodeURIComponent(caseId)}`
     );
   },
 
+  createCase(payload: CreateAnomalyCasePayload) {
+    return apiClient.post<AnomalyCase>("/regulator/anomaly-cases", payload);
+  },
+
+  closeCase(caseId: string) {
+    return apiClient.post<AnomalyCase>(
+      `/regulator/anomaly-cases/${encodeURIComponent(caseId)}/close`
+    );
+  },
+
+  // -------- Institution --------
+
   listBankNotices() {
-    return request<BankAnomalyNotice[]>("/institution/anomaly-notices");
+    return apiClient.get<BankAnomalyNotice[]>("/institution/anomaly-notices");
   },
 
   getBankNotice(caseId: string) {
-    return request<BankAnomalyNotice>(
+    return apiClient.get<BankAnomalyNotice>(
       `/institution/anomaly-notices/${encodeURIComponent(caseId)}`
     );
   },
 
   respondToNotice(caseId: string, bankResponse: string) {
-    return request<BankAnomalyNotice>(
+    return apiClient.post<BankAnomalyNotice>(
       `/institution/anomaly-notices/${encodeURIComponent(caseId)}/respond`,
-      {
-        method: "POST",
-        body: JSON.stringify({ bank_response: bankResponse }),
-      }
+      { bank_response: bankResponse }
     );
   },
 };

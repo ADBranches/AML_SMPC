@@ -76,11 +76,15 @@ export function BankAnomalyNoticeDetailPage() {
             </Card>
             <Card>
               <p className="text-xs font-bold uppercase text-slate-500">Risk</p>
-              <div className="mt-2"><StatusBadge status={notice.risk_level} /></div>
+              <div className="mt-2">
+                <StatusBadge status={notice.risk_level} />
+              </div>
             </Card>
             <Card>
               <p className="text-xs font-bold uppercase text-slate-500">Notice</p>
-              <div className="mt-2"><StatusBadge status={notice.notice_status} /></div>
+              <div className="mt-2">
+                <StatusBadge status={notice.notice_status} />
+              </div>
             </Card>
             <Card>
               <p className="text-xs font-bold uppercase text-slate-500">Transaction</p>
@@ -104,21 +108,28 @@ export function BankAnomalyNoticeDetailPage() {
 
           <Card>
             <h3 className="font-bold">Bank Response</h3>
-            <form onSubmit={submit} className="mt-4 space-y-4">
-              <textarea
-                value={response}
-                onChange={(event) => setResponse(event.target.value)}
-                className="min-h-32 w-full rounded-xl border px-4 py-3"
-                required
-              />
 
-              <button
-                disabled={saving}
-                className="rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
-              >
-                {saving ? "Submitting..." : "Submit Response"}
-              </button>
-            </form>
+            {notice.notice_status === "responded" ? (
+              <p className="mt-4 text-sm text-slate-600">
+                This notice has already been responded to.
+              </p>
+            ) : (
+              <form onSubmit={submit} className="mt-4 space-y-4">
+                <textarea
+                  value={response}
+                  onChange={(event) => setResponse(event.target.value)}
+                  className="min-h-32 w-full rounded-xl border px-4 py-3"
+                  required
+                />
+
+                <button
+                  disabled={saving}
+                  className="rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white disabled:opacity-60"
+                >
+                  {saving ? "Submitting..." : "Submit Response"}
+                </button>
+              </form>
+            )}
           </Card>
         </>
       ) : null}
